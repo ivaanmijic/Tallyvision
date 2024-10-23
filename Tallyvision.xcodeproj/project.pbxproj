@@ -9,21 +9,17 @@
 /* Begin PBXBuildFile section */
 		FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */; };
 		FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */; };
-		FCC679C42CC8D4BC00050D65 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679C32CC8D4BC00050D65 /* ViewController.swift */; };
-		FCC679C72CC8D4BC00050D65 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCC679C52CC8D4BC00050D65 /* Main.storyboard */; };
 		FCC679C92CC8D4BE00050D65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCC679C82CC8D4BE00050D65 /* Assets.xcassets */; };
-		FCC679CC2CC8D4BE00050D65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCC679CA2CC8D4BE00050D65 /* LaunchScreen.storyboard */; };
+		FCC679D72CC8D5B300050D65 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679D62CC8D5B300050D65 /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FCC679BC2CC8D4BC00050D65 /* Tallyvision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tallyvision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FCC679C32CC8D4BC00050D65 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FCC679C62CC8D4BC00050D65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FCC679C82CC8D4BE00050D65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FCC679CB2CC8D4BE00050D65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FCC679CD2CC8D4BE00050D65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FCC679D62CC8D5B300050D65 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +52,37 @@
 		FCC679BE2CC8D4BC00050D65 /* Tallyvision */ = {
 			isa = PBXGroup;
 			children = (
-				FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */,
-				FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */,
-				FCC679C32CC8D4BC00050D65 /* ViewController.swift */,
-				FCC679C52CC8D4BC00050D65 /* Main.storyboard */,
-				FCC679C82CC8D4BE00050D65 /* Assets.xcassets */,
-				FCC679CA2CC8D4BE00050D65 /* LaunchScreen.storyboard */,
+				FCC679D52CC8D59000050D65 /* View Controllers */,
+				FCC679D32CC8D56500050D65 /* Supporting Files */,
 				FCC679CD2CC8D4BE00050D65 /* Info.plist */,
 			);
 			path = Tallyvision;
+			sourceTree = "<group>";
+		};
+		FCC679D32CC8D56500050D65 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */,
+				FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */,
+				FCC679C82CC8D4BE00050D65 /* Assets.xcassets */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FCC679D52CC8D59000050D65 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FCC679D82CC8D60B00050D65 /* Home */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		FCC679D82CC8D60B00050D65 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FCC679D62CC8D5B300050D65 /* HomeViewController.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,9 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCC679CC2CC8D4BE00050D65 /* LaunchScreen.storyboard in Resources */,
 				FCC679C92CC8D4BE00050D65 /* Assets.xcassets in Resources */,
-				FCC679C72CC8D4BC00050D65 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,32 +154,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCC679C42CC8D4BC00050D65 /* ViewController.swift in Sources */,
 				FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */,
 				FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */,
+				FCC679D72CC8D5B300050D65 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		FCC679C52CC8D4BC00050D65 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FCC679C62CC8D4BC00050D65 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		FCC679CA2CC8D4BE00050D65 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FCC679CB2CC8D4BE00050D65 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FCC679CE2CC8D4BE00050D65 /* Debug */ = {
@@ -297,7 +294,6 @@
 				INFOPLIST_FILE = Tallyvision/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -325,7 +321,6 @@
 				INFOPLIST_FILE = Tallyvision/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
