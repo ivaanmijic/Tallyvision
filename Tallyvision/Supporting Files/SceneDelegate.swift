@@ -19,15 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let tabBarController = UITabBarController()
+        let mainViewController = MainViewController()
         
-        let homeViewController = UINavigationController(rootViewController: HomeViewController())
-        
-        homeViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
-        
-        tabBarController.viewControllers = [homeViewController]
-        
-        window?.rootViewController = tabBarController
+        window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
     }
 

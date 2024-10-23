@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  DiscoverViewController.swift
 //  Tallyvision
 //
 //  Created by Ivan Mijic on 23. 10. 2024..
@@ -7,12 +7,10 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class DiscoverViewController: UIViewController {
 
-    //MARK: - UIComponents
-    
     lazy var titleLabel: UILabel = {
-        return UILabel.screenTitle(withText: "HOME").forAutoLayout()
+        return UILabel.screenTitle(withText: "DISCOVER").forAutoLayout()
     }()
     
     //MARK: - Lifecycle
