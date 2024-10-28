@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		85D19B0FD36FE1CD26693FF1 /* Pods_Tallyvision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D516D0796A92BE21E280E3 /* Pods_Tallyvision.framework */; };
+		FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */; };
 		FC5322222CC8F4B1001BCC3D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322212CC8F4B1001BCC3D /* MainViewController.swift */; };
 		FC5322262CC8F817001BCC3D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322252CC8F817001BCC3D /* UIImage+Extensions.swift */; };
 		FC53222D2CC8FB3B001BCC3D /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC53222C2CC8FB3B001BCC3D /* DiscoverViewController.swift */; };
@@ -32,6 +33,7 @@
 		05DCEEC7ADF8AD823643E98E /* Pods-Tallyvision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tallyvision.debug.xcconfig"; path = "Target Support Files/Pods-Tallyvision/Pods-Tallyvision.debug.xcconfig"; sourceTree = "<group>"; };
 		67D516D0796A92BE21E280E3 /* Pods_Tallyvision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tallyvision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4059300682F2E68B45E9BE8 /* Pods-Tallyvision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tallyvision.release.xcconfig"; path = "Target Support Files/Pods-Tallyvision/Pods-Tallyvision.release.xcconfig"; sourceTree = "<group>"; };
+		FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Log.swift"; sourceTree = "<group>"; };
 		FC5322212CC8F4B1001BCC3D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		FC5322252CC8F817001BCC3D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		FC53222C2CC8FB3B001BCC3D /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
@@ -83,9 +85,18 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FC2AE5CA2CCFDFB50072FB95 /* AppDelegate Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */,
+			);
+			path = "AppDelegate Extensions";
+			sourceTree = "<group>";
+		};
 		FC5322232CC8F79D001BCC3D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				FC2AE5CA2CCFDFB50072FB95 /* AppDelegate Extensions */,
 				FC5322242CC8F7A6001BCC3D /* UIIKit Extensions */,
 			);
 			path = Extensions;
@@ -168,9 +179,9 @@
 		FCC679D32CC8D56500050D65 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FC5322342CC91CB7001BCC3D /* Fonts */,
 				FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */,
 				FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */,
+				FC5322342CC91CB7001BCC3D /* Fonts */,
 				FCC679C82CC8D4BE00050D65 /* Assets.xcassets */,
 			);
 			path = "Supporting Files";
@@ -330,6 +341,7 @@
 				FC53222F2CC8FB49001BCC3D /* WatchlistViewController.swift in Sources */,
 				FC53222D2CC8FB3B001BCC3D /* DiscoverViewController.swift in Sources */,
 				FCC679D72CC8D5B300050D65 /* HomeViewController.swift in Sources */,
+				FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */,
 				FC5322332CC91843001BCC3D /* UIColor+Extensions.swift in Sources */,
 				FC5322222CC8F4B1001BCC3D /* MainViewController.swift in Sources */,
 			);

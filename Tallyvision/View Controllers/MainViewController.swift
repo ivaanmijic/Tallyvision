@@ -11,7 +11,6 @@ class MainViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-   
         setupViewControllers()
         setupUI()
     }
@@ -48,6 +47,7 @@ class MainViewController: UITabBarController {
                 enableBlurEffect()
             }
         }
+        log.info("Main View did Load")
     }
     
     private func enableBlurEffect() {
