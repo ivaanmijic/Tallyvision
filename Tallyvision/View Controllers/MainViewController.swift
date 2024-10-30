@@ -8,11 +8,13 @@
 import UIKit
 
 class MainViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewControllers()
         setupUI()
+        fetchShows()
+        printShows()
     }
     
     private func setupViewControllers() {
@@ -23,7 +25,7 @@ class MainViewController: UITabBarController {
         
         viewControllers = [homeViewController, discoverViewController, watchlistViewController, statisticsViewController]
     }
-
+    
     private func createNavigationController(_ controller: UIViewController, withImage imageName: String) -> UINavigationController {
         let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).resizeTo(maxWidth: 30, maxHeight: 30)
         let selectedImage = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).resizeTo(maxWidth: 30, maxHeight: 30)
@@ -62,4 +64,45 @@ class MainViewController: UITabBarController {
     }
     
     // MARK: - Navigation
+    
+    // MARK: - Test
+    func fetchShows() {
+        let url = URL(string: "https://api.tvmaze.com/shows")!
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            do {
+                let shows = try JSONDecoder().decode([Show].self, from: data)
+                let dbManager = Database()
+                for show in shows {
+                    dbManager.insertShow(show)
+                }
+            } catch {
+                print("Failed to decode JSON: \(error)")
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func printShows() {
+        do {
+            let shows = try Database.dbQueue.read { db in
+                try Show.fetchAll(db)
+            }
+            
+            if shows.isEmpty {
+                log.error("No shows found in the database")
+                return
+            }
+            
+            for show in shows {
+                log.info(show)
+            }
+            
+        } catch {
+            log.error("Error fetching: \(error)")
+        }
+    }
 }

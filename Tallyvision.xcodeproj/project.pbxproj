@@ -27,6 +27,8 @@
 		FCC679DB2CC8E01F00050D65 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DA2CC8E01F00050D65 /* SwiftyBeaver */; };
 		FCC679DE2CC8E04500050D65 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DD2CC8E04500050D65 /* SDWebImage */; };
 		FCC679E02CC8E04500050D65 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DF2CC8E04500050D65 /* SDWebImageMapKit */; };
+		FCF77A202CD0D12D00456132 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A1F2CD0D12D00456132 /* Show.swift */; };
+		FCF77A242CD0DF2000456132 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A232CD0DF2000456132 /* Database.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		FCC679C82CC8D4BE00050D65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCC679CD2CC8D4BE00050D65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCC679D62CC8D5B300050D65 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		FCF77A1F2CD0D12D00456132 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
+		FCF77A232CD0DF2000456132 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +173,8 @@
 			isa = PBXGroup;
 			children = (
 				FC5322232CC8F79D001BCC3D /* Extensions */,
+				FCF77A222CD0DF0900456132 /* Persistence */,
+				FCF77A1E2CD0D0FE00456132 /* Models */,
 				FCC679D52CC8D59000050D65 /* View Controllers */,
 				FCC679D32CC8D56500050D65 /* Supporting Files */,
 				FCC679CD2CC8D4BE00050D65 /* Info.plist */,
@@ -205,6 +211,22 @@
 				FCC679D62CC8D5B300050D65 /* HomeViewController.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		FCF77A1E2CD0D0FE00456132 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FCF77A1F2CD0D12D00456132 /* Show.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FCF77A222CD0DF0900456132 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				FCF77A232CD0DF2000456132 /* Database.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCF77A202CD0D12D00456132 /* Show.swift in Sources */,
 				FC5322412CC933EB001BCC3D /* UILabel+Extension.swift in Sources */,
 				FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */,
 				FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */,
@@ -343,6 +366,7 @@
 				FCC679D72CC8D5B300050D65 /* HomeViewController.swift in Sources */,
 				FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */,
 				FC5322332CC91843001BCC3D /* UIColor+Extensions.swift in Sources */,
+				FCF77A242CD0DF2000456132 /* Database.swift in Sources */,
 				FC5322222CC8F4B1001BCC3D /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
