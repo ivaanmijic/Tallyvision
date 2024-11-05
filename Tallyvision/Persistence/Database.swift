@@ -41,23 +41,36 @@ extension Database {
                 try database.drop(table: Show.databaseTableName)
             }
             
-            try database.create(table: Show.databaseTableName) { table in
-                table.column("id", .integer).primaryKey()
-                table.column("name", .text)
-                table.column("type", .text)
-                table.column("language", .text)
-                table.column("status", .text)
-                table.column("genres", .text)
-                table.column("averageRuntime", .integer)
-                table.column("premiered", .date)
-                table.column("ended", .date)
-                table.column("officialSite", .text)
-                table.column("rating", .real)
-                table.column("summary", .text)
-                table.column("schedule", .text)
-                table.column("network", .text)
-                table.column("country", .text)
-                table.column("image", .text)
+            try database.create(table: Show.databaseTableName) { t in
+                t.column("id", .integer).primaryKey()
+                t.column("url", .text)
+                t.column("name", .text)
+                t.column("type", .text)
+                t.column("language", .text)
+                t.column("status", .text)
+                t.column("genres", .text)
+                t.column("averageRuntime", .integer)
+                t.column("premiered", .date)
+                t.column("ended", .date)
+                t.column("officialSite", .text)
+                t.column("rating", .real)
+                t.column("summary", .text)
+                t.column("schedule", .jsonText)
+                t.column("network", .jsonText)
+                t.column("country", .jsonText)
+                t.column("image", .text)
+            }
+            
+            try database.create(table: Season.databaseTableName) { t in
+                t.column("id", .integer).primaryKey()
+                t.column("showId", .integer).references(Show.databaseTableName, onDelete: .cascade)
+                t.column("number", .integer)
+                t.column("episodeOrder", .integer)
+                t.column("premiereDate", .date)
+                t.column("endDate", .date)
+                t.column("network", .jsonText)
+                t.column("image", .text)
+                t.column("summary", .text)
             }
         }
         

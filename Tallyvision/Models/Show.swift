@@ -11,7 +11,7 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
    
     static let databaseTableName = "tv_shows"
     
-    private static let dateFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         formatter.timeZone = TimeZone(identifier: "UTC")
@@ -20,6 +20,7 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
     }()
     
     var showId: Int64
+    var url: URL
     var title: String
     var type: String
     var language: String
@@ -44,26 +45,9 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
         let days: [String]
     }
     
-    struct Network: Codable {
-        let id: Int
-        let name: String
-        let country: Country
-        let officialSite: String?
-    }
-    
-    struct Country: Codable {
-        let name: String
-        let code: String
-        let timezone: String
-    }
-   
-    struct Image: Codable {
-        let medium: String?
-        let original: String?
-    }
     
     private enum CodingKeys: String, CodingKey {
-        case type, language, rating, summary, officialSite, genres, status, averageRuntime, schedule, network, image
+        case type, language, rating, summary, officialSite, genres, status, averageRuntime, schedule, network, image, url
         case showId = "id"
         case title = "name"
         case premiereDate = "premiered"
@@ -75,6 +59,10 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.showId = try container.decode(Int64.self, forKey: .showId)
+        
+        let urlString = try container.decode(String.self, forKey: .url)
+        self.url = URL(string: urlString)!
+        
         self.title = try container.decode(String.self, forKey: .title)
         self.type = try container.decode(String.self, forKey: .type)
         self.language = try container.decode(String.self, forKey: .language)
@@ -82,28 +70,13 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
         self.status = try container.decode(String.self, forKey: .status)
         self.averageRuntime = try container.decode(Int64.self, forKey: .averageRuntime)
         
-        
-//        if let premiereDateString = try container.decodeIfPresent(String.self, forKey: .premiereDate) {
-//            print(premiereDateString)
-//            self.premiereDate = Self.dateFormatter.date(from: premiereDateString)
-//            print(premiereDate)
-//        }
-//        
-//        if let endDateString = try container.decodeIfPresent(String.self, forKey: .endDate) {
-//            self.endDate = Self.dateFormatter.date(from: endDateString)
-//        }
-//        self.premiereDate = try container.decodeIfPresent(String.self, forKey: .premiereDate)
-//        self.endDate = try container.decodeIfPresent(String.self, forKey: .endDate)
-
         if let premiereDateString = try container.decodeIfPresent(String.self, forKey: .premiereDate) {
-            print("Decoded premiere date string: \(premiereDateString)")
             self.premiereDate = Self.dateFormatter.date(from: premiereDateString)
         } else {
             self.premiereDate = nil
         }
 
         if let endDateString = try container.decodeIfPresent(String.self, forKey: .endDate) {
-            print("Decoded end date string: \(endDateString)")
             self.endDate = Self.dateFormatter.date(from: endDateString)
         } else {
             self.endDate = nil

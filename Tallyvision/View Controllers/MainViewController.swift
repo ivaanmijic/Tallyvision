@@ -97,6 +97,10 @@ class MainViewController: UITabBarController {
                 return
             }
             
+            let seasons = try Database.dbQueue.read { db in
+                try Season.fetchAll(db)
+            }
+            
             for show in shows {
                 log.info(show)
             }
