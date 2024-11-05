@@ -13,8 +13,9 @@ class MainViewController: UITabBarController {
         super.viewDidLoad()
         setupViewControllers()
         setupUI()
-        fetchShows()
-        printShows()
+//        fetchShows()
+//        log.info("\n")
+        fetchShow(byId: 20)
     }
     
     private func setupViewControllers() {
@@ -66,47 +67,70 @@ class MainViewController: UITabBarController {
     // MARK: - Navigation
     
     // MARK: - Test
-    func fetchShows() {
-        let url = URL(string: "https://api.tvmaze.com/shows")!
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            
-            do {
-                let shows = try JSONDecoder().decode([Show].self, from: data)
-                let dbManager = Database()
-                for show in shows {
-                    dbManager.insertShow(show)
-                }
-            } catch {
-                print("Failed to decode JSON: \(error)")
+    func fetchShow(byId id: Int) {
+        TVMazeClient.shared.fetchShow(byId: id) { response in
+            switch response {
+            case .success(let show):
+                log.info(show)
+            case .failure(let errorMessage):
+                log.error(errorMessage)
             }
         }
-        
-        task.resume()
     }
     
-    func printShows() {
-        do {
-            let shows = try Database.dbQueue.read { db in
-                try Show.fetchAll(db)
+    func fetchShows() {
+        
+        TVMazeClient.shared.fetchShows() { response in
+            switch response {
+            case .success(let shows):
+                for show in shows {
+                    log.info(show)
+                }
+            case .failure(let error):
+                log.error(error)
             }
-            
-            if shows.isEmpty {
-                log.error("No shows found in the database")
-                return
-            }
-            
-            let seasons = try Database.dbQueue.read { db in
-                try Season.fetchAll(db)
-            }
-            
-            for show in shows {
-                log.info(show)
-            }
-            
-        } catch {
-            log.error("Error fetching: \(error)")
         }
+        
+//        let url = URL(string: "https://api.tvmaze.com/shows")!
+//        
+//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//            guard let data = data, error == nil else { return }
+//            
+//            do {
+//                let shows = try JSONDecoder().decode([Show].self, from: data)
+//                let dbManager = Database()
+//                for show in shows {
+//                    dbManager.insertShow(show)
+//                }
+//            } catch {
+//                print("Failed to decode JSON: \(error)")
+//            }
+//        }
+//        
+//        task.resume()
     }
+    
+//    func printShows() {
+//        do {
+//            let shows = try Database.dbQueue.read { db in
+//                try Show.fetchAll(db)
+//            }
+//            
+//            if shows.isEmpty {
+//                log.error("No shows found in the database")
+//                return
+//            }
+//            
+//            let seasons = try Database.dbQueue.read { db in
+//                try Season.fetchAll(db)
+//            }
+//            
+//            for show in shows {
+//                log.info(show)
+//            }
+//            
+//        } catch {
+//            log.error("Error fetching: \(error)")
+//        }
+//    }
 }

@@ -17,25 +17,7 @@ class TVMazeClient {
             completion(.failure(.invalidURL))
             return
         }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else {
-                completion(.failure(.unknown))
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, 200 ... 299 ~= response.statusCode else {
-                completion(.failure(.unknown))
-                return
-            }
-            
-            do {
-                let shows = try JSONDecoder().decode([Show].self, from: data)
-                completion(.success(shows))
-            } catch {
-                completion(.failure(.message(error)))
-            }
-        }.resume()
+        fetchData(from: url, completion: completion)
     }
     
     func fetchShow(byId id: Int, completion: @escaping (Result<Show, NetworkError>) -> Void) {
@@ -43,7 +25,10 @@ class TVMazeClient {
             completion(.failure(.invalidURL))
             return
         }
-        
+        fetchData(from: url, completion: completion)
+    }
+   
+    private func fetchData<Data: Decodable>(from url: URL, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 completion(.failure(.unknown))
@@ -56,8 +41,8 @@ class TVMazeClient {
             }
             
             do {
-                let show = try JSONDecoder().decode(Show.self, from: data)
-                completion(.success(show))
+                let data = try JSONDecoder().decode(Data.self, from: data)
+                completion(.success(data))
             } catch {
                 completion(.failure(.message(error)))
             }

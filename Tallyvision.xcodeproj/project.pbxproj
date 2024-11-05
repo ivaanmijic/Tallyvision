@@ -31,6 +31,8 @@
 		FCD0B4CC2CDA0E8F0042E05C /* Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4CB2CDA0E8F0042E05C /* Season.swift */; };
 		FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4CD2CDA17840042E05C /* Network.swift */; };
 		FCD0B4D02CDA17B60042E05C /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4CF2CDA17B60042E05C /* Country.swift */; };
+		FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */; };
+		FCD0B4D52CDA29630042E05C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4D42CDA29630042E05C /* NetworkError.swift */; };
 		FCF77A202CD0D12D00456132 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A1F2CD0D12D00456132 /* Show.swift */; };
 		FCF77A242CD0DF2000456132 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A232CD0DF2000456132 /* Database.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +63,8 @@
 		FCD0B4CB2CDA0E8F0042E05C /* Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Season.swift; sourceTree = "<group>"; };
 		FCD0B4CD2CDA17840042E05C /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		FCD0B4CF2CDA17B60042E05C /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeClient.swift; sourceTree = "<group>"; };
+		FCD0B4D42CDA29630042E05C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		FCF77A1F2CD0D12D00456132 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		FCF77A232CD0DF2000456132 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -181,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				FC5322232CC8F79D001BCC3D /* Extensions */,
+				FCD0B4D12CDA29230042E05C /* Networking */,
 				FCF77A222CD0DF0900456132 /* Persistence */,
 				FCF77A1E2CD0D0FE00456132 /* Models */,
 				FCC679D52CC8D59000050D65 /* View Controllers */,
@@ -229,6 +234,23 @@
 				FCD0B4CF2CDA17B60042E05C /* Country.swift */,
 			);
 			path = "Supporting Models";
+			sourceTree = "<group>";
+		};
+		FCD0B4D12CDA29230042E05C /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				FCD0B4D72CDA44B20042E05C /* TV Maze API */,
+				FCD0B4D42CDA29630042E05C /* NetworkError.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		FCD0B4D72CDA44B20042E05C /* TV Maze API */ = {
+			isa = PBXGroup;
+			children = (
+				FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */,
+			);
+			path = "TV Maze API";
 			sourceTree = "<group>";
 		};
 		FCF77A1E2CD0D0FE00456132 /* Models */ = {
@@ -383,6 +405,7 @@
 				FC53223C2CC92DA2001BCC3D /* UIView+Extensions.swift in Sources */,
 				FC5322262CC8F817001BCC3D /* UIImage+Extensions.swift in Sources */,
 				FC5322312CC8FB5D001BCC3D /* StatisticsViewController.swift in Sources */,
+				FCD0B4D52CDA29630042E05C /* NetworkError.swift in Sources */,
 				FC53222F2CC8FB49001BCC3D /* WatchlistViewController.swift in Sources */,
 				FCD0B4D02CDA17B60042E05C /* Country.swift in Sources */,
 				FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */,
@@ -390,6 +413,7 @@
 				FCC679D72CC8D5B300050D65 /* HomeViewController.swift in Sources */,
 				FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */,
 				FC5322332CC91843001BCC3D /* UIColor+Extensions.swift in Sources */,
+				FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */,
 				FCF77A242CD0DF2000456132 /* Database.swift in Sources */,
 				FC5322222CC8F4B1001BCC3D /* MainViewController.swift in Sources */,
 			);
