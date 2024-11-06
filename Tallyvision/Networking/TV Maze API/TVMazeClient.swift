@@ -12,41 +12,29 @@ class TVMazeClient {
     private init() {}
     private let baseURL = "https://api.tvmaze.com/"
     
-    func fetchShows(completion: @escaping (Result<[Show], NetworkError>) -> Void) {
-        guard let url = URL(string: "\(baseURL)shows") else {
-            completion(.failure(.invalidURL))
-            return
-        }
-        fetchData(from: url, completion: completion)
+    func fetchShows() async throws -> [Show] {
+        let url = URL(string: "\(baseURL)shows")!
+        return try await fetchData(from: url)
     }
     
-    func fetchShow(byId id: Int, completion: @escaping (Result<Show, NetworkError>) -> Void) {
-        guard let url = URL(string: "\(baseURL)shows/\(id)") else {
-            completion(.failure(.invalidURL))
-            return
-        }
-        fetchData(from: url, completion: completion)
+    func fetchShow(byId id: Int) async throws -> Show {
+        let url = URL(string: "\(baseURL)shows/\(id)")!
+        return try await fetchData(from: url)
     }
    
-    private func fetchData<Data: Decodable>(from url: URL, completion: @escaping (Result<Data, NetworkError>) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else {
-                completion(.failure(.unknown))
-                return
-            }
-            
+    private func fetchData<Data: Decodable>(from url: URL) async throws -> Data {
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
             guard let response = response as? HTTPURLResponse, 200 ... 299 ~= response.statusCode else {
-                completion(.failure(.unknown))
-                return
+                let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
+                throw NetworkError.badResponse(statusCode: statusCode)
             }
-            
-            do {
-                let data = try JSONDecoder().decode(Data.self, from: data)
-                completion(.success(data))
-            } catch {
-                completion(.failure(.message(error)))
-            }
-        }.resume()
+            let decodedData = try JSONDecoder().decode(Data.self, from: data)
+            return decodedData
+        } catch let decodingError as DecodingError {
+            throw NetworkError.decodingError(decodingError)
+        } catch {
+            throw NetworkError.message(error)
+        }
     }
-    
 }
