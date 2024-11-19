@@ -99,3 +99,6 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
       
     }
 }
+
+
+

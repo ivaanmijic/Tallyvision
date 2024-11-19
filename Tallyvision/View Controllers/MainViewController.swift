@@ -13,11 +13,6 @@ class MainViewController: UITabBarController {
         super.viewDidLoad()
         setupViewControllers()
         setupUI()
-        //        fetchShows()
-        //        log.info("\n")
-        Task {
-            await fetchShow(byId: 800000)
-        }
     }
     
     private func setupViewControllers() {
@@ -68,14 +63,5 @@ class MainViewController: UITabBarController {
     
     // MARK: - Navigation
     
-    // MARK: - Test
-    func fetchShow(byId id: Int) async {
-        do {
-            let show = try await TVMazeClient.shared.fetchShow(byId: id)
-            log.info(show)
-        } catch {
-            log.error("Error fetching show with id: \(id)\n \(error)")
-        }
-    }
 }
    

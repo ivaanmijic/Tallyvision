@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		E9654CC19B3D03EFCD99B941 /* Pods_Tallyvision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AF7AA0CA33A23DE4EAD2B36 /* Pods_Tallyvision.framework */; };
+		FC0366D52CE33DFF003EBE4A /* TvShowCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0366D42CE33DFF003EBE4A /* TvShowCardView.swift */; };
+		FC0366D82CE347BC003EBE4A /* ShowCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0366D72CE347BC003EBE4A /* ShowCards.swift */; };
 		FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */; };
+		FC4B3BC72CE4962C0055ECAF /* BlurredImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */; };
+		FC4B3BD42CE4E7E70055ECAF /* String+HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */; };
 		FC5322222CC8F4B1001BCC3D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322212CC8F4B1001BCC3D /* MainViewController.swift */; };
-		FC5322262CC8F817001BCC3D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322252CC8F817001BCC3D /* UIImage+Extensions.swift */; };
+		FC5322262CC8F817001BCC3D /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322252CC8F817001BCC3D /* UIImage+Resize.swift */; };
 		FC53222D2CC8FB3B001BCC3D /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC53222C2CC8FB3B001BCC3D /* DiscoverViewController.swift */; };
 		FC53222F2CC8FB49001BCC3D /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC53222E2CC8FB49001BCC3D /* WatchlistViewController.swift */; };
 		FC5322312CC8FB5D001BCC3D /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322302CC8FB5D001BCC3D /* StatisticsViewController.swift */; };
@@ -33,6 +37,7 @@
 		FCD0B4D02CDA17B60042E05C /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4CF2CDA17B60042E05C /* Country.swift */; };
 		FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */; };
 		FCD0B4D52CDA29630042E05C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4D42CDA29630042E05C /* NetworkError.swift */; };
+		FCD7CFFC2CEB7E4800A3B18F /* DotsIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD7CFFB2CEB7E4800A3B18F /* DotsIndicatorView.swift */; };
 		FCF77A202CD0D12D00456132 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A1F2CD0D12D00456132 /* Show.swift */; };
 		FCF77A242CD0DF2000456132 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A232CD0DF2000456132 /* Database.swift */; };
 /* End PBXBuildFile section */
@@ -41,9 +46,13 @@
 		2AF7AA0CA33A23DE4EAD2B36 /* Pods_Tallyvision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tallyvision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		500505D96C627702532FE601 /* Pods-Tallyvision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tallyvision.debug.xcconfig"; path = "Target Support Files/Pods-Tallyvision/Pods-Tallyvision.debug.xcconfig"; sourceTree = "<group>"; };
 		E730662B62931596AC283930 /* Pods-Tallyvision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tallyvision.release.xcconfig"; path = "Target Support Files/Pods-Tallyvision/Pods-Tallyvision.release.xcconfig"; sourceTree = "<group>"; };
+		FC0366D42CE33DFF003EBE4A /* TvShowCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShowCardView.swift; sourceTree = "<group>"; };
+		FC0366D72CE347BC003EBE4A /* ShowCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCards.swift; sourceTree = "<group>"; };
 		FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Log.swift"; sourceTree = "<group>"; };
+		FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredImageView.swift; sourceTree = "<group>"; };
+		FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMLParser.swift"; sourceTree = "<group>"; };
 		FC5322212CC8F4B1001BCC3D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		FC5322252CC8F817001BCC3D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		FC5322252CC8F817001BCC3D /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		FC53222C2CC8FB3B001BCC3D /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		FC53222E2CC8FB49001BCC3D /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
 		FC5322302CC8FB5D001BCC3D /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +74,7 @@
 		FCD0B4CF2CDA17B60042E05C /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeClient.swift; sourceTree = "<group>"; };
 		FCD0B4D42CDA29630042E05C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		FCD7CFFB2CEB7E4800A3B18F /* DotsIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsIndicatorView.swift; sourceTree = "<group>"; };
 		FCF77A1F2CD0D12D00456132 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		FCF77A232CD0DF2000456132 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +111,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FC0366D62CE3479E003EBE4A /* UI Models */ = {
+			isa = PBXGroup;
+			children = (
+				FC0366D72CE347BC003EBE4A /* ShowCards.swift */,
+			);
+			path = "UI Models";
+			sourceTree = "<group>";
+		};
 		FC2AE5CA2CCFDFB50072FB95 /* AppDelegate Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,9 +127,36 @@
 			path = "AppDelegate Extensions";
 			sourceTree = "<group>";
 		};
+		FC4B3BC12CE48BF90055ECAF /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FC4B3BCB2CE4D9A40055ECAF /* Recommendations */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FC4B3BCB2CE4D9A40055ECAF /* Recommendations */ = {
+			isa = PBXGroup;
+			children = (
+				FC0366D42CE33DFF003EBE4A /* TvShowCardView.swift */,
+				FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */,
+				FCD7CFFB2CEB7E4800A3B18F /* DotsIndicatorView.swift */,
+			);
+			path = Recommendations;
+			sourceTree = "<group>";
+		};
+		FC4B3BD22CE4E7CF0055ECAF /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
 		FC5322232CC8F79D001BCC3D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				FC4B3BD22CE4E7CF0055ECAF /* Foundation */,
 				FC2AE5CA2CCFDFB50072FB95 /* AppDelegate Extensions */,
 				FC5322242CC8F7A6001BCC3D /* UIIKit Extensions */,
 			);
@@ -121,7 +166,7 @@
 		FC5322242CC8F7A6001BCC3D /* UIIKit Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FC5322252CC8F817001BCC3D /* UIImage+Extensions.swift */,
+				FC5322252CC8F817001BCC3D /* UIImage+Resize.swift */,
 				FC5322322CC91843001BCC3D /* UIColor+Extensions.swift */,
 				FC53223B2CC92DA2001BCC3D /* UIView+Extensions.swift */,
 				FC5322402CC933EB001BCC3D /* UILabel+Extension.swift */,
@@ -163,6 +208,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		FC6E16AD2CDB92510084F8BC /* UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				FC4B3BC12CE48BF90055ECAF /* Home */,
+			);
+			path = "UI Components";
+			sourceTree = "<group>";
+		};
 		FCC679B32CC8D4BC00050D65 = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +241,8 @@
 				FCD0B4D12CDA29230042E05C /* Networking */,
 				FCF77A222CD0DF0900456132 /* Persistence */,
 				FCF77A1E2CD0D0FE00456132 /* Models */,
+				FC0366D62CE3479E003EBE4A /* UI Models */,
+				FC6E16AD2CDB92510084F8BC /* UI Components */,
 				FCC679D52CC8D59000050D65 /* View Controllers */,
 				FCC679D32CC8D56500050D65 /* Supporting Files */,
 				FCC679CD2CC8D4BE00050D65 /* Info.plist */,
@@ -398,12 +453,15 @@
 			files = (
 				FCD0B4CC2CDA0E8F0042E05C /* Season.swift in Sources */,
 				FCF77A202CD0D12D00456132 /* Show.swift in Sources */,
+				FC4B3BC72CE4962C0055ECAF /* BlurredImageView.swift in Sources */,
 				FC5322412CC933EB001BCC3D /* UILabel+Extension.swift in Sources */,
 				FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */,
 				FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */,
+				FCD7CFFC2CEB7E4800A3B18F /* DotsIndicatorView.swift in Sources */,
 				FCD0B4CA2CDA0E3A0042E05C /* Image.swift in Sources */,
 				FC53223C2CC92DA2001BCC3D /* UIView+Extensions.swift in Sources */,
-				FC5322262CC8F817001BCC3D /* UIImage+Extensions.swift in Sources */,
+				FC5322262CC8F817001BCC3D /* UIImage+Resize.swift in Sources */,
+				FC0366D52CE33DFF003EBE4A /* TvShowCardView.swift in Sources */,
 				FC5322312CC8FB5D001BCC3D /* StatisticsViewController.swift in Sources */,
 				FCD0B4D52CDA29630042E05C /* NetworkError.swift in Sources */,
 				FC53222F2CC8FB49001BCC3D /* WatchlistViewController.swift in Sources */,
@@ -411,11 +469,13 @@
 				FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */,
 				FC53222D2CC8FB3B001BCC3D /* DiscoverViewController.swift in Sources */,
 				FCC679D72CC8D5B300050D65 /* HomeViewController.swift in Sources */,
+				FC0366D82CE347BC003EBE4A /* ShowCards.swift in Sources */,
 				FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */,
 				FC5322332CC91843001BCC3D /* UIColor+Extensions.swift in Sources */,
 				FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */,
 				FCF77A242CD0DF2000456132 /* Database.swift in Sources */,
 				FC5322222CC8F4B1001BCC3D /* MainViewController.swift in Sources */,
+				FC4B3BD42CE4E7E70055ECAF /* String+HTMLParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,16 +21,17 @@ class DiscoverViewController: UIViewController {
     }
    
     private func setupUI() {
+        setupNavigationBar()
         view.backgroundColor = .screenColor
-        view.addSubview(titleLabel)
         setupConstraints()
     }
     
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
+    }
+    
     private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
-        ])
+        
     }
     
 

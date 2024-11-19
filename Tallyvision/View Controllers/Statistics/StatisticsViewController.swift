@@ -22,15 +22,16 @@ class StatisticsViewController: UIViewController {
    
     private func setupUI() {
         view.backgroundColor = .screenColor
-        view.addSubview(titleLabel)
+        setupNavigationBar()
         setupConstraints()
     }
     
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
+    }
+    
     private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
-        ])
+        
     }
     
 

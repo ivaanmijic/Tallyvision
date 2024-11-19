@@ -24,6 +24,10 @@ extension UIColor {
     static var textColor: UIColor {
         getColor(darkColor: .white, lightColor: .black)
     }
+    
+    static var titleColor: UIColor {
+        getColor(darkColor: .brightYellow, lightColor: .black)
+    }
    
     static func getColor(darkColor: UIColor, lightColor: UIColor) -> UIColor {
         UIColor { traitCollection in
