@@ -28,6 +28,7 @@
 		FCC679DB2CC8E01F00050D65 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DA2CC8E01F00050D65 /* SwiftyBeaver */; };
 		FCC679DE2CC8E04500050D65 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DD2CC8E04500050D65 /* SDWebImage */; };
 		FCC679E02CC8E04500050D65 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DF2CC8E04500050D65 /* SDWebImageMapKit */; };
+		FCCA8E422CEDD10F005866E2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA8E412CEDD10F005866E2 /* UIViewController+Extensions.swift */; };
 		FCD0B4C22CDA0D360042E05C /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C12CDA0D360042E05C /* Montserrat-Bold.ttf */; };
 		FCD0B4C42CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C32CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf */; };
 		FCD0B4C62CDA0D530042E05C /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C52CDA0D530042E05C /* Montserrat-Regular.ttf */; };
@@ -38,6 +39,7 @@
 		FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */; };
 		FCD0B4D52CDA29630042E05C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4D42CDA29630042E05C /* NetworkError.swift */; };
 		FCD7CFFC2CEB7E4800A3B18F /* DotsIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD7CFFB2CEB7E4800A3B18F /* DotsIndicatorView.swift */; };
+		FCEDE2662CEC7FD900B4C0F8 /* TvShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEDE2652CEC7FD900B4C0F8 /* TvShowCell.swift */; };
 		FCF77A202CD0D12D00456132 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A1F2CD0D12D00456132 /* Show.swift */; };
 		FCF77A242CD0DF2000456132 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A232CD0DF2000456132 /* Database.swift */; };
 /* End PBXBuildFile section */
@@ -65,6 +67,7 @@
 		FCC679C82CC8D4BE00050D65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCC679CD2CC8D4BE00050D65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCC679D62CC8D5B300050D65 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		FCCA8E412CEDD10F005866E2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		FCD0B4C12CDA0D360042E05C /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		FCD0B4C32CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		FCD0B4C52CDA0D530042E05C /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 		FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeClient.swift; sourceTree = "<group>"; };
 		FCD0B4D42CDA29630042E05C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		FCD7CFFB2CEB7E4800A3B18F /* DotsIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsIndicatorView.swift; sourceTree = "<group>"; };
+		FCEDE2652CEC7FD900B4C0F8 /* TvShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShowCell.swift; sourceTree = "<group>"; };
 		FCF77A1F2CD0D12D00456132 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		FCF77A232CD0DF2000456132 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,6 +174,7 @@
 				FC5322322CC91843001BCC3D /* UIColor+Extensions.swift */,
 				FC53223B2CC92DA2001BCC3D /* UIView+Extensions.swift */,
 				FC5322402CC933EB001BCC3D /* UILabel+Extension.swift */,
+				FCCA8E412CEDD10F005866E2 /* UIViewController+Extensions.swift */,
 			);
 			path = "UIIKit Extensions";
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 		FC6E16AD2CDB92510084F8BC /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				FCEDE2652CEC7FD900B4C0F8 /* TvShowCell.swift */,
 				FC4B3BC12CE48BF90055ECAF /* Home */,
 			);
 			path = "UI Components";
@@ -468,10 +474,12 @@
 				FCD0B4D02CDA17B60042E05C /* Country.swift in Sources */,
 				FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */,
 				FC53222D2CC8FB3B001BCC3D /* DiscoverViewController.swift in Sources */,
+				FCEDE2662CEC7FD900B4C0F8 /* TvShowCell.swift in Sources */,
 				FCC679D72CC8D5B300050D65 /* HomeViewController.swift in Sources */,
 				FC0366D82CE347BC003EBE4A /* ShowCards.swift in Sources */,
 				FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */,
 				FC5322332CC91843001BCC3D /* UIColor+Extensions.swift in Sources */,
+				FCCA8E422CEDD10F005866E2 /* UIViewController+Extensions.swift in Sources */,
 				FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */,
 				FCF77A242CD0DF2000456132 /* Database.swift in Sources */,
 				FC5322222CC8F4B1001BCC3D /* MainViewController.swift in Sources */,
