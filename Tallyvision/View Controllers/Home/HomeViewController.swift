@@ -13,22 +13,19 @@ class HomeViewController: UIViewController {
     
     var tvShowCards: ShowCards?
     var shows = [Show]()
-    private var initialCardCenter: CGPoint = .zero
     private var currentShowIndex = 0
+    
+    private var initialCardCenter: CGPoint = .zero
     
     //MARK: - UIComponents
    
     lazy var scrollView: UIScrollView = {
-        let view = UIScrollView()
-        view.backgroundColor = .clear
-        return view.forAutoLayout()
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView.forAutoLayout()
     }()
     
-    lazy var contentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view.forAutoLayout()
-    }()
+   lazy var contentView = UIView().forAutoLayout()
     
     lazy var titleLabel: UILabel = .screenTitle(withText: "HOME").forAutoLayout()
     lazy var recommendedShowsLabel: UILabel = .subtitle(withText: "Top shows this week").forAutoLayout()
@@ -147,30 +144,37 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - Pan Gesture Setup
+   
     
     private func setupPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        panGesture.delegate = self
         tvShowCardView.addGestureRecognizer(panGesture)
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self.view)
         let velocity = gesture.velocity(in: self.view)
+       
+        let isVerticalPanGesture = abs(translation.x) < abs(translation.y)
+        if isVerticalPanGesture {
+            gesture.setTranslation(.zero, in: self.view)
+        }
         
-        switch gesture.state {
-        case .began:
-            initialCardCenter = tvShowCardView.center
-            log.debug("began")
-        case .changed:
-            updateCardPositionWithTranslation(translation)
-            log.debug("changed")
-        case .ended:
-            handlePanGestureEnd(translation: translation, velocity: velocity)
-            log.debug("ended")
-        default:
-            break
+        else {
+            switch gesture.state {
+            case .began:
+                initialCardCenter = tvShowCardView.center
+            case .changed:
+                updateCardPositionWithTranslation(translation)
+            case .ended:
+                handlePanGestureEnd(translation: translation, velocity: velocity)
+            default:
+                break
+            }
         }
     }
+   
     
     private func updateCardPositionWithTranslation(_ translation: CGPoint) {
         tvShowCardView.center = CGPoint(x: initialCardCenter.x + translation.x, y: initialCardCenter.y)
@@ -182,8 +186,8 @@ class HomeViewController: UIViewController {
     }
     
     private func handlePanGestureEnd(translation: CGPoint, velocity: CGPoint) {
-        let swipeThreshold: CGFloat = 80
-        let velocityThreshold: CGFloat = 400
+        let swipeThreshold: CGFloat = 100
+        let velocityThreshold: CGFloat = 500
         
         if abs(translation.x) > swipeThreshold || abs(velocity.x) > velocityThreshold {
             let direction: CGFloat = translation.x > 0 ? 1 : -1
@@ -301,5 +305,19 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         return CGSize(width: 210 * 0.5, height: 295 * 0.5)
     }
     
+}
+
+extension HomeViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
+            let translation = panGesture.translation(in: self.view)
+            let isVerticalSwipe = abs(translation.y) > abs(translation.x)
+            if isVerticalSwipe { return true }
+        }
+        return false
+        
+    }
 }
 
