@@ -11,47 +11,18 @@ class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    var tvShowCards: ShowCards?
     var shows = [Show]()
-    private var currentShowIndex = 0
-    
-    private var initialCardCenter: CGPoint = .zero
     
     //MARK: - UIComponents
-   
-    lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = false
-        return scrollView.forAutoLayout()
-    }()
     
-   lazy var contentView = UIView().forAutoLayout()
-    
-    lazy var titleLabel: UILabel = .screenTitle(withText: "HOME").forAutoLayout()
-    lazy var recommendedShowsLabel: UILabel = .subtitle(withText: "Top shows this week").forAutoLayout()
-    lazy var newEpisodesLabel: UILabel = .subtitle(withText: "New in subscriptions").forAutoLayout()
-    lazy var recentShowsLabel: UILabel = .subtitle(withText: "Recent aired").forAutoLayout()
-    lazy var upcomingShowsLabel: UILabel = .subtitle(withText: "Upcoming shows").forAutoLayout()
-    
-    lazy var tvShowCardView: TvShowCardView = {
-        let view = TvShowCardView()
-        view.clipsToBounds = true
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 20
-        return view.forAutoLayout()
-    }()
-    
-    lazy var dotsIndicator = DotsIndicatorView().forAutoLayout()
-    lazy var blurredBackground = BlurredImageView().forAutoLayout()
-    
-    lazy var upcomingShowsCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .screenColor
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(TvShowCell.self, forCellWithReuseIdentifier: TvShowCell.identifier)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(ShowCardsCell.self, forCellWithReuseIdentifier: ShowCardsCell.identifier)
+        collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
         
         return collectionView.forAutoLayout()
     }()
@@ -60,210 +31,53 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionViews()
-        setupUI()
-        setupPanGesture()
         Task {
             await fetchShows()
         }
+        setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     private func setupUI() {
         view.backgroundColor = .screenColor
-        setupNavigationBar()
-        addSubviews()
-        configureDotsIndicator()
-        setupConstraints()
+        configureCollectionView()
+        configureCompositionalLayout()
     }
     
-    private func addSubviews() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(blurredBackground)
-        contentView.addSubview(recommendedShowsLabel)
-        contentView.addSubview(tvShowCardView)
-        contentView.addSubview(dotsIndicator)
-        contentView.addSubview(upcomingShowsLabel)
-        contentView.addSubview(upcomingShowsCollectionView)
+    private func configureCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.pin(to: view)
     }
     
-    private func configureDotsIndicator() {
-        dotsIndicator.configureDots(count: 5)
-    }
-    
-    private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
-    }
-    
-   
-    
-    private func setupConstraints() {
-        
-        scrollView.pin(to: view)
-        
-        let scrollContentGuide = scrollView.contentLayoutGuide
-        let scrollFrameGuide = scrollView.frameLayoutGuide
-        
-        
-        NSLayoutConstraint.activate([
-            
-            contentView.leadingAnchor.constraint(equalTo: scrollFrameGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollFrameGuide.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: 10000),
-            
-            recommendedShowsLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            recommendedShowsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            recommendedShowsLabel.heightAnchor.constraint(equalToConstant: 30),
-            
-            tvShowCardView.topAnchor.constraint(equalTo: recommendedShowsLabel.bottomAnchor, constant: 16),
-            tvShowCardView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            tvShowCardView.widthAnchor.constraint(equalToConstant: 272 * 1.1),
-            tvShowCardView.heightAnchor.constraint(equalToConstant: 400 * 1.1),
-            
-            blurredBackground.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -self.topBarHeight),
-            blurredBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -60),
-            blurredBackground.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 60),
-            blurredBackground.heightAnchor.constraint(equalToConstant: (UIScreen.main.bounds.width + 120) * 1000 / 680),
-            
-            dotsIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            dotsIndicator.topAnchor.constraint(equalTo: tvShowCardView.bottomAnchor, constant: 10),
-            dotsIndicator.heightAnchor.constraint(equalToConstant: 40),
-            
-            upcomingShowsLabel.topAnchor.constraint(equalTo: dotsIndicator.bottomAnchor, constant: 24),
-            upcomingShowsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            upcomingShowsLabel.heightAnchor.constraint(equalToConstant: 30),
-            
-            upcomingShowsCollectionView.topAnchor.constraint(equalTo: upcomingShowsLabel.bottomAnchor, constant: 16),
-            upcomingShowsCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            upcomingShowsCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            upcomingShowsCollectionView.heightAnchor.constraint(equalToConstant: 240)
-            
-        ])
-    }
-    
-    // MARK: - Pan Gesture Setup
-   
-    
-    private func setupPanGesture() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        panGesture.delegate = self
-        tvShowCardView.addGestureRecognizer(panGesture)
-    }
-    
-    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: self.view)
-        let velocity = gesture.velocity(in: self.view)
-       
-        let isVerticalPanGesture = abs(translation.x) < abs(translation.y)
-        if isVerticalPanGesture {
-            gesture.setTranslation(.zero, in: self.view)
-        }
-        
-        else {
-            switch gesture.state {
-            case .began:
-                initialCardCenter = tvShowCardView.center
-            case .changed:
-                updateCardPositionWithTranslation(translation)
-            case .ended:
-                handlePanGestureEnd(translation: translation, velocity: velocity)
-            default:
-                break
+    private func configureCompositionalLayout() {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
+            switch sectionIndex {
+            case 0: return AppLayouts.shared.showCardsSection()
+            default: return AppLayouts.shared.showRecommendationsSection()
             }
         }
+        collectionView.setCollectionViewLayout(layout, animated: true)
     }
-   
-    
-    private func updateCardPositionWithTranslation(_ translation: CGPoint) {
-        tvShowCardView.center = CGPoint(x: initialCardCenter.x + translation.x, y: initialCardCenter.y)
-        let rotationAngle = translation.x / 2000
-        tvShowCardView.transform = CGAffineTransform(rotationAngle: rotationAngle)
-        
-        let scale = 1 - min(abs(translation.x) / 300, 0.2)
-        tvShowCardView.transform = tvShowCardView.transform.scaledBy(x: scale, y: scale)
-    }
-    
-    private func handlePanGestureEnd(translation: CGPoint, velocity: CGPoint) {
-        let swipeThreshold: CGFloat = 100
-        let velocityThreshold: CGFloat = 500
-        
-        if abs(translation.x) > swipeThreshold || abs(velocity.x) > velocityThreshold {
-            let direction: CGFloat = translation.x > 0 ? 1 : -1
-            animateCardSwipe(direction: direction)
-        } else { updateCardPosition(reset: true) }
-        
-    }
-   
-    // MARK: - Card Animation
-    
-    private func animateCardSwipe(direction: CGFloat) {
-        let offScreenX = direction * self.view.frame.width * 1.5
-        UIView.animate(withDuration: 0.3, animations: {
-            self.tvShowCardView.center = CGPoint(x: self.tvShowCardView.center.x + offScreenX, y: self.tvShowCardView.center.y)
-            self.tvShowCardView.alpha = 0
-        }) { [weak self] _ in
-            self?.updateShowIndex(forDirection: direction)
-            self?.updateRecommendedShow()
-            self?.updateCardPosition()
-        }
-    }
-    
-    private func updateShowIndex(forDirection direction: CGFloat) {
-        if direction > 0 {
-            currentShowIndex -= 1
-            tvShowCards?.goToNextShow()
-        } else {
-            currentShowIndex += 1
-            tvShowCards?.goToPrevShow()
-        }
-    }
-    
-    private func updateCardPosition(reset: Bool = false) {
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            guard let self = self else { return }
-            if reset == true {
-                resetCardPosition()
-            }
-            self.tvShowCardView.alpha = 1
-            self.tvShowCardView.transform = CGAffineTransform.identity
-        }
-    }
-
-    
-    private func updateRecommendedShow() {
-        guard let currentShow = tvShowCards?.currentShow() else { return }
-        tvShowCardView.configure(forShow: currentShow)
-        blurredBackground.configure(forShow: currentShow)
-        dotsIndicator.highlightDot(atIndex: currentShowIndex)
-        resetCardPosition()
-    }
-    
-    private func resetCardPosition() {
-        tvShowCardView.center = initialCardCenter
-    }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-   
     
     // MARK: - Testing
     
     private func fetchShows() async {
         do {
             let fetchedShows = try await TVMazeClient.shared.fetchShows()
-            let dropedShows = Array(fetchedShows.dropFirst(fetchedShows.count - 5))
+            let dropedShows = Array(fetchedShows.dropFirst(fetchedShows.count - 7))
             shows = dropedShows
-            tvShowCards = ShowCards(shows: dropedShows)
-            upcomingShowsCollectionView.reloadData()
+            collectionView.reloadData()
         } catch {
             log.error("Error fetching shows\n\(error)")
         }
@@ -271,53 +85,64 @@ class HomeViewController: UIViewController {
     
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-
-extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
    
-    private func setupCollectionViews() {
-        upcomingShowsCollectionView.delegate = self
-        upcomingShowsCollectionView.dataSource = self
-    }
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return shows.count
+        switch section {
+        case 0: return 1
+        case 1: return shows.count
+        case 2: return shows.count
+        default: return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TvShowCell.identifier, for: indexPath)
-                as? TvShowCell else {
-            log.fault("Failed to deque TvShowCell in HomeViewController")
-            return UICollectionViewCell()
+        switch indexPath.section {
+        
+        case 0:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCardsCell.identifier, for: indexPath)
+                    as? ShowCardsCell else {
+                log.error("Unable deque TVShowCell")
+                return UICollectionViewCell()
+            }
+            cell.showCards = ShowCards(shows: shows)
+            return cell
+            
+        default:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCell.identifier, for: indexPath)
+                    as? ShowCell else {
+                log.error("Unable deque TVShowCell")
+                return UICollectionViewCell()
+            }
+            guard let imageUrl = shows[indexPath.row].image.medium else { return cell }
+            cell.configure(withImageURL: imageUrl)
+            return cell
         }
-        if let image = shows[indexPath.row].image.medium {
-            cell.configure(withImageURL: image)
-        }
-        return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 210 * 0.5, height: 295 * 0.5)
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath)
+                as? SectionHeaderView else { return UICollectionReusableView() }
+        
+        switch indexPath.section {
+        case 0: header.configure(title: "Today, ", date: Date())
+        case 1: header.configure(title: "Recent shows", date: nil)
+        case 2: header.configure(title: "Comming soon")
+        default: break
+        }
+            
+        return header
     }
     
 }
 
-extension HomeViewController: UIGestureRecognizerDelegate {
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        
-        if let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
-            let translation = panGesture.translation(in: self.view)
-            let isVerticalSwipe = abs(translation.y) > abs(translation.x)
-            if isVerticalSwipe { return true }
-        }
-        return false
-        
-    }
-}
+
+
 

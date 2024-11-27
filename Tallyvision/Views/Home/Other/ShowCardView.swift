@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class TvShowCardView: UIView {
+class ShowCardView: UIView {
     
     lazy var poster: UIImageView = {
         let imageView = UIImageView()
@@ -40,6 +40,7 @@ class TvShowCardView: UIView {
             log.error("ShowCardView: invalid url")
             return
         }
+        log.info(imageURL)
         poster.sd_setImage(with: imageURL)
     }
     

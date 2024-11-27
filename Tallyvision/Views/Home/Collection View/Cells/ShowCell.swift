@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TvShowCell: UICollectionViewCell {
+class ShowCell: UICollectionViewCell {
     
     static let identifier = "TV Show Cell"
     
@@ -21,6 +21,7 @@ class TvShowCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 20
+        imageView.layer.masksToBounds = true
         return imageView.forAutoLayout()
     }()
     
@@ -39,11 +40,13 @@ class TvShowCell: UICollectionViewCell {
         addSubview(imageView)
         imageView.pin(to: self)
         self.layer.cornerRadius = 20
+        self.layer.masksToBounds = true
     }
     
     private func setupImageView() {
         guard let imageURL = imageURL, let sd_imageURL = URL(string: imageURL) else { return }
         imageView.sd_setImage(with: sd_imageURL)
+        log.info(imageURL)
     }
     
     func configure(withImageURL imageURL: String) {

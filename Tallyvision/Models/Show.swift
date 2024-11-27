@@ -10,14 +10,7 @@ import GRDB
 struct Show: Codable, FetchableRecord, PersistableRecord {
    
     static let databaseTableName = "tv_shows"
-    
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-        formatter.timeZone = TimeZone(identifier: "UTC")
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter
-    }()
+    static let dateFormatter = DateFormatter.instance
     
     var showId: Int64
     var url: URL
