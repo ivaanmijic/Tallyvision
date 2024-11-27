@@ -16,10 +16,10 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
     var url: URL
     var title: String
     var type: String
-    var language: String
+    var language: String?
     var genres: [String]
     var status: String
-    var averageRuntime: Int64
+    var averageRuntime: Int64?
     var premiereDate: Date?
     var endDate: Date?
     var officialSite: String?
@@ -29,9 +29,6 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
     var image: Image
     var summary: String
    
-    private struct Rating: Codable {
-        let average: Double?
-    }
     
     struct Schedule: Codable {
         let time: String
@@ -58,10 +55,10 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
         
         self.title = try container.decode(String.self, forKey: .title)
         self.type = try container.decode(String.self, forKey: .type)
-        self.language = try container.decode(String.self, forKey: .language)
+        self.language = try container.decodeIfPresent(String.self, forKey: .language)
         self.genres = try container.decode([String].self, forKey: .genres)
         self.status = try container.decode(String.self, forKey: .status)
-        self.averageRuntime = try container.decode(Int64.self, forKey: .averageRuntime)
+        self.averageRuntime = try container.decodeIfPresent(Int64.self, forKey: .averageRuntime)
         
         if let premiereDateString = try container.decodeIfPresent(String.self, forKey: .premiereDate) {
             self.premiereDate = Self.dateFormatter.date(from: premiereDateString)
@@ -78,6 +75,7 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
        
         self.officialSite = try container.decodeIfPresent(String.self, forKey: .officialSite)
         self.schedule = try container.decode(Schedule.self, forKey: .schedule)
+       
         
         let ratingContainer = try? container.decode(Rating.self, forKey: .rating)
         if let ratingContainer = ratingContainer {

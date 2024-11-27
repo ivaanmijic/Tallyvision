@@ -33,6 +33,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         Task {
             await fetchShows()
+            await fetchEpisodes()
         }
         setupUI()
     }
@@ -71,6 +72,17 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - Testing
+   
+    private func fetchEpisodes() async {
+        do {
+            let episodes = try await TVMazeClient.shared.fetchEpisodes()
+            for episode in episodes {
+                log.info(episode.embeddedShow.show.title)
+            }
+        } catch {
+            log.error("Error fetech today streaming episodes\n\(error)")
+        }
+    }
     
     private func fetchShows() async {
         do {

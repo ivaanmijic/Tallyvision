@@ -10,15 +10,21 @@ import Foundation
 class TVMazeClient {
     static let shared = TVMazeClient()
     private init() {}
-    private let baseURL = "https://api.tvmaze.com/"
+    
+    static let baseURL = "https://api.tvmaze.com/"
     
     func fetchShows() async throws -> [Show] {
-        let url = URL(string: "\(baseURL)shows")!
+        let url = URL(string: "\(Self.baseURL)shows")!
         return try await fetchData(from: url)
     }
     
     func fetchShow(byId id: Int) async throws -> Show {
-        let url = URL(string: "\(baseURL)shows/\(id)")!
+        let url = URL(string: "\(Self.baseURL)shows/\(id)")!
+        return try await fetchData(from: url)
+    }
+    
+    func fetchEpisodes() async throws -> [Episode] {
+        let url = URL(string: "https://api.tvmaze.com/schedule/web?date=2020-05-29&country=US")!
         return try await fetchData(from: url)
     }
    

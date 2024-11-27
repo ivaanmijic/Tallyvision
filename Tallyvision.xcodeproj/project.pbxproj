@@ -25,6 +25,9 @@
 		FC5322412CC933EB001BCC3D /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322402CC933EB001BCC3D /* UILabel+Extension.swift */; };
 		FC5C79342CF6FDC90016BB87 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C79332CF6FDC90016BB87 /* SectionHeaderView.swift */; };
 		FC5C79372CF704E30016BB87 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C79362CF704E30016BB87 /* DateFormatter+Extension.swift */; };
+		FC5C793D2CF750D90016BB87 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C793C2CF750D90016BB87 /* Episode.swift */; };
+		FC5C793F2CF758300016BB87 /* Database+Migrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C793E2CF758300016BB87 /* Database+Migrator.swift */; };
+		FC5C79412CF759BE0016BB87 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C79402CF759BE0016BB87 /* Rating.swift */; };
 		FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */; };
 		FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */; };
 		FCC679C92CC8D4BE00050D65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCC679C82CC8D4BE00050D65 /* Assets.xcassets */; };
@@ -69,6 +72,9 @@
 		FC5322402CC933EB001BCC3D /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		FC5C79332CF6FDC90016BB87 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		FC5C79362CF704E30016BB87 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
+		FC5C793C2CF750D90016BB87 /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		FC5C793E2CF758300016BB87 /* Database+Migrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Database+Migrator.swift"; sourceTree = "<group>"; };
+		FC5C79402CF759BE0016BB87 /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		FCC679BC2CC8D4BC00050D65 /* Tallyvision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tallyvision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -345,6 +351,7 @@
 				FCD0B4C92CDA0E3A0042E05C /* Image.swift */,
 				FCD0B4CD2CDA17840042E05C /* Network.swift */,
 				FCD0B4CF2CDA17B60042E05C /* Country.swift */,
+				FC5C79402CF759BE0016BB87 /* Rating.swift */,
 			);
 			path = "Supporting Models";
 			sourceTree = "<group>";
@@ -372,6 +379,7 @@
 				FCD0B4C82CDA0E2B0042E05C /* Supporting Models */,
 				FCF77A1F2CD0D12D00456132 /* Show.swift */,
 				FCD0B4CB2CDA0E8F0042E05C /* Season.swift */,
+				FC5C793C2CF750D90016BB87 /* Episode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -380,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				FCF77A232CD0DF2000456132 /* Database.swift */,
+				FC5C793E2CF758300016BB87 /* Database+Migrator.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -511,6 +520,7 @@
 			files = (
 				FCD0B4CC2CDA0E8F0042E05C /* Season.swift in Sources */,
 				FCF77A202CD0D12D00456132 /* Show.swift in Sources */,
+				FC5C79412CF759BE0016BB87 /* Rating.swift in Sources */,
 				FC4B3BC72CE4962C0055ECAF /* BlurredImageView.swift in Sources */,
 				FC5322412CC933EB001BCC3D /* UILabel+Extension.swift in Sources */,
 				FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */,
@@ -526,6 +536,8 @@
 				FC4AA0392CF5ADBB00A67A74 /* AppLayouts.swift in Sources */,
 				FC53222F2CC8FB49001BCC3D /* WatchlistViewController.swift in Sources */,
 				FCD0B4D02CDA17B60042E05C /* Country.swift in Sources */,
+				FC5C793D2CF750D90016BB87 /* Episode.swift in Sources */,
+				FC5C793F2CF758300016BB87 /* Database+Migrator.swift in Sources */,
 				FC4AA03B2CF5BC9C00A67A74 /* ShowCardsCell.swift in Sources */,
 				FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */,
 				FC53222D2CC8FB3B001BCC3D /* DiscoverViewController.swift in Sources */,
