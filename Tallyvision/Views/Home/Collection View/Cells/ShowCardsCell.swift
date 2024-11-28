@@ -42,7 +42,6 @@ class ShowCardsCell: UICollectionViewCell {
     
     private func setupUI() {
         addSubviews()
-        configureDotsIndicator()
         setupConstraints()
         setupPanGesture()
     }
@@ -53,15 +52,12 @@ class ShowCardsCell: UICollectionViewCell {
         addSubview(dotsIndicator)
     }
     
-    private func configureDotsIndicator() {
-        dotsIndicator.configureDots(count: 5)
-    }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             showCardView.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             showCardView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            showCardView.widthAnchor.constraint(equalToConstant: 272 * 1.2),
+            showCardView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
             showCardView.heightAnchor.constraint(equalToConstant: 400 * 1.2),
             
             dotsIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -71,6 +67,14 @@ class ShowCardsCell: UICollectionViewCell {
         ])
     }
     
+    func configure(withShows shows: [Show]) {
+        showCards = ShowCards(shows: shows)
+        configureDotsIndicator(count: shows.count)
+    }
+    
+    func configureDotsIndicator(count: Int) {
+        dotsIndicator.configureDots(count: count)
+    }
     // MARK: - Pan Gesture Setup
    
     

@@ -20,7 +20,7 @@ class ShowCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 20
+        imageView.layer.cornerRadius = 10
         imageView.layer.masksToBounds = true
         return imageView.forAutoLayout()
     }()
@@ -39,14 +39,13 @@ class ShowCell: UICollectionViewCell {
         backgroundColor = .clear
         addSubview(imageView)
         imageView.pin(to: self)
-        self.layer.cornerRadius = 20
+        self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
     }
     
     private func setupImageView() {
         guard let imageURL = imageURL, let sd_imageURL = URL(string: imageURL) else { return }
         imageView.sd_setImage(with: sd_imageURL)
-        log.info(imageURL)
     }
     
     func configure(withImageURL imageURL: String) {

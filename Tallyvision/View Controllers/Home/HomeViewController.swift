@@ -32,10 +32,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            await fetchShows()
             await fetchEpisodes()
+            setupUI()
         }
-        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,8 +76,9 @@ class HomeViewController: UIViewController {
         do {
             let episodes = try await TVMazeClient.shared.fetchEpisodes()
             for episode in episodes {
-                log.info(episode.embeddedShow.show.title)
+                shows.append(episode.embeddedShow.show)
             }
+            collectionView.reloadData()
         } catch {
             log.error("Error fetech today streaming episodes\n\(error)")
         }
@@ -120,10 +120,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCardsCell.identifier, for: indexPath)
                     as? ShowCardsCell else {
-                log.error("Unable deque TVShowCell")
+                log.error("Unable deque ShowCardCell")
                 return UICollectionViewCell()
             }
-            cell.showCards = ShowCards(shows: shows)
+            cell.configure(withShows: shows)
             return cell
             
         default:

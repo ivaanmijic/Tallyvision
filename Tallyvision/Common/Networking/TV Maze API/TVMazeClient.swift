@@ -24,7 +24,7 @@ class TVMazeClient {
     }
     
     func fetchEpisodes() async throws -> [Episode] {
-        let url = URL(string: "https://api.tvmaze.com/schedule/web?date=2020-05-29&country=US")!
+        let url = URL(string: "https://api.tvmaze.com/schedule/web?date=2024-11-28&country=US")!
         return try await fetchData(from: url)
     }
    

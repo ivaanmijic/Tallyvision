@@ -148,6 +148,10 @@
 		FC4AA0362CF5AD0500A67A74 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FC5322232CC8F79D001BCC3D /* Extensions */,
+				FCD0B4D12CDA29230042E05C /* Networking */,
+				FCF77A222CD0DF0900456132 /* Persistence */,
+				FCF77A1E2CD0D0FE00456132 /* Models */,
 				FC4AA0372CF5AD1B00A67A74 /* Layouts */,
 			);
 			path = Common;
@@ -300,10 +304,6 @@
 		FCC679BE2CC8D4BC00050D65 /* Tallyvision */ = {
 			isa = PBXGroup;
 			children = (
-				FC5322232CC8F79D001BCC3D /* Extensions */,
-				FCD0B4D12CDA29230042E05C /* Networking */,
-				FCF77A222CD0DF0900456132 /* Persistence */,
-				FCF77A1E2CD0D0FE00456132 /* Models */,
 				FC4AA0362CF5AD0500A67A74 /* Common */,
 				FC0366D62CE3479E003EBE4A /* UI Models */,
 				FC6E16AD2CDB92510084F8BC /* Views */,

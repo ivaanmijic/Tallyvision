@@ -40,17 +40,8 @@ class ShowCardView: UIView {
             log.error("ShowCardView: invalid url")
             return
         }
-        log.info(imageURL)
         poster.sd_setImage(with: imageURL)
     }
-    
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-     // Drawing code
-     }
-     */
     
 }
 
