@@ -40,18 +40,12 @@ class MainTabBarController: UITabBarController {
         tabBar.backgroundColor = .screenColor
         tabBar.tintColor = .brightYellow
         tabBar.unselectedItemTintColor = .textColor
-        
-        if let scrollView = view.subviews.compactMap({ $0 as? UIScrollView }).first {
-            let canScroll = scrollView.contentSize.height > scrollView.frame.size.height
-            if canScroll {
-                enableBlurEffect()
-            }
-        }
-        log.info("Main View did Load")
+        enableBlurEffect()
+        log.info("Main Tab Bar Controller did Load")
     }
     
     private func enableBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .prominent)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = tabBar.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

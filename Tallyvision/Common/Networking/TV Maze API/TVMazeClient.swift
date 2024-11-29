@@ -8,8 +8,6 @@
 import Foundation
 
 class TVMazeClient {
-    static let shared = TVMazeClient()
-    private init() {}
     
     static let baseURL = "https://api.tvmaze.com/"
     

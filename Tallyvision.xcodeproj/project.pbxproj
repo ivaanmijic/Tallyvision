@@ -36,6 +36,8 @@
 		FCC679DE2CC8E04500050D65 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DD2CC8E04500050D65 /* SDWebImage */; };
 		FCC679E02CC8E04500050D65 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DF2CC8E04500050D65 /* SDWebImageMapKit */; };
 		FCCA8E422CEDD10F005866E2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA8E412CEDD10F005866E2 /* UIViewController+Extensions.swift */; };
+		FCCBAF6A2CF86BDD000F75BD /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */; };
+		FCCBAF6D2CF87A78000F75BD /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCCBAF6C2CF87A78000F75BD /* AlertKit */; };
 		FCD0B4C22CDA0D360042E05C /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C12CDA0D360042E05C /* Montserrat-Bold.ttf */; };
 		FCD0B4C42CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C32CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf */; };
 		FCD0B4C62CDA0D530042E05C /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C52CDA0D530042E05C /* Montserrat-Regular.ttf */; };
@@ -82,6 +84,7 @@
 		FCC679CD2CC8D4BE00050D65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCC679D62CC8D5B300050D65 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FCCA8E412CEDD10F005866E2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
 		FCD0B4C12CDA0D360042E05C /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		FCD0B4C32CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		FCD0B4C52CDA0D530042E05C /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 			files = (
 				FCC679DE2CC8E04500050D65 /* SDWebImage in Frameworks */,
 				FCC679E02CC8E04500050D65 /* SDWebImageMapKit in Frameworks */,
+				FCCBAF6D2CF87A78000F75BD /* AlertKit in Frameworks */,
 				FCC679DB2CC8E01F00050D65 /* SwiftyBeaver in Frameworks */,
 				E9654CC19B3D03EFCD99B941 /* Pods_Tallyvision.framework in Frameworks */,
 			);
@@ -148,9 +152,9 @@
 		FC4AA0362CF5AD0500A67A74 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				FC5322232CC8F79D001BCC3D /* Extensions */,
 				FCD0B4D12CDA29230042E05C /* Networking */,
 				FCF77A222CD0DF0900456132 /* Persistence */,
+				FCCBAF662CF86B8D000F75BD /* Services */,
 				FCF77A1E2CD0D0FE00456132 /* Models */,
 				FC4AA0372CF5AD1B00A67A74 /* Layouts */,
 			);
@@ -304,6 +308,7 @@
 		FCC679BE2CC8D4BC00050D65 /* Tallyvision */ = {
 			isa = PBXGroup;
 			children = (
+				FC5322232CC8F79D001BCC3D /* Extensions */,
 				FC4AA0362CF5AD0500A67A74 /* Common */,
 				FC0366D62CE3479E003EBE4A /* UI Models */,
 				FC6E16AD2CDB92510084F8BC /* Views */,
@@ -343,6 +348,14 @@
 				FCC679D62CC8D5B300050D65 /* HomeViewController.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		FCCBAF662CF86B8D000F75BD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		FCD0B4C82CDA0E2B0042E05C /* Supporting Models */ = {
@@ -415,6 +428,7 @@
 				FCC679DA2CC8E01F00050D65 /* SwiftyBeaver */,
 				FCC679DD2CC8E04500050D65 /* SDWebImage */,
 				FCC679DF2CC8E04500050D65 /* SDWebImageMapKit */,
+				FCCBAF6C2CF87A78000F75BD /* AlertKit */,
 			);
 			productName = Tallyvision;
 			productReference = FCC679BC2CC8D4BC00050D65 /* Tallyvision.app */;
@@ -447,6 +461,7 @@
 			packageReferences = (
 				FCC679D92CC8E01F00050D65 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				FCC679DC2CC8E04500050D65 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				FCCBAF6B2CF87A78000F75BD /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = FCC679BD2CC8D4BC00050D65 /* Products */;
 			projectDirPath = "";
@@ -539,6 +554,7 @@
 				FC5C793D2CF750D90016BB87 /* Episode.swift in Sources */,
 				FC5C793F2CF758300016BB87 /* Database+Migrator.swift in Sources */,
 				FC4AA03B2CF5BC9C00A67A74 /* ShowCardsCell.swift in Sources */,
+				FCCBAF6A2CF86BDD000F75BD /* ScheduleService.swift in Sources */,
 				FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */,
 				FC53222D2CC8FB3B001BCC3D /* DiscoverViewController.swift in Sources */,
 				FCEDE2662CEC7FD900B4C0F8 /* ShowCell.swift in Sources */,
@@ -775,6 +791,14 @@
 				minimumVersion = 5.19.7;
 			};
 		};
+		FCCBAF6B2CF87A78000F75BD /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparrowcode/AlertKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -792,6 +816,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FCC679DC2CC8E04500050D65 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImageMapKit;
+		};
+		FCCBAF6C2CF87A78000F75BD /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCCBAF6B2CF87A78000F75BD /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

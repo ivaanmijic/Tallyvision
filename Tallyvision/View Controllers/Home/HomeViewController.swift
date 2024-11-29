@@ -6,12 +6,17 @@
 //
 
 import UIKit
+import AlertKit
 
 class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    var shows = [Show]()
+    var todayShows = [Show]()
+    
+    let tvMazeClient = TVMazeClient()
+    
+    var scheduleService: ScheduleService!
     
     //MARK: - UIComponents
     
@@ -31,10 +36,9 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Task {
-            await fetchEpisodes()
-            setupUI()
-        }
+        setupUI()
+        setupServices()
+        updateUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,28 +74,29 @@ class HomeViewController: UIViewController {
         collectionView.setCollectionViewLayout(layout, animated: true)
     }
     
+    private func setupServices() {
+        scheduleService = ScheduleService(httpClient: tvMazeClient)
+    }
+    
     // MARK: - Testing
    
-    private func fetchEpisodes() async {
-        do {
-            let episodes = try await TVMazeClient.shared.fetchEpisodes()
-            for episode in episodes {
-                shows.append(episode.embeddedShow.show)
-            }
+    private func updateUI() {
+        Task {
+            await updateTodayShows()
             collectionView.reloadData()
-        } catch {
-            log.error("Error fetech today streaming episodes\n\(error)")
         }
     }
     
-    private func fetchShows() async {
+    private func updateTodayShows() async {
         do {
-            let fetchedShows = try await TVMazeClient.shared.fetchShows()
-            let dropedShows = Array(fetchedShows.dropFirst(fetchedShows.count - 7))
-            shows = dropedShows
-            collectionView.reloadData()
+            todayShows = try await scheduleService.fetchTodayShows()
         } catch {
-            log.error("Error fetching shows\n\(error)")
+            AlertKitAPI.present(
+                title: "Error",
+                icon: .error,
+                style: .iOS17AppleMusic,
+                haptic: .error
+            )
         }
     }
     
@@ -108,8 +113,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        case 1: return shows.count
-        case 2: return shows.count
+        case 1: return todayShows.count
+        case 2: return todayShows.count
         default: return 0
         }
     }
@@ -123,7 +128,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 log.error("Unable deque ShowCardCell")
                 return UICollectionViewCell()
             }
-            cell.configure(withShows: shows)
+            cell.configure(withShows: todayShows)
             return cell
             
         default:
@@ -132,7 +137,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 log.error("Unable deque TVShowCell")
                 return UICollectionViewCell()
             }
-            guard let imageUrl = shows[indexPath.row].image.medium else { return cell }
+            guard let imageUrl = todayShows[indexPath.row].image.medium else { return cell }
             cell.configure(withImageURL: imageUrl)
             return cell
         }
