@@ -10,7 +10,6 @@ import GRDB
 struct Show: Codable, FetchableRecord, PersistableRecord {
    
     static let databaseTableName = "tv_shows"
-    static let dateFormatter = DateFormatter.instance
     
     var showId: Int64
     var url: URL
@@ -20,14 +19,14 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
     var genres: [String]
     var status: String
     var averageRuntime: Int64?
-    var premiereDate: Date?
-    var endDate: Date?
+    var premiereDate: String
+    var endDate: String?
     var officialSite: String?
     var schedule: Schedule
     var rating: Double?
     var network: Network?
-    var image: Image
-    var summary: String
+    var image: Image?
+    var summary: String?
    
     
     struct Schedule: Codable {
@@ -59,20 +58,8 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
         self.genres = try container.decode([String].self, forKey: .genres)
         self.status = try container.decode(String.self, forKey: .status)
         self.averageRuntime = try container.decodeIfPresent(Int64.self, forKey: .averageRuntime)
-        
-        if let premiereDateString = try container.decodeIfPresent(String.self, forKey: .premiereDate) {
-            self.premiereDate = Self.dateFormatter.date(from: premiereDateString)
-        } else {
-            self.premiereDate = nil
-        }
-
-        if let endDateString = try container.decodeIfPresent(String.self, forKey: .endDate) {
-            self.endDate = Self.dateFormatter.date(from: endDateString)
-        } else {
-            self.endDate = nil
-        }
-
-       
+        self.premiereDate = try container.decode(String.self, forKey: .premiereDate)
+        self.endDate = try container.decodeIfPresent(String.self, forKey: .endDate)
         self.officialSite = try container.decodeIfPresent(String.self, forKey: .officialSite)
         self.schedule = try container.decode(Schedule.self, forKey: .schedule)
        
@@ -85,8 +72,8 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
         }
         
         self.network = try container.decodeIfPresent(Network.self, forKey: .network)
-        self.image = try container.decode(Image.self, forKey: .image)
-        self.summary = try container.decode(String.self, forKey: .summary)
+        self.image = try container.decodeIfPresent(Image.self, forKey: .image)
+        self.summary = try container.decodeIfPresent(String.self, forKey: .summary)
       
     }
 }

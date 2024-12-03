@@ -15,8 +15,8 @@ struct Season: Codable, FetchableRecord, PersistableRecord {
     var url: URL
     var number: Int64
     var episodeCount: Int64
-    var premiereDate: Date?
-    var endDate: Date?
+    var premiereDate: String?
+    var endDate: String?
     var network: Network?
     var image: Image
     var summary: String?
@@ -34,19 +34,8 @@ struct Season: Codable, FetchableRecord, PersistableRecord {
         self.url = URL(string: urlString)!
         
         self.number = try container.decode(Int64.self, forKey: .number)
-        
-        if let premiereDateString = try container.decodeIfPresent(String.self, forKey: .premiereDate) {
-            self.premiereDate = Show.dateFormatter.date(from: premiereDateString)
-        } else {
-            self.premiereDate = nil
-        }
-        
-        if let endDateString = try container.decodeIfPresent(String.self, forKey: .endDate) {
-            self.endDate = Show.dateFormatter.date(from: endDateString)
-        } else {
-            self.endDate = nil
-        }
-        
+        self.premiereDate = try container.decodeIfPresent(String.self, forKey: .premiereDate)
+        self.endDate = try container.decodeIfPresent(String.self, forKey: .endDate)
         self.network = try container.decodeIfPresent(Network.self, forKey: .network)
         self.image = try container.decode(Image.self, forKey: .image)
         self.summary = try container.decodeIfPresent(String.self, forKey: .summary)

@@ -13,8 +13,8 @@ class HomeViewController: UIViewController {
     // MARK: - Properties
     
     var todayShows = [Show]()
-    
-    let tvMazeClient = TVMazeClient()
+    var recentShows = [Show]()
+    var upcomingShows = [Show]()
     
     var scheduleService: ScheduleService!
     
@@ -75,7 +75,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupServices() {
-        scheduleService = ScheduleService(httpClient: tvMazeClient)
+        scheduleService = ScheduleService(httpClient: TVMazeClient())
     }
     
     // MARK: - Testing
@@ -83,20 +83,33 @@ class HomeViewController: UIViewController {
     private func updateUI() {
         Task {
             await updateTodayShows()
+            await updateRecentShows()
+            await updateUpcomingShows()
             collectionView.reloadData()
         }
     }
     
     private func updateTodayShows() async {
         do {
-            todayShows = try await scheduleService.fetchTodayShows()
+            todayShows = try await scheduleService.getTodaysShows()
         } catch {
-            AlertKitAPI.present(
-                title: "Error",
-                icon: .error,
-                style: .iOS17AppleMusic,
-                haptic: .error
-            )
+            log.error(error)
+        }
+    }
+    
+    private func updateRecentShows() async {
+        do {
+            recentShows = try await scheduleService.getRecentShows()
+        } catch {
+            log.error(error)
+        }
+    }
+    
+    private func updateUpcomingShows() async {
+        do {
+            upcomingShows = try await scheduleService.getUpcomingShows()
+        } catch {
+            log.error(error)
         }
     }
     
@@ -113,8 +126,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        case 1: return todayShows.count
-        case 2: return todayShows.count
+        case 1: return recentShows.count
+        case 2: return upcomingShows.count
         default: return 0
         }
     }
@@ -137,7 +150,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 log.error("Unable deque TVShowCell")
                 return UICollectionViewCell()
             }
-            guard let imageUrl = todayShows[indexPath.row].image.medium else { return cell }
+            let shows = indexPath.section == 1 ? recentShows : upcomingShows
+            guard let imageUrl = shows[indexPath.row].image?.medium else { return cell }
             cell.configure(withImageURL: imageUrl)
             return cell
         }

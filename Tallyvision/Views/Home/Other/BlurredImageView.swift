@@ -63,7 +63,7 @@ class BlurredImageView: UIImageView {
     }
     
     func configure(forShow show: Show) {
-        guard let urlString = show.image.original, let imageURL = URL(string: urlString) else {
+        guard let urlString = show.image?.original, let imageURL = URL(string: urlString) else {
             log.error("ShowCardView: invalid url")
             return
         }

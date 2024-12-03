@@ -14,7 +14,7 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
     var url: URL
     var title: String
     var season: Int64
-    var number: Int64
+    var number: Int64?
     var type: String
     var airDate: String?
     var airTime: String?
@@ -22,16 +22,15 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
     var rating: Double?
     var image: Image?
     var summary: String?
-    var embeddedShow: EmbeddedShow
+    var show: Show
     
     struct EmbeddedShow: Codable {
         let show: Show
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, url, season, number, type, airDate, airTime, runtime, rating, image, summary
+        case id, url, season, number, type, airDate, airTime, runtime, rating, image, summary, show
         case title = "name"
-        case embeddedShow = "_embedded"
     }
     
     init(from decoder: Decoder) throws {
@@ -44,7 +43,7 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
         
         title = try container.decode(String.self, forKey: .title)
         season = try container.decode(Int64.self, forKey: .season)
-        number = try container.decode(Int64.self, forKey: .number)
+        number = try container.decodeIfPresent(Int64.self, forKey: .number)
         type = try container.decode(String.self, forKey: .type)
         
         airDate = try container.decodeIfPresent(String.self, forKey: .airDate)
@@ -61,7 +60,7 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
         
         image = try container.decodeIfPresent(Image.self, forKey: .image)
         summary = try container.decodeIfPresent(String.self, forKey: .summary)
-        embeddedShow = try container.decode(EmbeddedShow.self, forKey: .embeddedShow)
+        show = try container.decode(Show.self, forKey: .show)
         
     }
    
