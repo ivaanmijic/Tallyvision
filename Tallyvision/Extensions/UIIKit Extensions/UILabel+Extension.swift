@@ -9,26 +9,26 @@ import UIKit
 
 extension UILabel {
     
-    static func screenTitle(withText text: String) -> UILabel {
+    static func title(withText text: String = "", fontSize: CGFloat = 36) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = .textColor
-        label.font = UIFont(name: "Montserrat-Bold", size: 48)
+        label.font = UIFont(name: "RedHatDisplay-Bold", size: fontSize)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
+        return label
+    }
+   
+    static func paragraph() -> UILabel {
+        let label = UILabel()
+        label.textColor = .textColor.withAlphaComponent(0.7)
+        label.font = UIFont(name: "RedHatDisplay-Regular", size: 16)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
         return label
     }
     
-    static func paragraph(withText text: String) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.font = UIFont(name: "Montserrat-Regular", size: 16)
-        label.textColor = .textColor
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.sizeToFit()
-        return label
-    }
     
 }

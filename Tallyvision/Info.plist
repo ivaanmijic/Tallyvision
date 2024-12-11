@@ -21,9 +21,10 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Montserrat-ExtraBold.ttf</string>
-		<string>Montserrat-Bold.ttf</string>
-		<string>Montserrat-Regular.ttf</string>
+		<string>RedHatDisplay-Bold.ttf</string>
+		<string>RedHatDisplay-SemiBoldttf</string>
+		<string>RedHatDisplay-Mediumttf</string>
+		<string>RedHatDisplay-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

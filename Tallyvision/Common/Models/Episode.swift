@@ -22,15 +22,24 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
     var rating: Double?
     var image: Image?
     var summary: String?
-    var show: Show
+    
+    var _embeddedShow: EmbeddedShow?
+    var _show: Show?
+    
+    var show: Show? {
+        guard let show = _show else { return  _embeddedShow?.show }
+        return show
+    }
     
     struct EmbeddedShow: Codable {
         let show: Show
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, url, season, number, type, airDate, airTime, runtime, rating, image, summary, show
+        case id, url, season, number, type, airDate, airTime, runtime, rating, image, summary
         case title = "name"
+        case _show = "show"
+        case _embeddedShow = "_embedded"
     }
     
     init(from decoder: Decoder) throws {
@@ -60,7 +69,9 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
         
         image = try container.decodeIfPresent(Image.self, forKey: .image)
         summary = try container.decodeIfPresent(String.self, forKey: .summary)
-        show = try container.decode(Show.self, forKey: .show)
+       
+        _embeddedShow = try container.decodeIfPresent(EmbeddedShow.self, forKey: ._embeddedShow)
+        _show = try container.decodeIfPresent(Show.self, forKey: ._show)
         
     }
    

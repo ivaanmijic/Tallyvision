@@ -10,7 +10,7 @@ import UIKit
 class DiscoverViewController: UIViewController {
 
     lazy var titleLabel: UILabel = {
-        return UILabel.screenTitle(withText: "DISCOVER").forAutoLayout()
+        return UILabel.title(withText: "DISCOVER").forAutoLayout()
     }()
     
     //MARK: - Lifecycle

@@ -15,6 +15,8 @@ class HomeViewController: UIViewController {
     var todayShows = [Show]()
     var recentShows = [Show]()
     var upcomingShows = [Show]()
+   
+    private var selectedShow: Show?
     
     var scheduleService: ScheduleService!
     
@@ -29,7 +31,7 @@ class HomeViewController: UIViewController {
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
         
-        return collectionView.forAutoLayout()
+        return collectionView.forAutoLayout().forAutoLayout()
     }()
     
     //MARK: - Lifecycle
@@ -164,12 +166,33 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         switch indexPath.section {
         case 0: header.configure(title: "Today, ", date: Date())
-        case 1: header.configure(title: "Recent shows", date: nil)
-        case 2: header.configure(title: "Comming soon")
+        case 1: header.configure(title: "Just released", date: nil)
+        case 2: header.configure(title: "Coming soon")
         default: break
         }
             
         return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        switch indexPath.section {
+        case 1: selectedShow = recentShows[indexPath.row]
+        case 2: selectedShow = upcomingShows[indexPath.row]
+        default: break
+        }
+        
+        guard let selectedShow = selectedShow else { return }
+        
+        presentDetails(for: selectedShow)
+        
+    }
+    
+    private func presentDetails(for show: Show) {
+        let showDetailsVC = ShowDetailsViewController()
+        showDetailsVC.hidesBottomBarWhenPushed = true
+        showDetailsVC.show = show
+        navigationController?.pushViewController(showDetailsVC, animated: true)
     }
     
 }

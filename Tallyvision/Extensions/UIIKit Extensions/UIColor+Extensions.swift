@@ -9,16 +9,20 @@ import UIKit
 
 extension UIColor {
     
-    static var brightYellow: UIColor {
-       getColor(red: 254, green: 206, blue: 47, alpha: 1)
+    static var baseYellow: UIColor {
+       getColor(red: 255, green: 199, blue: 0, alpha: 1)
     }
     
-    static var darkScreenColor: UIColor {
-        getColor(red: 7, green: 8, blue: 15, alpha: 1)
+    static var appBlack: UIColor {
+        getColor(red: 2, green: 9, blue: 19, alpha: 1)
+    }
+    
+    static var appBlue: UIColor {
+        getColor(red: 17, green: 38, blue: 57, alpha: 1)
     }
     
     static var screenColor: UIColor {
-        getColor(darkColor: .darkScreenColor, lightColor: .white)
+        getColor(darkColor: .appBlack, lightColor: .white)
     }
     
     static var textColor: UIColor {
@@ -26,7 +30,7 @@ extension UIColor {
     }
     
     static var titleColor: UIColor {
-        getColor(darkColor: .brightYellow, lightColor: .black)
+        getColor(darkColor: .baseYellow, lightColor: .black)
     }
    
     static func getColor(darkColor: UIColor, lightColor: UIColor) -> UIColor {

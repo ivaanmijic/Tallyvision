@@ -27,6 +27,12 @@ class TVMazeClient {
         let url = URL(string: "https://api.tvmaze.com/schedule?date=\(dateString)&country=US")!
         return try await fetchData(from: url)
     }
+    
+    func fetchWebEpisodes(forDate date: Date) async throws -> [Episode] {
+        let dateString = Self.dateFormatter.string(from: date)
+        let url = URL(string: "https://api.tvmaze.com/schedule/web?date=\(dateString)&country=US")!
+        return try await fetchData(from: url)
+    }
    
     private func fetchData<Data: Decodable>(from url: URL) async throws -> Data {
         do {

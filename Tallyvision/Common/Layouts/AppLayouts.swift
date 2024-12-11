@@ -10,7 +10,6 @@ import UIKit
 
 class AppLayouts {
     static let shared = AppLayouts()
-    private let imageRatio: CGFloat = 295/210
    
     func showCardsSection() -> NSCollectionLayoutSection {
         let screenWidth = UIScreen.main.bounds.width
@@ -18,7 +17,7 @@ class AppLayouts {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(screenWidth), heightDimension: .absolute(screenWidth * imageRatio + 40))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(screenWidth), heightDimension: .absolute(screenWidth * AppConstants.posterImageRatio + 40))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -31,7 +30,7 @@ class AppLayouts {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(120 * imageRatio))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(120 * AppConstants.posterImageRatio))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         

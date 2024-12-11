@@ -1,15 +1,22 @@
 //
-//  UIViewController+Extensions.swift
+//  AppConstants.swift
 //  Tallyvision
 //
-//  Created by Ivan Mijic on 20. 11. 2024..
+//  Created by Ivan Mijic on 4. 12. 2024..
 //
 
+import Foundation
 import UIKit
 
-extension UIViewController {
+class AppConstants {
+    
+    static let bacgroundImageRatio: CGFloat = 16 / 9
+    static let posterImageRatio: CGFloat = 295/210
+    
+    static let screenHeight: CGFloat = UIScreen.main.bounds.height
+    static let screenWidth: CGFloat = UIScreen.main.bounds.width
    
-    var topBarHeight: CGFloat {
+    static func topBarHeight(for navigationController: UINavigationController?) -> CGFloat {
         let statusBarHeight: CGFloat = {
             if #available(iOS 13.0, *) {
                 return UIApplication.shared.connectedScenes

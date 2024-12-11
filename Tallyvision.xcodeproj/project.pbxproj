@@ -29,6 +29,17 @@
 		FC5C793F2CF758300016BB87 /* Database+Migrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C793E2CF758300016BB87 /* Database+Migrator.swift */; };
 		FC5C79412CF759BE0016BB87 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C79402CF759BE0016BB87 /* Rating.swift */; };
 		FC6459942CFDFEB000809245 /* Date+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6459932CFDFEB000809245 /* Date+Operators.swift */; };
+		FCA028A92D084315002FC29B /* GenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA028A82D084315002FC29B /* GenresView.swift */; };
+		FCA028AB2D084341002FC29B /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA028AA2D084341002FC29B /* IntroductionView.swift */; };
+		FCA028AD2D0853B5002FC29B /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA028AC2D0853B5002FC29B /* PaddingLabel.swift */; };
+		FCB2C07C2D0049E100456CF4 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB2C07B2D0049E100456CF4 /* AppConstants.swift */; };
+		FCB2C0802D009A0E00456CF4 /* RedHatDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB2C07F2D009A0D00456CF4 /* RedHatDisplay-Bold.ttf */; };
+		FCB2C0842D009A2200456CF4 /* RedHatDisplay-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB2C0812D009A2200456CF4 /* RedHatDisplay-SemiBold.ttf */; };
+		FCB2C0852D009A2200456CF4 /* RedHatDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB2C0822D009A2200456CF4 /* RedHatDisplay-Medium.ttf */; };
+		FCB2C0862D009A2200456CF4 /* RedHatDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB2C0832D009A2200456CF4 /* RedHatDisplay-Regular.ttf */; };
+		FCB2C08A2D009DB300456CF4 /* DecoratedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB2C0892D009DB300456CF4 /* DecoratedLabel.swift */; };
+		FCBB94912CFF028A0097B766 /* ShowDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBB94902CFF028A0097B766 /* ShowDetailsViewController.swift */; };
+		FCBB94942CFF11D70097B766 /* TransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBB94932CFF11D70097B766 /* TransparentButton.swift */; };
 		FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */; };
 		FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */; };
 		FCC679C92CC8D4BE00050D65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCC679C82CC8D4BE00050D65 /* Assets.xcassets */; };
@@ -36,12 +47,8 @@
 		FCC679DB2CC8E01F00050D65 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DA2CC8E01F00050D65 /* SwiftyBeaver */; };
 		FCC679DE2CC8E04500050D65 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DD2CC8E04500050D65 /* SDWebImage */; };
 		FCC679E02CC8E04500050D65 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DF2CC8E04500050D65 /* SDWebImageMapKit */; };
-		FCCA8E422CEDD10F005866E2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA8E412CEDD10F005866E2 /* UIViewController+Extensions.swift */; };
 		FCCBAF6A2CF86BDD000F75BD /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */; };
 		FCCBAF6D2CF87A78000F75BD /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCCBAF6C2CF87A78000F75BD /* AlertKit */; };
-		FCD0B4C22CDA0D360042E05C /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C12CDA0D360042E05C /* Montserrat-Bold.ttf */; };
-		FCD0B4C42CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C32CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf */; };
-		FCD0B4C62CDA0D530042E05C /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCD0B4C52CDA0D530042E05C /* Montserrat-Regular.ttf */; };
 		FCD0B4CA2CDA0E3A0042E05C /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4C92CDA0E3A0042E05C /* Image.swift */; };
 		FCD0B4CC2CDA0E8F0042E05C /* Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4CB2CDA0E8F0042E05C /* Season.swift */; };
 		FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4CD2CDA17840042E05C /* Network.swift */; };
@@ -79,17 +86,24 @@
 		FC5C793E2CF758300016BB87 /* Database+Migrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Database+Migrator.swift"; sourceTree = "<group>"; };
 		FC5C79402CF759BE0016BB87 /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		FC6459932CFDFEB000809245 /* Date+Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Operators.swift"; sourceTree = "<group>"; };
+		FCA028A82D084315002FC29B /* GenresView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenresView.swift; sourceTree = "<group>"; };
+		FCA028AA2D084341002FC29B /* IntroductionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
+		FCA028AC2D0853B5002FC29B /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		FCB2C07B2D0049E100456CF4 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		FCB2C07F2D009A0D00456CF4 /* RedHatDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Bold.ttf"; sourceTree = "<group>"; };
+		FCB2C0812D009A2200456CF4 /* RedHatDisplay-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-SemiBold.ttf"; sourceTree = "<group>"; };
+		FCB2C0822D009A2200456CF4 /* RedHatDisplay-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Medium.ttf"; sourceTree = "<group>"; };
+		FCB2C0832D009A2200456CF4 /* RedHatDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Regular.ttf"; sourceTree = "<group>"; };
+		FCB2C0892D009DB300456CF4 /* DecoratedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratedLabel.swift; sourceTree = "<group>"; };
+		FCBB94902CFF028A0097B766 /* ShowDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsViewController.swift; sourceTree = "<group>"; };
+		FCBB94932CFF11D70097B766 /* TransparentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
 		FCC679BC2CC8D4BC00050D65 /* Tallyvision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tallyvision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FCC679C82CC8D4BE00050D65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCC679CD2CC8D4BE00050D65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCC679D62CC8D5B300050D65 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		FCCA8E412CEDD10F005866E2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
-		FCD0B4C12CDA0D360042E05C /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
-		FCD0B4C32CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
-		FCD0B4C52CDA0D530042E05C /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		FCD0B4C92CDA0E3A0042E05C /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		FCD0B4CB2CDA0E8F0042E05C /* Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Season.swift; sourceTree = "<group>"; };
 		FCD0B4CD2CDA17840042E05C /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -154,6 +168,7 @@
 		FC4AA0362CF5AD0500A67A74 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FCB2C07A2D0049C000456CF4 /* Constants */,
 				FCD0B4D12CDA29230042E05C /* Networking */,
 				FCF77A222CD0DF0900456132 /* Persistence */,
 				FCCBAF662CF86B8D000F75BD /* Services */,
@@ -207,7 +222,6 @@
 				FC5322322CC91843001BCC3D /* UIColor+Extensions.swift */,
 				FC53223B2CC92DA2001BCC3D /* UIView+Extensions.swift */,
 				FC5322402CC933EB001BCC3D /* UILabel+Extension.swift */,
-				FCCA8E412CEDD10F005866E2 /* UIViewController+Extensions.swift */,
 			);
 			path = "UIIKit Extensions";
 			sourceTree = "<group>";
@@ -239,9 +253,10 @@
 		FC5322342CC91CB7001BCC3D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				FCD0B4C12CDA0D360042E05C /* Montserrat-Bold.ttf */,
-				FCD0B4C32CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf */,
-				FCD0B4C52CDA0D530042E05C /* Montserrat-Regular.ttf */,
+				FCB2C0822D009A2200456CF4 /* RedHatDisplay-Medium.ttf */,
+				FCB2C0832D009A2200456CF4 /* RedHatDisplay-Regular.ttf */,
+				FCB2C0812D009A2200456CF4 /* RedHatDisplay-SemiBold.ttf */,
+				FCB2C07F2D009A0D00456CF4 /* RedHatDisplay-Bold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -285,9 +300,38 @@
 		FC6E16AD2CDB92510084F8BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FCBB94922CFF11C00097B766 /* Common */,
 				FC4B3BC12CE48BF90055ECAF /* Home */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		FCB2C07A2D0049C000456CF4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				FCB2C07B2D0049E100456CF4 /* AppConstants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		FCBB948F2CFF025F0097B766 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FCBB94902CFF028A0097B766 /* ShowDetailsViewController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		FCBB94922CFF11C00097B766 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FCBB94932CFF11D70097B766 /* TransparentButton.swift */,
+				FCB2C0892D009DB300456CF4 /* DecoratedLabel.swift */,
+				FCA028A82D084315002FC29B /* GenresView.swift */,
+				FCA028AA2D084341002FC29B /* IntroductionView.swift */,
+				FCA028AC2D0853B5002FC29B /* PaddingLabel.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		FCC679B32CC8D4BC00050D65 = {
@@ -337,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				FC5322212CC8F4B1001BCC3D /* MainTabBarController.swift */,
+				FCBB948F2CFF025F0097B766 /* Common */,
 				FCC679D82CC8D60B00050D65 /* Home */,
 				FC5322272CC8FA54001BCC3D /* Discover */,
 				FC5322282CC8FA5C001BCC3D /* Watchlist */,
@@ -480,10 +525,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCD0B4C62CDA0D530042E05C /* Montserrat-Regular.ttf in Resources */,
-				FCD0B4C22CDA0D360042E05C /* Montserrat-Bold.ttf in Resources */,
-				FCD0B4C42CDA0D4A0042E05C /* Montserrat-ExtraBold.ttf in Resources */,
+				FCB2C0842D009A2200456CF4 /* RedHatDisplay-SemiBold.ttf in Resources */,
+				FCB2C0862D009A2200456CF4 /* RedHatDisplay-Regular.ttf in Resources */,
+				FCB2C0852D009A2200456CF4 /* RedHatDisplay-Medium.ttf in Resources */,
 				FCC679C92CC8D4BE00050D65 /* Assets.xcassets in Resources */,
+				FCB2C0802D009A0E00456CF4 /* RedHatDisplay-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCBB94942CFF11D70097B766 /* TransparentButton.swift in Sources */,
 				FCD0B4CC2CDA0E8F0042E05C /* Season.swift in Sources */,
 				FCF77A202CD0D12D00456132 /* Show.swift in Sources */,
 				FC5C79412CF759BE0016BB87 /* Rating.swift in Sources */,
@@ -543,11 +590,14 @@
 				FC5322412CC933EB001BCC3D /* UILabel+Extension.swift in Sources */,
 				FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */,
 				FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */,
+				FCBB94912CFF028A0097B766 /* ShowDetailsViewController.swift in Sources */,
 				FCD7CFFC2CEB7E4800A3B18F /* DotsIndicatorView.swift in Sources */,
+				FCB2C07C2D0049E100456CF4 /* AppConstants.swift in Sources */,
 				FC5C79342CF6FDC90016BB87 /* SectionHeaderView.swift in Sources */,
 				FCD0B4CA2CDA0E3A0042E05C /* Image.swift in Sources */,
 				FC53223C2CC92DA2001BCC3D /* UIView+Extensions.swift in Sources */,
 				FC5322262CC8F817001BCC3D /* UIImage+Resize.swift in Sources */,
+				FCA028AB2D084341002FC29B /* IntroductionView.swift in Sources */,
 				FC0366D52CE33DFF003EBE4A /* ShowCardView.swift in Sources */,
 				FC5322312CC8FB5D001BCC3D /* StatisticsViewController.swift in Sources */,
 				FCD0B4D52CDA29630042E05C /* NetworkError.swift in Sources */,
@@ -564,9 +614,11 @@
 				FCC679D72CC8D5B300050D65 /* HomeViewController.swift in Sources */,
 				FC0366D82CE347BC003EBE4A /* ShowCards.swift in Sources */,
 				FC6459942CFDFEB000809245 /* Date+Operators.swift in Sources */,
+				FCB2C08A2D009DB300456CF4 /* DecoratedLabel.swift in Sources */,
 				FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */,
 				FC5322332CC91843001BCC3D /* UIColor+Extensions.swift in Sources */,
-				FCCA8E422CEDD10F005866E2 /* UIViewController+Extensions.swift in Sources */,
+				FCA028A92D084315002FC29B /* GenresView.swift in Sources */,
+				FCA028AD2D0853B5002FC29B /* PaddingLabel.swift in Sources */,
 				FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */,
 				FC5C79372CF704E30016BB87 /* DateFormatter+Extension.swift in Sources */,
 				FCF77A242CD0DF2000456132 /* Database.swift in Sources */,

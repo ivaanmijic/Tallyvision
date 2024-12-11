@@ -40,9 +40,9 @@ class ScheduleService {
         let episodes = try await fetchEpisodes(forDaysToFetch: daysToFetch, startingFrom: direction)
         
         for episode in episodes {
-            let show = episode.show
             
-            guard dates.contains(show.premiereDate),
+            guard let show = episode.show,
+                  dates.contains(show.premiereDate),
                   !shows.contains(where: { $0.showId == show.showId })
             else { continue }
             
@@ -61,12 +61,24 @@ class ScheduleService {
                     try await fetchEpisodes(forDate: date)
                 }
             }
+            
             return try await group.reduce(into: []) { $0 += $1 }
         }
         
     }
     
     private func fetchEpisodes(forDate date: Date) async throws -> [Episode] {
-        return try await httpClient.fetchEpisodes(forDate: date)
+        
+        return try await withThrowingTaskGroup(of: [Episode].self) { group in
+            group.addTask { [self] in
+                try await httpClient.fetchEpisodes(forDate: date)
+            }
+            
+            group.addTask { [self] in
+                try await httpClient.fetchWebEpisodes(forDate: date)
+            }
+            
+            return try await group.reduce(into: []) { $0 += $1 }
+        }
     }
 }

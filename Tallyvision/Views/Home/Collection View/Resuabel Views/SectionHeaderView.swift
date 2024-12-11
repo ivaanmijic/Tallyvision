@@ -31,7 +31,7 @@ class SectionHeaderView: UICollectionReusableView {
             let attributedString = NSMutableAttributedString()
             
             let titleAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont(name: "Montserrat-Bold", size: 24)!,
+                .font: UIFont(name: "RedHatDisplay-Bold", size: 24)!,
                 .foregroundColor: UIColor.textColor
             ]
             let titleAttributed = NSAttributedString(string: title, attributes: titleAttributes)
@@ -43,7 +43,7 @@ class SectionHeaderView: UICollectionReusableView {
                 let (day, month) = DateFormatter.dayAndMont(fromDate: date)
                 let dateString = "\(day) " + month
                 let dateAttributes: [NSAttributedString.Key: Any] = [
-                    .font: UIFont(name: "Montserrat-Bold", size: 20)!,
+                    .font: UIFont(name: "RedHatDisplay-Bold", size: 20)!,
                     .foregroundColor: UIColor.textColor.withAlphaComponent(0.7)
                 ]
                 let dateAttributed = NSAttributedString(string: dateString.uppercased(), attributes: dateAttributes)

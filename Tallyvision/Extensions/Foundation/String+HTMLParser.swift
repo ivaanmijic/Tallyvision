@@ -10,7 +10,7 @@ import UIKit
 
 extension String {
     
-    func parseHTMLString(withFont font: UIFont) -> NSAttributedString? {
+    func parseHTMLString() -> String? {
         guard let data = self.data(using: .utf8) else { return nil }
         
         do {
@@ -20,13 +20,7 @@ extension String {
                           .characterEncoding: String.Encoding.utf8.rawValue],
                 documentAttributes: nil)
             
-            attributedString.addAttribute(
-                .font,
-                value: font,
-                range: NSRange(location: 0, length: attributedString.length)
-            )
-            
-            return attributedString
+            return attributedString.string
         } catch {
             log.error("Failed to parse HTML: \(error)")
             return nil

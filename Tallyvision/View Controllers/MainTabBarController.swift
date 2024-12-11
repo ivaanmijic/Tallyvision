@@ -37,15 +37,15 @@ class MainTabBarController: UITabBarController {
     }
     
     private func setupUI() {
-        tabBar.backgroundColor = .screenColor
-        tabBar.tintColor = .brightYellow
+        tabBar.tintColor = .baseYellow
+        tabBar.backgroundColor = .appBlack
         tabBar.unselectedItemTintColor = .textColor
         enableBlurEffect()
         log.info("Main Tab Bar Controller did Load")
     }
     
     private func enableBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .prominent)
+        let blurEffect = UIBlurEffect(style: .dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = tabBar.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
