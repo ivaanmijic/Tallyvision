@@ -14,7 +14,7 @@ class ShowCardsCell: UICollectionViewCell {
     
     private var initialCardCenter: CGPoint = .zero
     private var currentShowIndex = 0
-    var showCards: ShowCards?
+//    var showCards: ShowCards?
     
     // MARK: UI Component
     
@@ -68,7 +68,7 @@ class ShowCardsCell: UICollectionViewCell {
     }
     
     func configure(withShows shows: [Show]) {
-        showCards = ShowCards(shows: shows)
+//        showCards = ShowCards(shows: shows)
         configureDotsIndicator(count: shows.count)
     }
     
@@ -145,10 +145,10 @@ class ShowCardsCell: UICollectionViewCell {
     private func updateShowIndex(forDirection direction: CGFloat) {
         if direction > 0 {
             currentShowIndex -= 1
-            showCards?.goToNextShow()
+//            showCards?.goToNextShow()
         } else {
             currentShowIndex += 1
-            showCards?.goToPrevShow()
+//            showCards?.goToPrevShow()
         }
     }
     
@@ -165,8 +165,8 @@ class ShowCardsCell: UICollectionViewCell {
 
     
     private func updateRecommendedShow() {
-        guard let currentShow = showCards?.currentShow() else { return }
-        showCardView.configure(forShow: currentShow)
+//        guard let currentShow = showCards?.currentShow() else { return }
+//        showCardView.configure(forShow: currentShow)
         dotsIndicator.highlightDot(atIndex: currentShowIndex)
         resetCardPosition()
     }
