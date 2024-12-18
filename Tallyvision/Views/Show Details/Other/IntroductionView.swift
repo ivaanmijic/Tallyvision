@@ -40,7 +40,7 @@ class IntroductionView: UIView {
     }
     
     func setText(_ text: String) {
-        introduction.text = text.parseHTMLString()
+        introduction.text = text.stripHTML()
     }
     
 }

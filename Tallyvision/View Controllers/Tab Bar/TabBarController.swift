@@ -7,12 +7,13 @@
 
 import UIKit
 
-class MainTabBarController: UITabBarController {
+class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewControllers()
-        setupUI()
+        setupTabBar()
+        configureRoundedTabBar()
     }
     
     private func setupViewControllers() {
@@ -36,26 +37,12 @@ class MainTabBarController: UITabBarController {
         return navigationController
     }
     
-    private func setupUI() {
+    private func setupTabBar() {
         tabBar.tintColor = .baseYellow
-        tabBar.backgroundColor = .appBlack
         tabBar.unselectedItemTintColor = .textColor
-        enableBlurEffect()
-        log.info("Main Tab Bar Controller did Load")
-    }
-    
-    private func enableBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = tabBar.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+        tabBar.backgroundImage = UIImage()
+        tabBar.shadowImage = UIImage()
         tabBar.backgroundColor = .clear
-        tabBar.addSubview(blurEffectView)
-        tabBar.sendSubviewToBack(blurEffectView)
     }
-    
-    // MARK: - Navigation
     
 }
-   

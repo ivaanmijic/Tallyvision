@@ -79,9 +79,9 @@ class HomeViewController: UIViewController {
     private func setupServices() {
         scheduleService = ScheduleService(httpClient: TVMazeClient())
     }
-    
-    // MARK: - Testing
    
+    // MARK: UI Update
+    
     private func updateUI() {
         Task {
             await updateTodayShows()
@@ -127,7 +127,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return 1
+        case 0: return todayShows.count
         case 1: return recentShows.count
         case 2: return upcomingShows.count
         default: return 0
@@ -135,28 +135,22 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-        
-        case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCardsCell.identifier, for: indexPath)
-                    as? ShowCardsCell else {
-                log.error("Unable deque ShowCardCell")
-                return UICollectionViewCell()
-            }
-            cell.configure(withShows: todayShows)
-            return cell
-            
-        default:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCell.identifier, for: indexPath)
-                    as? ShowCell else {
-                log.error("Unable deque TVShowCell")
-                return UICollectionViewCell()
-            }
-            let shows = indexPath.section == 1 ? recentShows : upcomingShows
-            guard let imageUrl = shows[indexPath.row].image?.medium else { return cell }
-            cell.configure(withImageURL: imageUrl)
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCell.identifier, for: indexPath)
+                as? ShowCell else {
+            log.error("Unable deque TVShowCell")
+            return UICollectionViewCell()
         }
+        var shows: [Show]
+        switch indexPath.section {
+        case 0: shows = todayShows
+        case 1: shows = recentShows
+        case 2: shows = upcomingShows
+        default: fatalError("Invalid section")
+        }
+        guard let image = shows[indexPath.row].image else { return cell }
+        guard let imageUrl = indexPath.section == 0 ? image.original : image.medium else { return cell }
+        cell.configure(withImageURL: imageUrl)
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -177,6 +171,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         switch indexPath.section {
+        case 0: selectedShow = todayShows[indexPath.row]
         case 1: selectedShow = recentShows[indexPath.row]
         case 2: selectedShow = upcomingShows[indexPath.row]
         default: break
@@ -189,9 +184,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     private func presentDetails(for show: Show) {
-        let showDetailsVC = ShowDetailsViewController()
+        let showDetailsVC = ShowDetailsViewController(show: show)
         showDetailsVC.hidesBottomBarWhenPushed = true
-        showDetailsVC.show = show
         navigationController?.pushViewController(showDetailsVC, animated: true)
     }
     

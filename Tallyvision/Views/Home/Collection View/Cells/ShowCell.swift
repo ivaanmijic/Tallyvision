@@ -17,9 +17,9 @@ class ShowCell: UICollectionViewCell {
         }
     }
     
-    private lazy var imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.layer.masksToBounds = true
         return imageView.forAutoLayout()
@@ -38,9 +38,9 @@ class ShowCell: UICollectionViewCell {
     private func setupUI() {
         backgroundColor = .clear
         addSubview(imageView)
-        imageView.pin(to: self)
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
+        imageView.pin(to: self)
     }
     
     private func setupImageView() {
@@ -51,6 +51,5 @@ class ShowCell: UICollectionViewCell {
     func configure(withImageURL imageURL: String) {
         self.imageURL = imageURL
     }
-
     
 }

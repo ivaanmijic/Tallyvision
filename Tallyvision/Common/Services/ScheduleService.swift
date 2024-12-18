@@ -19,8 +19,19 @@ class ScheduleService {
     
     func getTodaysShows() async throws -> [Show] {
         let todayEpisodes = try await fetchEpisodes(forDate: currentDate)
+        var seenShowIds = Set<Int64>()
+       
         return todayEpisodes.compactMap { $0.show }
-            .filter {$0.type != "News" && $0.rating ?? 0.0 >= 7.2 }
+            .filter {$0.type != "News" && $0.rating ?? 0.0 > 7.0 }
+            .filter { show in
+                if seenShowIds.contains(show.showId) {
+                    return false
+                }
+                else {
+                    seenShowIds.insert(show.showId)
+                    return true
+                }
+            }
     }
     
     func getRecentShows() async throws -> [Show] {
@@ -58,7 +69,7 @@ class ScheduleService {
         return try await withThrowingTaskGroup(of: [Episode].self) { group in
             for date in dates {
                 group.addTask { [self] in
-                    try await fetchEpisodes(forDate: date)
+                    return try await fetchEpisodes(forDate: date)
                 }
             }
             
@@ -71,11 +82,11 @@ class ScheduleService {
         
         return try await withThrowingTaskGroup(of: [Episode].self) { group in
             group.addTask { [self] in
-                try await httpClient.fetchEpisodes(forDate: date)
+                return try await httpClient.fetchEpisodes(forDate: date)
             }
             
             group.addTask { [self] in
-                try await httpClient.fetchWebEpisodes(forDate: date)
+                return try await httpClient.fetchWebEpisodes(forDate: date)
             }
             
             return try await group.reduce(into: []) { $0 += $1 }

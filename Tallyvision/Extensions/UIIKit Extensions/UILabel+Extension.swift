@@ -26,7 +26,6 @@ extension UILabel {
         label.font = UIFont(name: "RedHatDisplay-Regular", size: 16)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.sizeToFit()
         return label
     }
     

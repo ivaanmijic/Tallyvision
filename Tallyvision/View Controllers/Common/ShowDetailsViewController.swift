@@ -11,13 +11,30 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
-    var show: Show? {
-        didSet {
-            updateImage()
-        }
+    var show: Show
+    var showCast = [ShowCast]()
+    
+    var castService: CastService!
+    
+    // MARK: - Constructors
+    init(show: Show) {
+        self.show = show
+        super.init(nibName: nil, bundle: nil)
+        self.updateImage()
+        log.info(show.showId)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - UI Components
+    
+    let cell: UICollectionViewCell = {
+        let cell = UICollectionViewCell()
+        cell.backgroundColor = .appBlack
+        return cell
+    }()
     
     lazy var backButton: TransparentButton = {
         let button = TransparentButton(type: .custom)
@@ -28,46 +45,23 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     }()
     
     lazy var backgroundImage = UIImageView().forAutoLayout()
-    lazy var scrollView = UIScrollView().forAutoLayout()
     
-    lazy var stackView: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .vertical
-        return sv.forAutoLayout()
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "mask")
+        collectionView.register(
+            ShowMetadataView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: ShowMetadataView.reuseIdentifier
+        )
+        
+        return collectionView.forAutoLayout()
     }()
     
     lazy var transparentMaskView = UIView().forAutoLayout()
-    lazy var contentView = UIView().forAutoLayout()
-    
-    lazy var contentStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.spacing = 16
-        view.alignment = .top
-        view.distribution = .fill
-        view.isLayoutMarginsRelativeArrangement = true
-        view.layoutMargins = UIEdgeInsets(top: 40, left: 40, bottom: 40, right: 40)
-        view.layer.cornerRadius = 40
-        view.clipsToBounds = true
-        view.backgroundColor = .appBlack
-        return view.forAutoLayout()
-    }()
-   
-    lazy var horizontalInfoView = UIView().forAutoLayout()
-    
-    lazy var horizontalInfoStackView: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.spacing = 10
-        sv.alignment = .leading
-        return sv.forAutoLayout()
-    }()
-   
-    lazy var ratingLabel = DecoratedLabel().forAutoLayout()
-    lazy var dateLabel = DecoratedLabel().forAutoLayout()
-    lazy var runtimeLabel = DecoratedLabel().forAutoLayout()
-    
-    lazy var titleLable: UILabel = .title(fontSize: 32).forAutoLayout()
     
     lazy var saveButton: UIButton = {
         let button = UIButton()
@@ -80,17 +74,16 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         button.addTarget(self, action: #selector(addToFavorites), for: .touchUpInside)
         return button.forAutoLayout()
     }()
-  
-    lazy var introductionView = IntroductionView().forAutoLayout()
-    lazy var genresView = GenresView().forAutoLayout()
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setupUI()
+        setupServices()
+        updateUI()
     }
+    
     
     private func setupNavigationBar() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -103,9 +96,18 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     private func setupUI() {
         view.backgroundColor = .appBlack
         setupBackgroundImage()
-        setupScrollableStackView()
-        setupStackView()
+        configureCollectionView()
+        configureCompositionalLayout()
         setupSaveButton()
+    }
+    
+    private func setupServices() {
+        castService = CastService(httpClinet: TVMazeClient())
+    }
+    
+    // TODO: update Actors section
+    private func updateUI() {
+        
     }
     
     private func setupBackgroundImage() {
@@ -117,75 +119,6 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
             backgroundImage.heightAnchor.constraint(equalToConstant: AppConstants.screenWidth * AppConstants.posterImageRatio)
         ])
     }
-   
-    private func setupScrollableStackView() {
-        scrollView.showsVerticalScrollIndicator = false
-        view.addSubview(scrollView)
-        scrollView.pin(to: view)
-   
-        scrollView.addSubview(stackView)
-        stackView.pin(to: scrollView)
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-    }
-    
-    private func setupStackView() {
-        stackView.addArrangedSubview(transparentMaskView)
-        NSLayoutConstraint.activate([
-            transparentMaskView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            transparentMaskView.heightAnchor.constraint(equalToConstant: AppConstants.screenHeight * 0.38),
-        ])
-        
-        stackView.addArrangedSubview(contentView)
-        setupContentView()
-    }
-   
-    private func setupContentView() {
-        contentView.addSubview(contentStackView)
-        contentStackView.pin(to: contentView)
-       
-        contentStackView.addArrangedSubview(horizontalInfoView)
-        setupHorizonatalInfoView()
-        
-        if let title = show?.title {
-            titleLable.text = title
-            contentStackView.addArrangedSubview(titleLable)
-        }
-        
-        if let summary = show?.summary {
-            contentStackView.addArrangedSubview(introductionView)
-            introductionView.setText(summary)
-        }
-        
-        if let genres = show?.genres, genres.count > 0 {
-            contentStackView.addArrangedSubview(genresView)
-            genresView.configure(with: genres)
-        }
-    }
-    
-   private func setupHorizonatalInfoView() {
-        horizontalInfoView.addSubview(horizontalInfoStackView)
-        horizontalInfoStackView.pin(to: horizontalInfoView)
-        
-        if let rating = show?.rating {
-            ratingLabel.configure(icon: UIImage(systemName: "star.fill"), withColor: .baseYellow, text: "\(rating)")
-            horizontalInfoStackView.addArrangedSubview(ratingLabel)
-        }
-        
-        if let premiereDate = show?.premiereDate {
-            var yearsString = String(premiereDate.prefix(4))
-            if let endDate = show?.endDate {
-                let endYearString = String(endDate.prefix(4))
-                yearsString = yearsString + " - " + endYearString
-            }
-            dateLabel.configure(icon: UIImage(systemName: "calendar"), withColor: .purple, text: yearsString)
-            horizontalInfoStackView.addArrangedSubview(dateLabel)
-        }
-        
-        if let averageRuntime = show?.averageRuntime {
-            runtimeLabel.configure(icon: UIImage(systemName: "clock.fill"), withColor: .gray, text: "\(averageRuntime) min")
-            horizontalInfoStackView.addArrangedSubview(runtimeLabel)
-        }
-    }
     
     private func setupSaveButton() {
         view.addSubview(saveButton)
@@ -196,11 +129,28 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
             saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-   
+    
+    private func configureCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.pin(to: view)
+    }
+    
+    private func configureCompositionalLayout() {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
+            switch sectionIndex {
+            case 1: return AppLayouts.shared.genresSection()
+            default: return AppLayouts.shared.metaDataSection()
+            }
+        }
+        collectionView.setCollectionViewLayout(layout, animated: true)
+    }
+    
     
     // MARK: - Actions
     private func updateImage() {
-        guard let imageURL = show?.image?.original, let sd_imageURL = URL(string: imageURL) else { return }
+        guard let imageURL = show.image?.original, let sd_imageURL = URL(string: imageURL) else { return }
         backgroundImage.sd_setImage(with: sd_imageURL)
     }
     
@@ -209,7 +159,46 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func addToFavorites() {
-        log.info("Added \(show!.title) to favorites")
+        log.info("Added \(show.title) to favorites")
     }
-   
+    
+}
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+
+extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        default: return 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.section {
+        
+        default:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "mask", for: indexPath)
+            
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: ShowMetadataView.reuseIdentifier,
+                for: indexPath
+            ) as! ShowMetadataView
+            footer.configure(with: show)
+            return footer
+        }
+        return UICollectionReusableView()
+    }
+    
+    
 }

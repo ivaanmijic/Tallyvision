@@ -9,16 +9,16 @@ import Foundation
 
 class TVMazeClient {
     
-    static let baseURL = "https://api.tvmaze.com/"
+    let baseURL = "https://api.tvmaze.com/"
     static let dateFormatter: DateFormatter = .apiDateFormatter
     
     func fetchShows() async throws -> [Show] {
-        let url = URL(string: "\(Self.baseURL)shows")!
+        let url = URL(string: "\(baseURL)shows")!
         return try await fetchData(from: url)
     }
     
     func fetchShow(byId id: Int) async throws -> Show {
-        let url = URL(string: "\(Self.baseURL)shows/\(id)")!
+        let url = URL(string: "\(baseURL)shows/\(id)")!
         return try await fetchData(from: url)
     }
     
@@ -31,6 +31,12 @@ class TVMazeClient {
     func fetchWebEpisodes(forDate date: Date) async throws -> [Episode] {
         let dateString = Self.dateFormatter.string(from: date)
         let url = URL(string: "https://api.tvmaze.com/schedule/web?date=\(dateString)&country=US")!
+        return try await fetchData(from: url)
+    }
+    
+    func fetchCast(forShowId showId: Int64) async throws -> [CastResponse] {
+        let url = URL(string: "\(baseURL)shows/\(showId)/cast")!
+        log.info(url)
         return try await fetchData(from: url)
     }
    
