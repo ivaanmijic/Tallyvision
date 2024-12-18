@@ -10,7 +10,7 @@ import UIKit
 class StatisticsViewController: UIViewController {
 
     lazy var titleLabel: UILabel = {
-        return UILabel.title(withText: "STATS").forAutoLayout()
+        return UILabel.appLabel(withText: "STATS").forAutoLayout()
     }()
     
     //MARK: - Lifecycle

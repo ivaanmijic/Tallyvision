@@ -13,6 +13,7 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var show: Show
     var showCast = [ShowCast]()
+    var cast = [Cast]()
     
     var castService: CastService!
     
@@ -21,7 +22,7 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.show = show
         super.init(nibName: nil, bundle: nil)
         self.updateImage()
-        log.info(show.showId)
+        log.info("Loaded show with ID: \(show.showId)")
     }
     
     required init?(coder: NSCoder) {
@@ -52,10 +53,18 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         collectionView.backgroundColor = .clear
         
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "mask")
+        collectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: CastCollectionViewCell.identifier)
+        
         collectionView.register(
             ShowMetadataView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: ShowMetadataView.reuseIdentifier
+        )
+        
+        collectionView.register(
+            SectionTitleReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionTitleReusableView.identifier
         )
         
         return collectionView.forAutoLayout()
@@ -105,10 +114,6 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         castService = CastService(httpClinet: TVMazeClient())
     }
     
-    // TODO: update Actors section
-    private func updateUI() {
-        
-    }
     
     private func setupBackgroundImage() {
         view.addSubview(backgroundImage)
@@ -139,12 +144,38 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private func configureCompositionalLayout() {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
+            
             switch sectionIndex {
-            case 1: return AppLayouts.shared.genresSection()
-            default: return AppLayouts.shared.metaDataSection()
+            case 1:
+                return AppLayouts.shared.castSection()
+                
+            default:
+                return AppLayouts.shared.metaDataSection()
             }
         }
+        layout.register(BackgroundSupplementaryView.self, forDecorationViewOfKind: "backgroundDecoration")
+        
         collectionView.setCollectionViewLayout(layout, animated: true)
+    }
+    
+    // MARK: - UI update
+    
+    private func updateUI() {
+        Task {
+            await updateCast()
+            collectionView.reloadData()
+        }
+    }
+    
+    private func updateCast() async {
+        do {
+            (cast, showCast) = try await castService.getCastForShow(withId: show.showId)
+            for member in cast {
+                log.info(member.name)
+            }
+        } catch {
+            log.error("Error fetching cast:\n \(error)")
+        }
     }
     
     
@@ -169,18 +200,31 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
 extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
+        case 1:
+            log.info(showCast.count)
+            return showCast.count
         default: return 1
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
-        
+            
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCollectionViewCell.identifier, for: indexPath) as? CastCollectionViewCell else {
+                log.error("Unable to dequeue \(CastCollectionViewCell.identifier)")
+                return UICollectionViewCell()
+            }
+            let actor = cast[indexPath.row]
+            let characterName = showCast[indexPath.row].characterName
+            cell.configure(name: actor.name, characterName: characterName, imageURL: actor.image?.medium)
+            return cell
+            
         default:
             return collectionView.dequeueReusableCell(withReuseIdentifier: "mask", for: indexPath)
             
@@ -188,17 +232,32 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionFooter {
-            let footer = collectionView.dequeueReusableSupplementaryView(
+       
+        switch kind {
+            
+        case UICollectionView.elementKindSectionFooter where indexPath.section == 0:
+                guard let footer = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: ShowMetadataView.reuseIdentifier,
+                    for: indexPath
+                ) as? ShowMetadataView else { break }
+                footer.configure(with: show)
+                return footer
+            
+        case UICollectionView.elementKindSectionHeader where indexPath.section == 1:
+            guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: ShowMetadataView.reuseIdentifier,
+                withReuseIdentifier: SectionTitleReusableView.identifier,
                 for: indexPath
-            ) as! ShowMetadataView
-            footer.configure(with: show)
-            return footer
+            ) as? SectionTitleReusableView else { break }
+            if !cast.isEmpty {
+                header.configure(title: "Cast")
+            }
+            return header
+            
+        default: break
         }
+        
         return UICollectionReusableView()
     }
-    
-    
 }

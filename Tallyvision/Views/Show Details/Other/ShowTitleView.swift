@@ -9,8 +9,9 @@ import UIKit
 
 class ShowTitleView: UIStackView {
 
-    lazy var titleLabel: UILabel = .title(fontSize: 32).forAutoLayout()
-    lazy var genresLabel: UILabel = .title(fontSize: 14).forAutoLayout()
+    lazy var titleLabel: UILabel = .appLabel(fontSize: 32).forAutoLayout()
+    lazy var genresLabel: UILabel = .appLabel(fontSize: 14).forAutoLayout()
+    lazy var horizontalLine = HorizontalLine().forAutoLayout()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,10 +25,11 @@ class ShowTitleView: UIStackView {
     
     private func setupUI() {
         axis = .vertical
-        spacing = 0
+        spacing = 4
         alignment = .leading
         addArrangedSubview(genresLabel)
         addArrangedSubview(titleLabel)
+        addArrangedSubview(horizontalLine)
     }
     
     func configure(title: String) {
@@ -35,7 +37,7 @@ class ShowTitleView: UIStackView {
     }
     
     func configure(genres: [String]) {
-        genresLabel.text = genres.prefix(3).joined(separator: ", ")
+        genresLabel.text = genres.joined(separator: ", ")
     }
 
 }

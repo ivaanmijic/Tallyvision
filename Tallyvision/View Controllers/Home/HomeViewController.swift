@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
         
         collectionView.register(ShowCardsCell.self, forCellWithReuseIdentifier: ShowCardsCell.identifier)
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
-        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
+        collectionView.register(SectionTitleReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionTitleReusableView.identifier)
         
         return collectionView.forAutoLayout().forAutoLayout()
     }()
@@ -155,8 +155,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionHeader,
-              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath)
-                as? SectionHeaderView else { return UICollectionReusableView() }
+              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleReusableView.identifier, for: indexPath)
+                as? SectionTitleReusableView else { return UICollectionReusableView() }
         
         switch indexPath.section {
         case 0: header.configure(title: "Today, ", date: Date())

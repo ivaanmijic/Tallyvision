@@ -12,14 +12,14 @@ class IntroductionView: UIView {
     lazy var stackView: UIStackView = {
         let view = UIStackView() 
         view.axis = .vertical
-        view.spacing = 8
+        view.spacing = 4
         view.alignment = .top
         view.distribution = .fill
         view.clipsToBounds = true
         return view.forAutoLayout()
     }()
     
-    lazy var introductionTitle: UILabel = .title(withText: "Introduction", fontSize: 16).forAutoLayout()
+    lazy var introductionTitle: UILabel = .appLabel(withText: "Introduction", fontSize: 16).forAutoLayout()
     lazy var introduction: UILabel = .paragraph().forAutoLayout()
     
     override init(frame: CGRect) {

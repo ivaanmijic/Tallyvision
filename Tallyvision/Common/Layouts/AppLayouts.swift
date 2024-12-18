@@ -10,84 +10,105 @@ import UIKit
 
 class AppLayouts {
     static let shared = AppLayouts()
-  
-    func genresSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(1), heightDimension: .estimated(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    
+    func castSection() -> NSCollectionLayoutSection {
+         let section = createSection(
+            itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
+            groupSize: NSCollectionLayoutSize(widthDimension: .absolute(152), heightDimension: .absolute(230)),
+            groupInsets: NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8),
+            sectionInsets: NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0),
+            scrollingBehavior: .continuous,
+            decorationElementKind: "backgroundDecoration"
+        )
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .estimated(1.0))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item, item, item])
-        group.interItemSpacing = .fixed(16)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 40, bottom: 10, trailing: 40)
-        
+        section.boundarySupplementaryItems = [createHeader()]
+       
         return section
     }
     
     func metaDataSection() -> NSCollectionLayoutSection {
         let screenWidth = AppConstants.screenWidth
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(screenWidth), heightDimension: .absolute(AppConstants.screenHeight * 0.35))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
+        let section = createSection(
+            itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
+            groupSize: NSCollectionLayoutSize(widthDimension: .absolute(screenWidth), heightDimension: .absolute(AppConstants.screenHeight * 0.35))
+        )
         
         let metadataSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
-        let metadataSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: metadataSize,
-            elementKind: UICollectionView.elementKindSectionFooter,
-            alignment: .bottom
-        )
-        section.boundarySupplementaryItems = [metadataSupplementary]
-       
+        section.boundarySupplementaryItems = [
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: metadataSize,
+                elementKind: UICollectionView.elementKindSectionFooter,
+                alignment: .bottom
+            )
+        ]
         
         return section
     }
-   
+    
     func showCardsSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .absolute(400))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 15)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
-        section.orthogonalScrollingBehavior = .groupPagingCentered
+        let section = createSection(
+            itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
+            groupSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .absolute(400)),
+            groupInsets: NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 15),
+            sectionInsets: NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0),
+            scrollingBehavior: .groupPagingCentered
+        )
         section.boundarySupplementaryItems = [createHeader()]
         
         return section
     }
     
     func showRecommendationsSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let section = createSection(
+            itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
+            groupSize: NSCollectionLayoutSize(
+                widthDimension: .absolute(120),
+                heightDimension: .absolute(120 * AppConstants.posterImageRatio)
+            ),
+            groupInsets: NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5),
+            sectionInsets: NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0),
+            scrollingBehavior: .continuous
+        )
+        section.boundarySupplementaryItems = [createHeader()]
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(120 * AppConstants.posterImageRatio))
+        return section
+    }
+   
+    private func createSection(
+            itemSize: NSCollectionLayoutSize,
+            groupSize: NSCollectionLayoutSize,
+            groupInsets: NSDirectionalEdgeInsets = .zero,
+            sectionInsets: NSDirectionalEdgeInsets = .zero,
+            scrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .none,
+            decorationElementKind: String? = nil
+    ) -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        group.contentInsets = groupInsets
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
-
-        section.boundarySupplementaryItems = [createHeader()]
+        section.contentInsets = sectionInsets
+        section.orthogonalScrollingBehavior = scrollingBehavior
+        
+        if let decorationElementKind = decorationElementKind {
+            section.decorationItems = [
+                NSCollectionLayoutDecorationItem.background(elementKind: decorationElementKind)
+            ]
+        }
         
         return section
     }
     
     private func createHeader(fractionalWidth: CGFloat = 0.95) -> NSCollectionLayoutBoundarySupplementaryItem {
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fractionalWidth), heightDimension: .estimated(40))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(fractionalWidth),
+            heightDimension: .estimated(40)
+        )
+        return NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-        return header
     }
 }

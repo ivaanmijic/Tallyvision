@@ -10,7 +10,7 @@ import UIKit
 class WatchlistViewController: UIViewController {
 
     lazy var titleLabel: UILabel = {
-        return UILabel.title(withText: "WATCH\nLIST").forAutoLayout()
+        return UILabel.appLabel(withText: "WATCH\nLIST").forAutoLayout()
     }()
     
     //MARK: - Lifecycle

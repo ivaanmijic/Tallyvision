@@ -9,11 +9,11 @@ import UIKit
 
 extension UILabel {
     
-    static func title(withText text: String = "", fontSize: CGFloat = 36) -> UILabel {
+    static func appLabel(withText text: String = "", fontSize: CGFloat = 36, fontStyle: String = "Bold", alpha: CGFloat = 1) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = .textColor
-        label.font = UIFont(name: "RedHatDisplay-Bold", size: fontSize)
+        label.font = UIFont(name: "RedHatDisplay-\(fontStyle)", size: fontSize)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
