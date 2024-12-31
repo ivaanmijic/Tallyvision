@@ -33,11 +33,11 @@ class ShowMetadataView: UICollectionReusableView {
         
         button.setTitle("Episodes  ", for: .normal)
         button.titleLabel?.font = UIFont(name: "RedHatDisplay-SemiBold", size: 18)
-        button.setTitleColor(.white.withAlphaComponent(0.7), for: .normal)
+        button.setTitleColor(.textColor.withAlphaComponent(0.7), for: .normal)
         
         let iconImage = UIImage(systemName: "chevron.right")
         button.setImage(iconImage, for: .normal)
-        button.tintColor = .white.withAlphaComponent(0.7)
+        button.tintColor = .textColor.withAlphaComponent(0.7)
         
         button.semanticContentAttribute = .forceRightToLeft
         
@@ -59,7 +59,7 @@ class ShowMetadataView: UICollectionReusableView {
     }
     
     private func setupView() {
-        self.backgroundColor = .appBlack
+        self.backgroundColor = .screenColor
         self.layer.cornerRadius = 40
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.layer.masksToBounds = true

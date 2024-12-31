@@ -10,7 +10,7 @@ import UIKit
 class BackgroundSupplementaryView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .appBlack
+        self.backgroundColor = .screenColor
     }
     
     required init?(coder: NSCoder) {

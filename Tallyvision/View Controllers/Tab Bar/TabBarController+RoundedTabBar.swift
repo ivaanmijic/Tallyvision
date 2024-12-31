@@ -17,7 +17,7 @@ extension TabBarController {
         let maskLayer = CAShapeLayer()
         maskLayer.path = UIBezierPath(
             roundedRect: blurEffectView.bounds,
-            cornerRadius: (tabBar.frame.width / 2)
+            cornerRadius: (tabBar.frame.height / 2)
         ).cgPath
         blurEffectView.layer.mask = maskLayer
         
@@ -32,7 +32,7 @@ extension TabBarController {
                 width: tabBar.bounds.width - 60,
                 height: tabBar.bounds.height + 10
             ),
-            cornerRadius: (tabBar.frame.width / 2)
+            cornerRadius: (tabBar.frame.height / 2)
         ).cgPath
         backgroundLayer.fillColor = UIColor.clear.cgColor
         backgroundLayer.opacity = 1.0

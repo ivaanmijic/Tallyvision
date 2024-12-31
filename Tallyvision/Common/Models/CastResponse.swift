@@ -8,7 +8,7 @@
 import Foundation
 
 struct CastResponse: Decodable {
-    var cast: Cast
+    var cast: Person
     var showCast: ShowCast
     
     private enum CodingKeys: String, CodingKey {
@@ -29,7 +29,7 @@ struct CastResponse: Decodable {
         let personContainer = try container.nestedContainer(keyedBy: PersonKeys.self, forKey: .person)
         let characterContainer = try container.nestedContainer(keyedBy: CharacterKeys.self, forKey: .character)
        
-        cast = Cast(
+        cast = Person(
             id: try personContainer.decode(Int64.self, forKey: .id),
             name: try personContainer.decode(String.self, forKey: .name),
             country: try personContainer.decodeIfPresent(Country.self, forKey: .country),

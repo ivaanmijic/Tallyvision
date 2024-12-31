@@ -19,48 +19,38 @@ class ScheduleService {
     
     func getTodaysShows() async throws -> [Show] {
         let todayEpisodes = try await fetchEpisodes(forDate: currentDate)
-        var seenShowIds = Set<Int64>()
        
-        return todayEpisodes.compactMap { $0.show }
-            .filter {$0.type != "News" && $0.rating ?? 0.0 > 7.0 }
-            .filter { show in
-                if seenShowIds.contains(show.showId) {
-                    return false
-                }
-                else {
-                    seenShowIds.insert(show.showId)
-                    return true
-                }
-            }
+        let shows = todayEpisodes.compactMap { $0.show }
+            .filter {$0.type != "News" && $0.rating ?? 0.0 > 6.5 }
+            .filter { $0.image?.original != nil }
+           
+        return Array(Set(shows))
     }
     
     func getRecentShows() async throws -> [Show] {
-        return try await fetchShows(daysToFetch: daysToFetch, relativeTo: -1)
+        let shows = try await fetchShows(daysToFetch: daysToFetch, relativeTo: -1)
+            .filter { $0.image?.medium != nil }
+        
+        return Array(Set(shows))
     }
     
     func getUpcomingShows() async throws -> [Show] {
-        return try await fetchShows(daysToFetch: daysToFetch, relativeTo: 1)
+        let shows = try await fetchShows(daysToFetch: daysToFetch, relativeTo: 1)
+            .filter { $0.image?.medium != nil }
+        
+        return Array(Set(shows))
     }
     
     private func fetchShows(daysToFetch: Int, relativeTo direction: Int) async throws -> [Show] {
-        var shows = [Show]()
         let dates = (1...daysToFetch).map {
             DateFormatter.apiDateFormatter.string(from: currentDate + Double($0 * direction) * Date.dayInterval)
         }
         
         let episodes = try await fetchEpisodes(forDaysToFetch: daysToFetch, startingFrom: direction)
         
-        for episode in episodes {
-            
-            guard let show = episode.show,
-                  dates.contains(show.premiereDate),
-                  !shows.contains(where: { $0.showId == show.showId })
-            else { continue }
-            
-            shows.append(show)
-        }
+        return episodes.compactMap { $0.show }
+            .filter { dates.contains($0.premiereDate) }
         
-        return shows
     }
     
     private func fetchEpisodes(forDaysToFetch daysToFetch: Int, startingFrom offset: Int) async throws -> [Episode] {

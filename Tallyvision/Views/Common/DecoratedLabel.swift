@@ -20,7 +20,7 @@ class DecoratedLabel: UIView {
         label.numberOfLines = 1
         label.textAlignment = .left
         label.font = UIFont(name: "RedHatDisplay-Bold", size: 16)
-        label.textColor = .white.withAlphaComponent(0.7)
+        label.textColor = .textColor.withAlphaComponent(0.7)
         return label.forAutoLayout()
     }()
     

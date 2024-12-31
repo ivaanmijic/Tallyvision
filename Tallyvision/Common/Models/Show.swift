@@ -79,4 +79,17 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
 }
 
 
+// MARK: - implementing Hashable
+
+extension Show: Hashable {
+    static func == (lhs: Show, rhs: Show) -> Bool {
+        return lhs.showId == rhs.showId
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(showId)
+    }
+}
+
+
 

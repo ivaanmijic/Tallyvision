@@ -7,9 +7,9 @@
 
 import UIKit
 
-class CastCollectionViewCell: UICollectionViewCell {
+class CastCell: UICollectionViewCell {
    
-    static let identifier = String(describing: CastCollectionViewCell.self)
+    static let identifier = String(describing: CastCell.self)
     
     private var imageURL: String? {
         didSet {
@@ -21,7 +21,8 @@ class CastCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView(arrangedSubviews: [imageView, nameLabel, characterLabel])
         stackView.axis = .vertical
         stackView.spacing = 4
-        stackView.alignment = .leading
+        stackView.alignment = .center
+        stackView.distribution = .fill
         return stackView.forAutoLayout()
     }()
   
@@ -36,13 +37,15 @@ class CastCollectionViewCell: UICollectionViewCell {
         
     lazy var nameLabel: UILabel = {
         let label = UILabel.appLabel(fontSize: 14, fontStyle: "Bold")
-        label.numberOfLines = 1
+        label.numberOfLines = 2
+        label.textAlignment = .center
         return label.forAutoLayout()
     }()
     
     lazy var characterLabel: UILabel = {
         let label = UILabel.appLabel(fontSize: 14, fontStyle: "Medium")
-        label.numberOfLines = 1
+        label.numberOfLines = 2
+        label.textAlignment = .center
         return label.forAutoLayout()
     }()
     
@@ -57,10 +60,6 @@ class CastCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        backgroundColor = .appBlue
-        layer.cornerRadius = 16
-        layer.masksToBounds = true
-        
         addSubview(stackView)
         activateConstraints()
     }
@@ -69,22 +68,18 @@ class CastCollectionViewCell: UICollectionViewCell {
     
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            imageView.widthAnchor.constraint(equalToConstant: 120),
-            imageView.widthAnchor.constraint(equalToConstant: 160)
+            imageView.widthAnchor.constraint(equalToConstant: 100),
+            imageView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
     
     private func setupImageView() {
-        if let imageURL = imageURL, let sd_imageURL = URL(string: imageURL) {
-            imageView.sd_setImage(with: sd_imageURL)
-        } else {
-            imageView.image = UIImage(named: "placeholder")?.resizeTo(maxWidth: 120, maxHeight: 160)
-        }
+        imageView.configure(image: imageURL, placeholder: "placeholder")
     }
     
     func configure(name: String, characterName: String, imageURL: String?) {

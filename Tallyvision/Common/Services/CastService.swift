@@ -14,8 +14,8 @@ class CastService {
         self.httpClinet = httpClinet
     }
     
-    func getCastForShow(withId id: Int64) async throws -> ([Cast], [ShowCast]) {
-        var cast = [Cast]()
+    func getCastForShow(withId id: Int64) async throws -> ([Person], [ShowCast]) {
+        var cast = [Person]()
         var showCast = [ShowCast]()
         let castResponse =  try await httpClinet.fetchCast(forShowId: id)
         
@@ -26,4 +26,8 @@ class CastService {
         
         return (cast, showCast)
     }
+    
+//    func getCastCredit(personId: Int64) async throws -> {
+//        
+//    }
 }

@@ -13,7 +13,7 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var show: Show
     var showCast = [ShowCast]()
-    var cast = [Cast]()
+    var cast = [Person]()
     
     var castService: CastService!
     
@@ -31,12 +31,6 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - UI Components
     
-    let cell: UICollectionViewCell = {
-        let cell = UICollectionViewCell()
-        cell.backgroundColor = .appBlack
-        return cell
-    }()
-    
     lazy var backButton: TransparentButton = {
         let button = TransparentButton(type: .custom)
         button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
@@ -53,7 +47,7 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         collectionView.backgroundColor = .clear
         
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "mask")
-        collectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: CastCollectionViewCell.identifier)
+        collectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.identifier)
         
         collectionView.register(
             ShowMetadataView.self,
@@ -71,18 +65,6 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     }()
     
     lazy var transparentMaskView = UIView().forAutoLayout()
-    
-    lazy var saveButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .baseYellow
-        button.setTitle("Add to List", for: .normal)
-        button.setTitleColor(.appBlack, for: .normal)
-        button.titleLabel?.font = UIFont(name: "RedHatDisplay-Bold", size: 18)
-        button.layer.cornerRadius = 25
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(addToFavorites), for: .touchUpInside)
-        return button.forAutoLayout()
-    }()
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -93,21 +75,15 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         updateUI()
     }
     
-    
     private func setupNavigationBar() {
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationController?.configureNavigationBar(leftButton: backButton, target: self)
     }
     
     private func setupUI() {
-        view.backgroundColor = .appBlack
+        view.backgroundColor = .screenColor
         setupBackgroundImage()
         configureCollectionView()
         configureCompositionalLayout()
-        setupSaveButton()
     }
     
     private func setupServices() {
@@ -125,15 +101,6 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         ])
     }
     
-    private func setupSaveButton() {
-        view.addSubview(saveButton)
-        NSLayoutConstraint.activate([
-            saveButton.heightAnchor.constraint(equalToConstant: 50),
-            saveButton.widthAnchor.constraint(equalToConstant: 150),
-            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
     
     private func configureCollectionView() {
         view.addSubview(collectionView)
@@ -179,19 +146,11 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
-    // MARK: - Actions
     private func updateImage() {
         guard let imageURL = show.image?.original, let sd_imageURL = URL(string: imageURL) else { return }
         backgroundImage.sd_setImage(with: sd_imageURL)
     }
-    
-    @objc private func goBack() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func addToFavorites() {
-        log.info("Added \(show.title) to favorites")
-    }
+        
     
 }
 
@@ -216,8 +175,8 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
         switch indexPath.section {
             
         case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCollectionViewCell.identifier, for: indexPath) as? CastCollectionViewCell else {
-                log.error("Unable to dequeue \(CastCollectionViewCell.identifier)")
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCell.identifier, for: indexPath) as? CastCell else {
+                log.error("Unable to dequeue \(CastCell.identifier)")
                 return UICollectionViewCell()
             }
             let actor = cast[indexPath.row]
@@ -232,17 +191,17 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-       
+        
         switch kind {
             
         case UICollectionView.elementKindSectionFooter where indexPath.section == 0:
-                guard let footer = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: ShowMetadataView.reuseIdentifier,
-                    for: indexPath
-                ) as? ShowMetadataView else { break }
-                footer.configure(with: show)
-                return footer
+            guard let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: ShowMetadataView.reuseIdentifier,
+                for: indexPath
+            ) as? ShowMetadataView else { break }
+            footer.configure(with: show)
+            return footer
             
         case UICollectionView.elementKindSectionHeader where indexPath.section == 1:
             guard let header = collectionView.dequeueReusableSupplementaryView(
@@ -260,4 +219,21 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
         
         return UICollectionReusableView()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.section == 1 else { return }
+        let castDetailsVC = CastDetailsViewController(actor: cast[indexPath.row])
+        navigationController?.pushViewController(castDetailsVC, animated: true)
+    }
+    
 }
+
+// MARK: - UIScrollViewDelegate
+
+//extension ShowDetailsViewController: UIScrollViewDelegate {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height {
+//            scrollView.contentOffset.y = scrollView.contentSize.height - scrollView.bounds.size.height
+//        }
+//    }
+//}

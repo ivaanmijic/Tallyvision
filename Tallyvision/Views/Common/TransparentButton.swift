@@ -10,7 +10,7 @@ import UIKit
 class TransparentButton: UIButton {
    
     lazy var blurEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.layer.cornerRadius = self.layer.cornerRadius
         blurView.frame = self.bounds

@@ -68,7 +68,7 @@ extension Database {
             }
             
             migrator.registerMigration("createCast") { db in
-                try db.create(table: Cast.databaseTableName) { t in
+                try db.create(table: Person.databaseTableName) { t in
                     t.column("id", .integer).primaryKey()
                     t.column("name", .text).notNull()
                     t.column("country", .jsonText)
@@ -83,7 +83,7 @@ extension Database {
                 try db.create(table: ShowCast.databaseTableName) { t in
                     t.column("id", .integer).primaryKey(autoincrement: true)
                     t.column("showId", .integer).notNull().references(Show.databaseTableName, onDelete: .cascade)
-                    t.column("castId", .integer).notNull().references(Cast.databaseTableName, onDelete: .cascade)
+                    t.column("castId", .integer).notNull().references(Person.databaseTableName, onDelete: .cascade)
                 }
             }
             

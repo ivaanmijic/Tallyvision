@@ -14,15 +14,16 @@ class AppLayouts {
     
     func castSection() -> NSCollectionLayoutSection {
          let section = createSection(
-            itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
-            groupSize: NSCollectionLayoutSize(widthDimension: .absolute(152), heightDimension: .absolute(230)),
+            itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1)),
+            groupSize: NSCollectionLayoutSize(widthDimension: .absolute(90), heightDimension: .estimated(210)),
             groupInsets: NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8),
-            sectionInsets: NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0),
+            sectionInsets: NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 40, trailing: 0),
             scrollingBehavior: .continuous,
             decorationElementKind: "backgroundDecoration"
         )
-        
-        section.boundarySupplementaryItems = [createHeader()]
+       
+        let header = createHeader()
+        section.boundarySupplementaryItems = [header]
        
         return section
     }
@@ -50,10 +51,10 @@ class AppLayouts {
         let section = createSection(
             itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
             groupSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .absolute(400)),
-            groupInsets: NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 15),
-            sectionInsets: NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0),
+            sectionInsets: NSDirectionalEdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15),
             scrollingBehavior: .groupPagingCentered
         )
+        section.interGroupSpacing = 10
         section.boundarySupplementaryItems = [createHeader()]
         
         return section

@@ -33,8 +33,8 @@ extension UIColor {
         getColor(darkColor: .white, lightColor: .black)
     }
     
-    static var titleColor: UIColor {
-        getColor(darkColor: .baseYellow, lightColor: .black)
+    static var secondaryScreenColor: UIColor {
+        getColor(darkColor: .appBlue, lightColor: .gray)
     }
    
     static func getColor(darkColor: UIColor, lightColor: UIColor) -> UIColor {

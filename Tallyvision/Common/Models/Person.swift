@@ -7,9 +7,9 @@
 
 import GRDB
 
-struct Cast: Codable, FetchableRecord, PersistableRecord {
+struct Person: Codable, FetchableRecord, PersistableRecord {
     
-    static let databaseTableName: String = "cast"
+    static let databaseTableName: String = "person"
     
     var id: Int64
     var name: String
