@@ -44,8 +44,7 @@ class ShowCell: UICollectionViewCell {
     }
     
     private func setupImageView() {
-        guard let imageURL = imageURL, let sd_imageURL = URL(string: imageURL) else { return }
-        imageView.sd_setImage(with: sd_imageURL)
+        imageView.configure(image: imageURL)
     }
     
     func configure(withImageURL imageURL: String) {

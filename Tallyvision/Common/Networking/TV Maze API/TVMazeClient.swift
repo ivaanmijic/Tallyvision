@@ -36,13 +36,12 @@ class TVMazeClient {
     
     func fetchCast(forShowId showId: Int64) async throws -> [CastResponse] {
         let url = URL(string: "\(baseURL)shows/\(showId)/cast")!
-        log.info(url)
         return try await fetchData(from: url)
     }
     
-    func fetchCredits(forCastId castId: Int64) async throws -> [Show] {
+    func fetchCredits(forCastId castId: Int64) async throws -> [CastCredit] {
         let url = URL(string: "\(baseURL)people/\(castId)/castcredits?embed=show")!
-        return [Show]()
+        return try await fetchData(from: url)
     }
    
     private func fetchData<Data: Decodable>(from url: URL) async throws -> Data {

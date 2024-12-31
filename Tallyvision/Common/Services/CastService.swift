@@ -27,7 +27,10 @@ class CastService {
         return (cast, showCast)
     }
     
-//    func getCastCredit(personId: Int64) async throws -> {
-//        
-//    }
+    func getCastCredit(personId: Int64) async throws -> [Show] {
+        let castCredits = try await httpClinet.fetchCredits(forCastId: personId)
+        
+        let shows = castCredits.compactMap { $0.show }
+        return shows
+    }
 }

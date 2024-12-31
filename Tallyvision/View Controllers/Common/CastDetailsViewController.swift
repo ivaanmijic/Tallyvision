@@ -12,6 +12,8 @@ class CastDetailsViewController: UIViewController {
     var actor: Person
     var shows = [Show]()
     
+    var castService: CastService!
+    
     // MARK: UI Components
     
     private lazy var backButton: TransparentButton = {
@@ -82,9 +84,11 @@ class CastDetailsViewController: UIViewController {
     init(actor: Person) {
         self.actor = actor
         super.init(nibName: nil, bundle: nil)
+        self.castService = CastService(httpClinet: TVMazeClient())
         updateUI()
         log.info("Cast Details View Contrller has been loaded for: \(actor.id)")
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not implemented")
@@ -162,6 +166,12 @@ class CastDetailsViewController: UIViewController {
     private func updateUI() {
         updateImage()
         updateLabels()
+        
+        Task {
+            await updateShows()
+            collectionView.reloadData()
+        }
+        
     }
     
     private func updateImage() {
@@ -190,6 +200,14 @@ class CastDetailsViewController: UIViewController {
             stackView.addArrangedSubview(createKeyValueLabel(key: "Born in:", value: country.name))
         }
         
+    }
+    
+    private func updateShows() async {
+        do {
+           shows = try await castService.getCastCredit(personId: actor.id)
+        } catch {
+            log.error("CastDetailsVC: updateShows()")
+        }
     }
     
     private func createKeyValueLabel(key: String, value: String) -> UIView {
@@ -238,7 +256,18 @@ extension CastDetailsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCell.identifier, for: indexPath)
+                as? ShowCell else {
+            return UICollectionViewCell()
+        }
+       
+        if let image = shows[indexPath.row].image,
+           let imageURL = image.medium {
+            cell.configure(withImageURL: imageURL)
+        }
+        
+        return cell
     }
 }
 
