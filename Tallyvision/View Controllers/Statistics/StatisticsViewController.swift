@@ -21,7 +21,7 @@ class StatisticsViewController: UIViewController {
     }
    
     private func setupUI() {
-        view.backgroundColor = .screenColor
+        view.backgroundColor = .appColor
         setupNavigationBar()
         setupConstraints()
     }

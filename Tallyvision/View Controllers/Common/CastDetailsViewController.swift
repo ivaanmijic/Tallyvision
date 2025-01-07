@@ -36,7 +36,7 @@ class CastDetailsViewController: UIViewController {
     
     private lazy var contentView: UIView = {
         let view = UIView()
-        view.backgroundColor = .screenColor
+        view.backgroundColor = .appColor
         view.layer.cornerRadius = 40
         view.layer.masksToBounds = true
         return view.forAutoLayout()
@@ -106,7 +106,7 @@ class CastDetailsViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .screenColor
+        view.backgroundColor = .appColor
         addSubviews()
         configureCollectionView()
         configureCompositionalLayout()
@@ -122,7 +122,7 @@ class CastDetailsViewController: UIViewController {
     }
     
     private func configureCollectionView() {
-        collectionView.backgroundColor = .screenColor
+        collectionView.backgroundColor = .appColor
         collectionView.delegate = self
         collectionView.dataSource = self
     }

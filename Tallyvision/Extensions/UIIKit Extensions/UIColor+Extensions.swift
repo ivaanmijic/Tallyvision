@@ -13,28 +13,25 @@ extension UIColor {
        getColor(red: 255, green: 199, blue: 0, alpha: 1)
     }
     
-    static var appBlack: UIColor {
-        getColor(red: 2, green: 9, blue: 19, alpha: 1)
+    
+    static var darkGray: UIColor {
+        getColor(red: 26, green: 26, blue: 26, alpha: 1)
     }
     
-    static var appBlue: UIColor {
-        getColor(red: 17, green: 38, blue: 57, alpha: 1)
+    static var lightGray: UIColor {
+        getColor(red: 247, green: 247, blue: 247, alpha: 1)
     }
     
-    static var appGray: UIColor {
-        getColor(red: 117, green: 117, blue: 177, alpha: 1)
-    }
-    
-    static var screenColor: UIColor {
-        getColor(darkColor: .appBlack, lightColor: .white)
+    static var appColor: UIColor {
+        getColor(darkColor: .black, lightColor: .white)
     }
     
     static var textColor: UIColor {
         getColor(darkColor: .white, lightColor: .black)
     }
     
-    static var secondaryScreenColor: UIColor {
-        getColor(darkColor: .appBlue, lightColor: .gray)
+    static var secondaryAppColor: UIColor {
+        getColor(darkColor: .darkGray, lightColor: .lightGray)
     }
    
     static func getColor(darkColor: UIColor, lightColor: UIColor) -> UIColor {

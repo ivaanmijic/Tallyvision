@@ -42,7 +42,7 @@ class BlurredImageView: UIImageView {
     }
     
     private func setupGradient() {
-        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.screenColor.cgColor]
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.appColor.cgColor]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientLayer.locations = [0.0, 1.0]
@@ -57,7 +57,7 @@ class BlurredImageView: UIImageView {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if var colors = gradientLayer.colors as? [CGColor] {
-            colors[1] = UIColor.screenColor.cgColor
+            colors[1] = UIColor.appColor.cgColor
             gradientLayer.colors = colors
         }
     }

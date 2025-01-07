@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .screenColor
+        collectionView.backgroundColor = .appColor
         
         collectionView.register(ShowCardsCell.self, forCellWithReuseIdentifier: ShowCardsCell.identifier)
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
@@ -54,7 +54,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .screenColor
+        view.backgroundColor = .appColor
         configureCollectionView()
         configureCompositionalLayout()
     }

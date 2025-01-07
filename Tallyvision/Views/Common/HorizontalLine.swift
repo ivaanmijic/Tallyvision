@@ -22,7 +22,7 @@ class HorizontalLine: UIView {
     }
     
     private func setupUI() {
-        line.backgroundColor = .appBlue
+        line.backgroundColor = .darkGray
         addSubview(line)
         
         NSLayoutConstraint.activate([

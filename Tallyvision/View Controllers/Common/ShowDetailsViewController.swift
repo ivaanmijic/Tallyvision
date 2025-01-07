@@ -80,7 +80,7 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func setupUI() {
-        view.backgroundColor = .screenColor
+        view.backgroundColor = .appColor
         setupBackgroundImage()
         configureCollectionView()
         configureCompositionalLayout()

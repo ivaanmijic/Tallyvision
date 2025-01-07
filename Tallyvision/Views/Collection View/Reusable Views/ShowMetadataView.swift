@@ -59,7 +59,7 @@ class ShowMetadataView: UICollectionReusableView {
     }
     
     private func setupView() {
-        self.backgroundColor = .screenColor
+        self.backgroundColor = .appColor
         self.layer.cornerRadius = 40
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.layer.masksToBounds = true
