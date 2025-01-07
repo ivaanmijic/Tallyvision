@@ -20,6 +20,7 @@
 		FC4AA03B2CF5BC9C00A67A74 /* ShowCardsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AA03A2CF5BC9C00A67A74 /* ShowCardsCell.swift */; };
 		FC4B3BC72CE4962C0055ECAF /* BlurredImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */; };
 		FC4B3BD42CE4E7E70055ECAF /* String+HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */; };
+		FC4D182F2D2D2FCE00B88C39 /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */; };
 		FC5209C32D19B0F4001A3180 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5209C22D19B0F4001A3180 /* UINavigationController+Extension.swift */; };
 		FC5209C52D19B371001A3180 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5209C42D19B371001A3180 /* UIViewController+Extension.swift */; };
 		FC5322222CC8F4B1001BCC3D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322212CC8F4B1001BCC3D /* TabBarController.swift */; };
@@ -90,6 +91,7 @@
 		FC4AA03A2CF5BC9C00A67A74 /* ShowCardsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCardsCell.swift; sourceTree = "<group>"; };
 		FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredImageView.swift; sourceTree = "<group>"; };
 		FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMLParser.swift"; sourceTree = "<group>"; };
+		FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
 		FC5209C22D19B0F4001A3180 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FC5209C42D19B371001A3180 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		FC5322212CC8F4B1001BCC3D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -252,6 +254,22 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
+		FC4D182C2D2D2F3400B88C39 /* Table View */ = {
+			isa = PBXGroup;
+			children = (
+				FC4D182D2D2D2FBB00B88C39 /* Cells */,
+			);
+			path = "Table View";
+			sourceTree = "<group>";
+		};
+		FC4D182D2D2D2FBB00B88C39 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		FC5322232CC8F79D001BCC3D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +332,7 @@
 		FC6E16AD2CDB92510084F8BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FC4D182C2D2D2F3400B88C39 /* Table View */,
 				FC4468602D1313F5004CFAB2 /* Collection View */,
 				FCBB94922CFF11C00097B766 /* Common */,
 				FC4468632D1314B1004CFAB2 /* Legacy */,
@@ -643,6 +662,7 @@
 				FC4AA0392CF5ADBB00A67A74 /* AppLayouts.swift in Sources */,
 				FC53222F2CC8FB49001BCC3D /* WatchlistViewController.swift in Sources */,
 				FCD0B4D02CDA17B60042E05C /* Country.swift in Sources */,
+				FC4D182F2D2D2FCE00B88C39 /* ShowTableViewCell.swift in Sources */,
 				FC359CAD2D09A4D5004E9D95 /* CastResponse.swift in Sources */,
 				FC5C793D2CF750D90016BB87 /* Episode.swift in Sources */,
 				FC5C793F2CF758300016BB87 /* Database+Migrator.swift in Sources */,

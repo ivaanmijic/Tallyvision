@@ -10,7 +10,6 @@ import UIKit
 
 class AppConstants {
     
-    static let bacgroundImageRatio: CGFloat = 16 / 9
     static let posterImageRatio: CGFloat = 295/210
     
     static let screenHeight: CGFloat = UIScreen.main.bounds.height
