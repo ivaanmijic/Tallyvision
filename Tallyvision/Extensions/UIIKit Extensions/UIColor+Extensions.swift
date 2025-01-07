@@ -15,11 +15,11 @@ extension UIColor {
     
     
     static var darkGray: UIColor {
-        getColor(red: 26, green: 26, blue: 26, alpha: 1)
+        getColor(red: 28, green: 28, blue: 31, alpha: 1)
     }
     
     static var lightGray: UIColor {
-        getColor(red: 247, green: 247, blue: 247, alpha: 1)
+        getColor(red: 239, green: 239, blue: 240, alpha: 1)
     }
     
     static var appColor: UIColor {

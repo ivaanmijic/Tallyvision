@@ -40,7 +40,6 @@ class DiscoverViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
-        collectionView.backgroundColor = .red
        
         return collectionView.forAutoLayout()
     }()
@@ -48,7 +47,7 @@ class DiscoverViewController: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ShowTableViewCell.self, forCellReuseIdentifier: ShowTableViewCell.identifier)
-        tableView.backgroundColor = .blue
+        tableView.separatorStyle = .none
         return tableView.forAutoLayout()
     }()
     
@@ -119,6 +118,7 @@ extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDe
                 as? ShowCell else {
             return UICollectionViewCell()
         }
+        cell.backgroundColor = .secondaryAppColor
         return cell
     }
 }
@@ -142,19 +142,36 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension DiscoverViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            tableView.isHidden = true
-            collectionView.isHidden = false
-        } else {
-            tableView.isHidden = false
-            collectionView.isHidden = true
-        }
+        toggleViewVisiblityForSearch(textDidChange: searchText)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        hideTableView()
+        tableView.reloadData()
+    }
+    
+}
+
+// MARK: - ViewVisibility
+
+extension DiscoverViewController {
+    
+    private func toggleViewVisiblityForSearch(textDidChange searchText: String) {
+        if searchText.isEmpty {
+            hideTableView()
+        } else {
+            hideCollectionView()
+        }
+    }
+    
+    private func hideTableView() {
         tableView.isHidden = true
         collectionView.isHidden = false
-        tableView.reloadData()
+    }
+    
+    private func hideCollectionView() {
+        tableView.isHidden = false
+        collectionView.isHidden = true
     }
     
 }
