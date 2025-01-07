@@ -32,4 +32,5 @@ class AppConstants {
         return statusBarHeight + navigationBarHeight
     }
     
+    static let posterHeight = screenHeight * 0.2
 }

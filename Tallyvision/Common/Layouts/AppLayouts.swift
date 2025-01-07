@@ -60,12 +60,12 @@ class AppLayouts {
         return section
     }
     
-    func showRecommendationsSection() -> NSCollectionLayoutSection {
+    func posterSection() -> NSCollectionLayoutSection {
         let section = createSection(
             itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
             groupSize: NSCollectionLayoutSize(
-                widthDimension: .absolute(120),
-                heightDimension: .absolute(120 * AppConstants.posterImageRatio)
+                widthDimension: .absolute(AppConstants.posterHeight / AppConstants.posterImageRatio),
+                heightDimension: .absolute(AppConstants.posterHeight)
             ),
             groupInsets: NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5),
             sectionInsets: NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0),

@@ -222,8 +222,7 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.section == 1 else { return }
-        let castDetailsVC = CastDetailsViewController(actor: cast[indexPath.row])
-        navigationController?.pushViewController(castDetailsVC, animated: true)
+        navigateToDetails(for: cast[indexPath.row])
     }
     
 }

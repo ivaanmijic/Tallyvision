@@ -70,7 +70,7 @@ class HomeViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
             switch sectionIndex {
             case 0: return AppLayouts.shared.showCardsSection()
-            default: return AppLayouts.shared.showRecommendationsSection()
+            default: return AppLayouts.shared.posterSection()
             }
         }
         collectionView.setCollectionViewLayout(layout, animated: true)
@@ -179,7 +179,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         guard let selectedShow = selectedShow else { return }
         
-        presentDetails(for: selectedShow)
+        navigateToDetails(for: selectedShow)
         
     }
     
@@ -213,11 +213,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 //        }
 //    }
     
-    private func presentDetails(for show: Show) {
-        let showDetailsVC = ShowDetailsViewController(show: show)
-        showDetailsVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(showDetailsVC, animated: true)
-    }
+    
     
 }
 

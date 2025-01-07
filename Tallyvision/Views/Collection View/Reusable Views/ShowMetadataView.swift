@@ -107,8 +107,10 @@ class ShowMetadataView: UICollectionReusableView {
             showTitle.configure(title: title)
         }
         
-        if let genres = show?.genres {
+        if let genres = show?.genres, genres.count != 0 {
             showTitle.configure(genres: genres)
+        } else {
+            showTitle.configure(genres: [show!.type])
         }
         
         verticalStackView.addArrangedSubview(showTitle)

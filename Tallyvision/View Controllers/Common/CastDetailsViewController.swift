@@ -50,7 +50,11 @@ class CastDetailsViewController: UIViewController {
         return imageView.forAutoLayout()
     }()
     
-    private lazy var nameLabel: UILabel = .appLabel(fontSize: 32, fontStyle: "bold").forAutoLayout()
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel.appLabel(fontSize: 32, fontStyle: "bold")
+        label.textAlignment = .center
+        return label.forAutoLayout()
+    }()
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -62,14 +66,9 @@ class CastDetailsViewController: UIViewController {
     }()
     
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
-        
         collectionView.register(
             SectionTitleReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -100,7 +99,6 @@ class CastDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupUI()
-        setupCollectionView()
     }
     
     private func setupNavigationBar() {
@@ -110,15 +108,10 @@ class CastDetailsViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .screenColor
         addSubviews()
+        configureCollectionView()
+        configureCompositionalLayout()
         activateConstraints()
     }
-    
-    private func setupCollectionView() {
-        collectionView.backgroundColor = .baseYellow
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-    
     private func addSubviews() {
         view.addSubview(blurredImage)
         view.addSubview(contentView)
@@ -126,6 +119,19 @@ class CastDetailsViewController: UIViewController {
         contentView.addSubview(nameLabel)
         contentView.addSubview(collectionView)
         contentView.addSubview(stackView)
+    }
+    
+    private func configureCollectionView() {
+        collectionView.backgroundColor = .screenColor
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    private func configureCompositionalLayout() {
+        let layout = UICollectionViewCompositionalLayout { _, _ in
+            return AppLayouts.shared.posterSection()
+        }
+        collectionView.setCollectionViewLayout(layout, animated: true)
     }
     
     private func activateConstraints() {
@@ -148,11 +154,12 @@ class CastDetailsViewController: UIViewController {
             
             nameLabel.topAnchor.constraint(equalTo: actorImage.bottomAnchor, constant: 24),
             nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            nameLabel.widthAnchor.constraint(equalToConstant: AppConstants.screenWidth * 0.6),
             
             collectionView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: AppConstants.screenHeight * 0.25),
+            collectionView.heightAnchor.constraint(equalToConstant: AppConstants.posterHeight + 40),
             
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor),
             stackView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 16),
@@ -269,6 +276,32 @@ extension CastDetailsViewController: UICollectionViewDelegate, UICollectionViewD
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader,
+           let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: SectionTitleReusableView.identifier,
+            for: indexPath
+           ) as? SectionTitleReusableView {
+            header.configure(title: "Known for:")
+            return header
+        }
+        
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        navigateToDetails(for: shows[indexPath.row])
+    }
+    
 }
 
-
+extension CastDetailsViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.contentOffset.y = 0
+    }
+    
+}
