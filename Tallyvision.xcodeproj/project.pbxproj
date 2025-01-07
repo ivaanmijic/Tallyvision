@@ -21,6 +21,7 @@
 		FC4B3BC72CE4962C0055ECAF /* BlurredImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */; };
 		FC4B3BD42CE4E7E70055ECAF /* String+HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */; };
 		FC4D182F2D2D2FCE00B88C39 /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */; };
+		FC4D18332D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D18322D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift */; };
 		FC5209C32D19B0F4001A3180 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5209C22D19B0F4001A3180 /* UINavigationController+Extension.swift */; };
 		FC5209C52D19B371001A3180 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5209C42D19B371001A3180 /* UIViewController+Extension.swift */; };
 		FC5322222CC8F4B1001BCC3D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322212CC8F4B1001BCC3D /* TabBarController.swift */; };
@@ -92,6 +93,7 @@
 		FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredImageView.swift; sourceTree = "<group>"; };
 		FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMLParser.swift"; sourceTree = "<group>"; };
 		FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
+		FC4D18322D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Dedupe.swift"; sourceTree = "<group>"; };
 		FC5209C22D19B0F4001A3180 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FC5209C42D19B371001A3180 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		FC5322212CC8F4B1001BCC3D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */,
 				FC5C79362CF704E30016BB87 /* DateFormatter+Extension.swift */,
 				FC6459932CFDFEB000809245 /* Date+Operators.swift */,
+				FC4D18322D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC4D18332D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift in Sources */,
 				FCBB94942CFF11D70097B766 /* TransparentButton.swift in Sources */,
 				FCD0B4CC2CDA0E8F0042E05C /* Season.swift in Sources */,
 				FCEBB31F2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift in Sources */,
