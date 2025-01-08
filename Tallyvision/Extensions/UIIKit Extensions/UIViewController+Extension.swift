@@ -21,7 +21,6 @@ extension UIViewController {
         } else if let person = item as? Person {
             detailsVC = CastDetailsViewController(actor: person)
         }
-        detailsVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailsVC, animated: true)
     }
     

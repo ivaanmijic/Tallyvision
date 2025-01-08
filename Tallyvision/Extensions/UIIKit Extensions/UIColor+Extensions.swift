@@ -13,7 +13,6 @@ extension UIColor {
        getColor(red: 255, green: 199, blue: 0, alpha: 1)
     }
     
-    
     static var darkGray: UIColor {
         getColor(red: 28, green: 28, blue: 31, alpha: 1)
     }
@@ -32,6 +31,10 @@ extension UIColor {
     
     static var secondaryAppColor: UIColor {
         getColor(darkColor: .darkGray, lightColor: .lightGray)
+    }
+    
+    static var thirdAppColor: UIColor {
+        getColor(darkColor: .lightGray, lightColor: .darkGray)
     }
    
     static func getColor(darkColor: UIColor, lightColor: UIColor) -> UIColor {

@@ -13,7 +13,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         setupViewControllers()
         setupTabBar()
-        configureRoundedTabBar()
+//        configureRoundedTabBar()
     }
     
     private func setupViewControllers() {
@@ -28,10 +28,9 @@ class TabBarController: UITabBarController {
     private func createNavigationController(_ controller: UIViewController, withImage imageName: String) -> UINavigationController {
         let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).resizeTo(maxWidth: 30, maxHeight: 30)
         let selectedImage = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).resizeTo(maxWidth: 30, maxHeight: 30)
-        
+       
         let navigationController = UINavigationController(rootViewController: controller)
         navigationController.tabBarItem = UITabBarItem(title: nil, image: image, selectedImage: selectedImage)
-        
         navigationController.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         
         return navigationController
@@ -40,9 +39,10 @@ class TabBarController: UITabBarController {
     private func setupTabBar() {
         tabBar.tintColor = .baseYellow
         tabBar.unselectedItemTintColor = .textColor
-        tabBar.backgroundImage = UIImage()
-        tabBar.shadowImage = UIImage()
-        tabBar.backgroundColor = .clear
+//        tabBar.backgroundImage = UIImage()
+//        tabBar.shadowImage = UIImage()
+//        tabBar.backgroundColor = .clear
+        tabBar.backgroundColor = .appColor
     }
     
 }

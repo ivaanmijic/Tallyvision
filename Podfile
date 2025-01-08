@@ -7,4 +7,5 @@ target 'Tallyvision' do
 
   # Pods for Tallyvision
   pod 'GRDB.swift'
+  pod 'ScrollStackController'
 end

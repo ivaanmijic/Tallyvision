@@ -34,6 +34,8 @@ class HomeViewController: UIViewController {
         return collectionView.forAutoLayout().forAutoLayout()
     }()
     
+    
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -58,6 +60,9 @@ class HomeViewController: UIViewController {
         configureCollectionView()
         configureCompositionalLayout()
     }
+    
+    
+
     
     private func configureCollectionView() {
         view.addSubview(collectionView)
@@ -182,38 +187,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         navigateToDetails(for: selectedShow)
         
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-//        if indexPath.section == 0 {
-//            animateCell(in: collectionView, at: indexPath, scale: 0.95)
-//        }
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-//        if indexPath.section == 0 {
-//            animateCell(in: collectionView, at: indexPath)
-//        }
-//    }
-//    
-//    private func animateCell(in collectionView: UICollectionView, at indexPath: IndexPath, scale: CGFloat? = nil) {
-//        if let cell = collectionView.cellForItem(at: indexPath) as? ShowCell {
-//            UIView.animate(
-//                withDuration: 0.4,
-//                delay: 0,
-//                usingSpringWithDamping: 1,
-//                initialSpringVelocity: 0,
-//                options: .curveEaseIn
-//            ) {
-//                if let scale = scale {
-//                    cell.imageView.transform = .init(scaleX: scale, y: scale)
-//                } else {
-//                    cell.contentView.transform = .identity
-//                }
-//            }
-//        }
-//    }
-    
-    
     
 }
 

@@ -5,6 +5,7 @@
 //  Created by Ivan Mijic on 5. 11. 2024..
 //
 
+
 import Foundation
 
 class TVMazeClient {
@@ -41,6 +42,11 @@ class TVMazeClient {
     
     func fetchCredits(forCastId castId: Int64) async throws -> [CastCredit] {
         let url = URL(string: "\(baseURL)people/\(castId)/castcredits?embed=show")!
+        return try await fetchData(from: url)
+    }
+    
+    func fetchSeason(forShowId showId: Int64) async throws -> [Season] {
+        let url = URL(string: "\(baseURL)/shows/\(showId)/seasons")!
         return try await fetchData(from: url)
     }
     

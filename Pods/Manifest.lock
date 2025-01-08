@@ -2,17 +2,21 @@ PODS:
   - GRDB.swift (6.24.1):
     - GRDB.swift/standard (= 6.24.1)
   - GRDB.swift/standard (6.24.1)
+  - ScrollStackController (1.5.1)
 
 DEPENDENCIES:
   - GRDB.swift
+  - ScrollStackController
 
 SPEC REPOS:
   trunk:
     - GRDB.swift
+    - ScrollStackController
 
 SPEC CHECKSUMS:
   GRDB.swift: 136dcb5d8dddca50aae3ba7d77475f79e7232cd8
+  ScrollStackController: 479ab43ad1364d234fc3ac9b0fe1f3613426fd54
 
-PODFILE CHECKSUM: 6332e4992d3448ec1308cc04a528e18199c52a04
+PODFILE CHECKSUM: f14ff46038cc4e1db5424c90fc3662484b0eaba1
 
 COCOAPODS: 1.16.2

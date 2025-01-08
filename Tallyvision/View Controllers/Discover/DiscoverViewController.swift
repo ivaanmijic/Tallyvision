@@ -33,6 +33,7 @@ class DiscoverViewController: UIViewController {
         controller.searchBar.placeholder = "Find shows"
         controller.obscuresBackgroundDuringPresentation = false
         controller.searchBar.keyboardType = .default
+        controller.searchBar.backgroundColor = .appColor
         return controller
     }()
     
@@ -79,8 +80,6 @@ class DiscoverViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
-        navigationController?.toolbar.backgroundColor = .appColor
-        navigationController?.navigationBar.backgroundColor = .appColor
     }
    
     private func setupUI() {
@@ -279,3 +278,19 @@ extension DiscoverViewController {
     
     
 }
+
+
+//extension DiscoverViewController: UIScrollViewDelegate {
+//    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        guard let headerView = tableView.headerView(forSection: 0) else { return }
+//        headerView.isHidden = true
+//        if scrollView.contentOffset.y <= 0 {
+//            headerView.isHidden = false
+//        }
+//    }
+//    
+//}
+
+
+

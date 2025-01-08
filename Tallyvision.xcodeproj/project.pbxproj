@@ -42,8 +42,10 @@
 		FC6459942CFDFEB000809245 /* Date+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6459932CFDFEB000809245 /* Date+Operators.swift */; };
 		FC81954E2D10662A006D1CDF /* CastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC81954D2D10662A006D1CDF /* CastService.swift */; };
 		FC9CEC112D2E6D9C00F09992 /* SearchResultsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CEC102D2E6D9C00F09992 /* SearchResultsHeaderView.swift */; };
+		FC9CEC132D2E814600F09992 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CEC122D2E814600F09992 /* AppButton.swift */; };
 		FCA028AB2D084341002FC29B /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA028AA2D084341002FC29B /* IntroductionView.swift */; };
 		FCA028AD2D0853B5002FC29B /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA028AC2D0853B5002FC29B /* PaddingLabel.swift */; };
+		FCA736482D2EE77600ABE551 /* SeasonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA736472D2EE77600ABE551 /* SeasonService.swift */; };
 		FCB2C07C2D0049E100456CF4 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB2C07B2D0049E100456CF4 /* AppConstants.swift */; };
 		FCB2C0802D009A0E00456CF4 /* RedHatDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB2C07F2D009A0D00456CF4 /* RedHatDisplay-Bold.ttf */; };
 		FCB2C0842D009A2200456CF4 /* RedHatDisplay-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB2C0812D009A2200456CF4 /* RedHatDisplay-SemiBold.ttf */; };
@@ -117,8 +119,10 @@
 		FC6459932CFDFEB000809245 /* Date+Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Operators.swift"; sourceTree = "<group>"; };
 		FC81954D2D10662A006D1CDF /* CastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastService.swift; sourceTree = "<group>"; };
 		FC9CEC102D2E6D9C00F09992 /* SearchResultsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsHeaderView.swift; sourceTree = "<group>"; };
+		FC9CEC122D2E814600F09992 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		FCA028AA2D084341002FC29B /* IntroductionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
 		FCA028AC2D0853B5002FC29B /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		FCA736472D2EE77600ABE551 /* SeasonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonService.swift; sourceTree = "<group>"; };
 		FCB2C07B2D0049E100456CF4 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		FCB2C07F2D009A0D00456CF4 /* RedHatDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Bold.ttf"; sourceTree = "<group>"; };
 		FCB2C0812D009A2200456CF4 /* RedHatDisplay-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -385,6 +389,7 @@
 				FCEBB31A2D12AF6900EAE4B7 /* ShowTitleView.swift */,
 				FC44685C2D1310B5004CFAB2 /* HorizontalLine.swift */,
 				FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */,
+				FC9CEC122D2E814600F09992 /* AppButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -458,6 +463,7 @@
 				FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */,
 				FC81954D2D10662A006D1CDF /* CastService.swift */,
 				FC4D183A2D2D790C00B88C39 /* SearchService.swift */,
+				FCA736472D2EE77600ABE551 /* SeasonService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -668,6 +674,7 @@
 				FC038A932D244825006FBB14 /* CastCredit.swift in Sources */,
 				FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */,
 				FCBB94912CFF028A0097B766 /* ShowDetailsViewController.swift in Sources */,
+				FC9CEC132D2E814600F09992 /* AppButton.swift in Sources */,
 				FCD7CFFC2CEB7E4800A3B18F /* DotsIndicatorView.swift in Sources */,
 				FCCDF3922D22E9DE00B6DDAB /* UIImageView+Extension.swift in Sources */,
 				FCB2C07C2D0049E100456CF4 /* AppConstants.swift in Sources */,
@@ -711,6 +718,7 @@
 				FC5209C52D19B371001A3180 /* UIViewController+Extension.swift in Sources */,
 				FCF77A242CD0DF2000456132 /* Database.swift in Sources */,
 				FC5322222CC8F4B1001BCC3D /* TabBarController.swift in Sources */,
+				FCA736482D2EE77600ABE551 /* SeasonService.swift in Sources */,
 				FC4B3BD42CE4E7E70055ECAF /* String+HTMLParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,17 +11,21 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
-    var show: Show
+    var show: Show    
     var showCast = [ShowCast]()
     var cast = [Person]()
+    var seasons = [Season]()
     
     var castService: CastService!
+    var seasonService: SeasonService!
+    
+    var previousOffset: CGFloat = 0
+    var isSaveButtonVisible = false
     
     // MARK: - Constructors
     init(show: Show) {
         self.show = show
         super.init(nibName: nil, bundle: nil)
-        self.updateImage()
         log.info("Loaded show with ID: \(show.showId)")
     }
     
@@ -64,6 +68,15 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         return collectionView.forAutoLayout()
     }()
     
+    lazy var saveButton: AppButton = {
+        let button = AppButton(color: .baseYellow, image: UIImage(systemName: "bookmark.fill")!, frame: .zero)
+        button.alpha = 0.0
+        button.label.textColor = .textColor
+        return button.forAutoLayout()
+    }()
+    
+   
+    
     lazy var transparentMaskView = UIView().forAutoLayout()
     // MARK: - Lifecycle
     
@@ -84,20 +97,35 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         setupBackgroundImage()
         configureCollectionView()
         configureCompositionalLayout()
+        setupButtons()
     }
     
     private func setupServices() {
         castService = CastService(httpClinet: TVMazeClient())
+        seasonService = SeasonService(httpClient: TVMazeClient())
     }
     
     
     private func setupBackgroundImage() {
+        backgroundImage.configure(image: show.image?.original)
         view.addSubview(backgroundImage)
         NSLayoutConstraint.activate([
             backgroundImage.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             backgroundImage.heightAnchor.constraint(equalToConstant: AppConstants.screenWidth * AppConstants.posterImageRatio)
+        ])
+    }
+    
+    private func setupButtons() {
+        view.addSubview(saveButton)
+        saveButton.configure(title: "Add to Watchlist")
+        NSLayoutConstraint.activate([
+            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 84),
+            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            saveButton.heightAnchor.constraint(equalToConstant: 50),
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
     }
     
@@ -129,28 +157,31 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private func updateUI() {
         Task {
+            await updateSeasons()
             await updateCast()
-            collectionView.reloadData()
+            reloadData()
         }
     }
     
     private func updateCast() async {
         do {
             (cast, showCast) = try await castService.getCastForShow(withId: show.showId)
-            for member in cast {
-                log.info(member.name)
-            }
         } catch {
             log.error("Error fetching cast:\n \(error)")
         }
     }
     
-    
-    private func updateImage() {
-        guard let imageURL = show.image?.original, let sd_imageURL = URL(string: imageURL) else { return }
-        backgroundImage.sd_setImage(with: sd_imageURL)
+    private func updateSeasons() async {
+        do {
+            seasons = try await seasonService.getSeasonsFowShow(withId: show.showId)
+        } catch {
+            log.error("Error fething seasons:\n \(error)" )
+        }
     }
-        
+    
+    func reloadData() {
+        collectionView.reloadData()
+    }
     
 }
 
@@ -200,7 +231,7 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
                 withReuseIdentifier: ShowMetadataView.reuseIdentifier,
                 for: indexPath
             ) as? ShowMetadataView else { break }
-            footer.configure(with: show)
+            footer.configure(with: show, seasons)
             return footer
             
         case UICollectionView.elementKindSectionHeader where indexPath.section == 1:
@@ -229,10 +260,38 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
 
 // MARK: - UIScrollViewDelegate
 
-//extension ShowDetailsViewController: UIScrollViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height {
-//            scrollView.contentOffset.y = scrollView.contentSize.height - scrollView.bounds.size.height
-//        }
-//    }
-//}
+extension ShowDetailsViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let scrollViewHeight = scrollView.bounds.height
+        
+        if offsetY + scrollViewHeight >= contentHeight - 50 {
+            if !isSaveButtonVisible {
+                showSaveButton()
+            }
+        } else {
+            if isSaveButtonVisible {
+                hideSaveButton()
+            }
+        }
+    }
+    
+    func showSaveButton() {
+        isSaveButtonVisible = true
+        UIView.animate(withDuration: 0.3) {
+            self.saveButton.alpha = 1.0
+            self.saveButton.transform = CGAffineTransform(translationX: 0, y: -100)
+        }
+    }
+    
+    func hideSaveButton() {
+        isSaveButtonVisible = false
+        UIView.animate(withDuration: 0.3) {
+            self.saveButton.alpha = 0.0
+            self.saveButton.transform = .identity
+        }
+    }
+    
+}
