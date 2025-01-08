@@ -49,7 +49,7 @@ class ScheduleService {
         let episodes = try await fetchEpisodes(forDaysToFetch: daysToFetch, startingFrom: direction)
         
         return episodes.compactMap { $0.show }
-            .filter { dates.contains($0.premiereDate) }
+            .filter { dates.contains($0.premiereDate ?? "Unknown") }
         
     }
     

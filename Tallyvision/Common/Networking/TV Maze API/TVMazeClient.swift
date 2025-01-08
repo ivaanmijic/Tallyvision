@@ -43,6 +43,11 @@ class TVMazeClient {
         let url = URL(string: "\(baseURL)people/\(castId)/castcredits?embed=show")!
         return try await fetchData(from: url)
     }
+    
+    func fetchShows(forQuery query: String) async throws -> [SearchResponse] {
+        let url = URL(string: "\(baseURL)search/shows?q=\(query)")!
+        return try await fetchData(from: url)
+    }
    
     private func fetchData<Data: Decodable>(from url: URL) async throws -> Data {
         do {

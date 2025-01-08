@@ -19,7 +19,7 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
     var genres: [String]
     var status: String
     var averageRuntime: Int64?
-    var premiereDate: String
+    var premiereDate: String?
     var endDate: String?
     var officialSite: String?
     var schedule: Schedule
@@ -58,7 +58,7 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
         self.genres = try container.decode([String].self, forKey: .genres)
         self.status = try container.decode(String.self, forKey: .status)
         self.averageRuntime = try container.decodeIfPresent(Int64.self, forKey: .averageRuntime)
-        self.premiereDate = try container.decode(String.self, forKey: .premiereDate)
+        self.premiereDate = try container.decodeIfPresent(String.self, forKey: .premiereDate)
         self.endDate = try container.decodeIfPresent(String.self, forKey: .endDate)
         self.officialSite = try container.decodeIfPresent(String.self, forKey: .officialSite)
         self.schedule = try container.decode(Schedule.self, forKey: .schedule)

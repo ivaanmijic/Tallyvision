@@ -35,19 +35,19 @@ class ShowTableViewCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel.appLabel( fontSize: 20, fontStyle: "SemiBold").forAutoLayout()
-        label.numberOfLines = 1
+        label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
         return label.forAutoLayout()
     }()
 
-    private lazy var infoLabel: UILabel = {
+    private lazy var firstSubtitleLabel: UILabel = {
         let label = UILabel.appLabel( fontSize: 16, fontStyle: "Regular", alpha: 0.7).forAutoLayout()
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         return label.forAutoLayout()
     }()
 
-    private lazy var castLabel: UILabel = {
+    private lazy var secondSubtitleLabel: UILabel = {
         let label = UILabel.appLabel( fontSize: 16, fontStyle: "Regular", alpha: 0.5).forAutoLayout()
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
@@ -70,8 +70,8 @@ class ShowTableViewCell: UITableViewCell {
         contentView.addSubview(cellView)
         cellView.addSubview(poster)
         cellView.addSubview(titleLabel)
-        cellView.addSubview(infoLabel)
-        cellView.addSubview(castLabel)
+        cellView.addSubview(firstSubtitleLabel)
+        cellView.addSubview(secondSubtitleLabel)
         cellView.addSubview(ratingLabel)
     }
     
@@ -99,14 +99,14 @@ class ShowTableViewCell: UITableViewCell {
                 titleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
                 titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: ratingLabel.leadingAnchor, constant: -10),
 
-                infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 1),
-                infoLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
-                infoLabel.trailingAnchor.constraint(lessThanOrEqualTo: cellView.trailingAnchor, constant: -10),
+                firstSubtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 1),
+                firstSubtitleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
+                firstSubtitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: cellView.trailingAnchor, constant: -10),
 
-                castLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 5),
-                castLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
-                castLabel.trailingAnchor.constraint(lessThanOrEqualTo: cellView.trailingAnchor, constant: -10),
-                castLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10)
+                secondSubtitleLabel.topAnchor.constraint(equalTo: firstSubtitleLabel.bottomAnchor, constant: 5),
+                secondSubtitleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
+                secondSubtitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: cellView.trailingAnchor, constant: -10),
+                secondSubtitleLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10)
         ])
     }
     
@@ -117,14 +117,18 @@ class ShowTableViewCell: UITableViewCell {
         poster.configure(image: show.image?.medium, placeholder: "placeholder")
         titleLabel.text = show.title
         
-        let premiereYear = show.premiereDate.prefix(4)
-        let endYear = show.endDate?.prefix(4) ?? "Present"
-        let genres = show.genres.joined(separator: ", ")
-        infoLabel.text = "(\(premiereYear) - \(endYear))\t\(genres)"
+        if let premiereDate = show.premiereDate {
+            let premierYear = premiereDate.prefix(4)
+            let endYear = show.endDate?.prefix(4) ?? "Present"
+            firstSubtitleLabel.text = "\(premierYear) - \(endYear)"
+        }
         
-        let formattedRating = show.rating.map { String(format: "%.1f", $0) }
-        if let rating = formattedRating {
-            ratingLabel.configure(icon: UIImage(systemName: "star.fill"), withColor: .baseYellow, text: rating)
+        let genres = show.genres.joined(separator: ", ")
+        let secondSubtitle = genres.count != 0 ? "\(genres)" : "\(show.type)"
+        secondSubtitleLabel.text = secondSubtitle
+        
+        if let rating = show.rating {
+            ratingLabel.configure(icon: UIImage(systemName: "star.fill"), withColor: .baseYellow, text: String("\(rating)"))
         }
     }
     
