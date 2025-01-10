@@ -46,7 +46,7 @@ class TVMazeClient {
     }
     
     func fetchSeason(forShowId showId: Int64) async throws -> [Season] {
-        let url = URL(string: "\(baseURL)/shows/\(showId)/seasons")!
+        let url = URL(string: "\(baseURL)shows/\(showId)/seasons")!
         return try await fetchData(from: url)
     }
     
@@ -63,6 +63,7 @@ class TVMazeClient {
                 throw NetworkError.badResponse(statusCode: statusCode)
             }
             let decodedData = try JSONDecoder().decode(Data.self, from: data)
+            log.info("Decoded data type: \(type(of: decodedData))")
             return decodedData
         } catch let decodingError as DecodingError {
             throw NetworkError.decodingError(decodingError)

@@ -1,12 +1,12 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/GRDB.swift" "${PODS_CONFIGURATION_BUILD_DIR}/ScrollStackController"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/GRDB.swift" "${PODS_CONFIGURATION_BUILD_DIR}/Pageboy" "${PODS_CONFIGURATION_BUILD_DIR}/ScrollingStackViewController" "${PODS_CONFIGURATION_BUILD_DIR}/Tabman"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/GRDB.swift/GRDB.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ScrollStackController/ScrollStackController.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/GRDB.swift/GRDB.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Pageboy/Pageboy.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ScrollingStackViewController/ScrollingStackViewController.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Tabman/Tabman.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift '@executable_path/Frameworks' '@loader_path/Frameworks'
 LIBRARY_SEARCH_PATHS = $(inherited) "${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
-OTHER_LDFLAGS = $(inherited) -l"sqlite3" -framework "Foundation" -framework "GRDB" -framework "ScrollStackController" -framework "UIKit"
-OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/GRDB.swift" "-F${PODS_CONFIGURATION_BUILD_DIR}/ScrollStackController"
+OTHER_LDFLAGS = $(inherited) -l"sqlite3" -framework "Foundation" -framework "GRDB" -framework "Pageboy" -framework "ScrollingStackViewController" -framework "Tabman"
+OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/GRDB.swift" "-F${PODS_CONFIGURATION_BUILD_DIR}/Pageboy" "-F${PODS_CONFIGURATION_BUILD_DIR}/ScrollingStackViewController" "-F${PODS_CONFIGURATION_BUILD_DIR}/Tabman"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS $(inherited) -D SQLITE_ENABLE_FTS5
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

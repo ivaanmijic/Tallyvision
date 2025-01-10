@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "scrollstackcontroller",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/malcommac/ScrollStackController.git",
+      "state" : {
+        "revision" : "8ada87d10a486a8222c005d38a68554af2161ca8",
+        "version" : "1.8.0"
+      }
+    },
+    {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage",

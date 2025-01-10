@@ -2,21 +2,29 @@ PODS:
   - GRDB.swift (6.24.1):
     - GRDB.swift/standard (= 6.24.1)
   - GRDB.swift/standard (6.24.1)
-  - ScrollStackController (1.5.1)
+  - Pageboy (4.2.0)
+  - ScrollingStackViewController (6.0.0)
+  - Tabman (3.2.0):
+    - Pageboy (~> 4.2.0)
 
 DEPENDENCIES:
   - GRDB.swift
-  - ScrollStackController
+  - ScrollingStackViewController
+  - Tabman
 
 SPEC REPOS:
   trunk:
     - GRDB.swift
-    - ScrollStackController
+    - Pageboy
+    - ScrollingStackViewController
+    - Tabman
 
 SPEC CHECKSUMS:
   GRDB.swift: 136dcb5d8dddca50aae3ba7d77475f79e7232cd8
-  ScrollStackController: 479ab43ad1364d234fc3ac9b0fe1f3613426fd54
+  Pageboy: 7f7886f61c76633df635861bf7839caf2cabdb3e
+  ScrollingStackViewController: b2c7184197705db2681c6071c6c5aecdde73569b
+  Tabman: 49f9181a2bfe5c29d002864dac2de8e0b7ea9180
 
-PODFILE CHECKSUM: f14ff46038cc4e1db5424c90fc3662484b0eaba1
+PODFILE CHECKSUM: d6cd9374a05442e99e4029a2ea58b5e3cb960ea1
 
 COCOAPODS: 1.16.2

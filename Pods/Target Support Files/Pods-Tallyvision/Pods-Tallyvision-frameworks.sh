@@ -177,11 +177,15 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/ScrollStackController/ScrollStackController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ScrollingStackViewController/ScrollingStackViewController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/ScrollStackController/ScrollStackController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ScrollingStackViewController/ScrollingStackViewController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

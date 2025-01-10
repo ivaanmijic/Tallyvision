@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AlertKit
 
 class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -36,8 +37,7 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - UI Components
     
     lazy var backButton: TransparentButton = {
-        let button = TransparentButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        let button = TransparentButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
         return button
@@ -54,9 +54,9 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         collectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.identifier)
         
         collectionView.register(
-            ShowMetadataView.self,
+            ShowOveriewView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: ShowMetadataView.reuseIdentifier
+            withReuseIdentifier: ShowOveriewView.reuseIdentifier
         )
         
         collectionView.register(
@@ -167,7 +167,7 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         do {
             (cast, showCast) = try await castService.getCastForShow(withId: show.showId)
         } catch {
-            log.error("Error fetching cast:\n \(error)")
+            displayError(error)
         }
     }
     
@@ -175,12 +175,23 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
         do {
             seasons = try await seasonService.getSeasonsFowShow(withId: show.showId)
         } catch {
-            log.error("Error fething seasons:\n \(error)" )
+            log.error("Error fetching seasons\n: \(error)")
+            displayError(error)
         }
     }
     
-    func reloadData() {
+    private func reloadData() {
         collectionView.reloadData()
+    }
+    
+    private func displayError(_ error: Error) {
+        if let error = error as? NetworkError {
+            AlertKitAPI.present(
+                title: error.localizedDescription,
+                icon: .error,
+                style: .iOS17AppleMusic
+            )
+        }
     }
     
 }
@@ -204,6 +215,7 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
+           
             
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCell.identifier, for: indexPath) as? CastCell else {
@@ -228,10 +240,10 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
         case UICollectionView.elementKindSectionFooter where indexPath.section == 0:
             guard let footer = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: ShowMetadataView.reuseIdentifier,
+                withReuseIdentifier: ShowOveriewView.reuseIdentifier,
                 for: indexPath
-            ) as? ShowMetadataView else { break }
-            footer.configure(with: show, seasons)
+            ) as? ShowOveriewView else { break }
+            footer.configure(withShow: show, seasons: seasons)
             return footer
             
         case UICollectionView.elementKindSectionHeader where indexPath.section == 1:

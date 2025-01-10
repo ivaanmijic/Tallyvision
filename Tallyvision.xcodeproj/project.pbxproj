@@ -20,6 +20,7 @@
 		FC4AA03B2CF5BC9C00A67A74 /* ShowCardsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AA03A2CF5BC9C00A67A74 /* ShowCardsCell.swift */; };
 		FC4B3BC72CE4962C0055ECAF /* BlurredImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */; };
 		FC4B3BD42CE4E7E70055ECAF /* String+HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BD32CE4E7E70055ECAF /* String+HTMLParser.swift */; };
+		FC4C17EB2D315FE800DB7CC7 /* ScrollStackController in Frameworks */ = {isa = PBXBuildFile; productRef = FC4C17EA2D315FE800DB7CC7 /* ScrollStackController */; };
 		FC4D182F2D2D2FCE00B88C39 /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */; };
 		FC4D18332D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D18322D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift */; };
 		FC4D18392D2D789300B88C39 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D18382D2D789300B88C39 /* SearchResponse.swift */; };
@@ -43,7 +44,7 @@
 		FC81954E2D10662A006D1CDF /* CastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC81954D2D10662A006D1CDF /* CastService.swift */; };
 		FC9CEC112D2E6D9C00F09992 /* SearchResultsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CEC102D2E6D9C00F09992 /* SearchResultsHeaderView.swift */; };
 		FC9CEC132D2E814600F09992 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CEC122D2E814600F09992 /* AppButton.swift */; };
-		FCA028AB2D084341002FC29B /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA028AA2D084341002FC29B /* IntroductionView.swift */; };
+		FCA028AB2D084341002FC29B /* StorylineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA028AA2D084341002FC29B /* StorylineView.swift */; };
 		FCA028AD2D0853B5002FC29B /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA028AC2D0853B5002FC29B /* PaddingLabel.swift */; };
 		FCA736482D2EE77600ABE551 /* SeasonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA736472D2EE77600ABE551 /* SeasonService.swift */; };
 		FCB2C07C2D0049E100456CF4 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB2C07B2D0049E100456CF4 /* AppConstants.swift */; };
@@ -75,7 +76,7 @@
 		FCEBB31D2D12C07F00EAE4B7 /* CastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEBB31C2D12C07F00EAE4B7 /* CastCell.swift */; };
 		FCEBB31F2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEBB31E2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift */; };
 		FCECD0182D11675200214673 /* TabBarController+RoundedTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCECD0172D11675200214673 /* TabBarController+RoundedTabBar.swift */; };
-		FCECD01F2D116BBF00214673 /* ShowMetadataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCECD01E2D116BBF00214673 /* ShowMetadataView.swift */; };
+		FCECD01F2D116BBF00214673 /* ShowOveriewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCECD01E2D116BBF00214673 /* ShowOveriewView.swift */; };
 		FCEDE2662CEC7FD900B4C0F8 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEDE2652CEC7FD900B4C0F8 /* ShowCell.swift */; };
 		FCF77A202CD0D12D00456132 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A1F2CD0D12D00456132 /* Show.swift */; };
 		FCF77A242CD0DF2000456132 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A232CD0DF2000456132 /* Database.swift */; };
@@ -120,7 +121,7 @@
 		FC81954D2D10662A006D1CDF /* CastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastService.swift; sourceTree = "<group>"; };
 		FC9CEC102D2E6D9C00F09992 /* SearchResultsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsHeaderView.swift; sourceTree = "<group>"; };
 		FC9CEC122D2E814600F09992 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
-		FCA028AA2D084341002FC29B /* IntroductionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
+		FCA028AA2D084341002FC29B /* StorylineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorylineView.swift; sourceTree = "<group>"; };
 		FCA028AC2D0853B5002FC29B /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		FCA736472D2EE77600ABE551 /* SeasonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonService.swift; sourceTree = "<group>"; };
 		FCB2C07B2D0049E100456CF4 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
@@ -150,7 +151,7 @@
 		FCEBB31C2D12C07F00EAE4B7 /* CastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCell.swift; sourceTree = "<group>"; };
 		FCEBB31E2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSupplementaryView.swift; sourceTree = "<group>"; };
 		FCECD0172D11675200214673 /* TabBarController+RoundedTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+RoundedTabBar.swift"; sourceTree = "<group>"; };
-		FCECD01E2D116BBF00214673 /* ShowMetadataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMetadataView.swift; sourceTree = "<group>"; };
+		FCECD01E2D116BBF00214673 /* ShowOveriewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOveriewView.swift; sourceTree = "<group>"; };
 		FCEDE2652CEC7FD900B4C0F8 /* ShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
 		FCF77A1F2CD0D12D00456132 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		FCF77A232CD0DF2000456132 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
@@ -165,6 +166,7 @@
 				FCC679E02CC8E04500050D65 /* SDWebImageMapKit in Frameworks */,
 				FCCBAF6D2CF87A78000F75BD /* AlertKit in Frameworks */,
 				FCC679DB2CC8E01F00050D65 /* SwiftyBeaver in Frameworks */,
+				FC4C17EB2D315FE800DB7CC7 /* ScrollStackController in Frameworks */,
 				1352530FDBC3329E91129D6D /* Pods_Tallyvision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,7 +211,7 @@
 		FC4468612D131401004CFAB2 /* Reusable Views */ = {
 			isa = PBXGroup;
 			children = (
-				FCECD01E2D116BBF00214673 /* ShowMetadataView.swift */,
+				FCECD01E2D116BBF00214673 /* ShowOveriewView.swift */,
 				FCEBB31E2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift */,
 				FC5C79332CF6FDC90016BB87 /* SectionTitleReusableView.swift */,
 			);
@@ -385,7 +387,7 @@
 				FCBB94932CFF11D70097B766 /* TransparentButton.swift */,
 				FCB2C0892D009DB300456CF4 /* DecoratedLabel.swift */,
 				FCA028AC2D0853B5002FC29B /* PaddingLabel.swift */,
-				FCA028AA2D084341002FC29B /* IntroductionView.swift */,
+				FCA028AA2D084341002FC29B /* StorylineView.swift */,
 				FCEBB31A2D12AF6900EAE4B7 /* ShowTitleView.swift */,
 				FC44685C2D1310B5004CFAB2 /* HorizontalLine.swift */,
 				FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */,
@@ -553,6 +555,7 @@
 				FCC679DD2CC8E04500050D65 /* SDWebImage */,
 				FCC679DF2CC8E04500050D65 /* SDWebImageMapKit */,
 				FCCBAF6C2CF87A78000F75BD /* AlertKit */,
+				FC4C17EA2D315FE800DB7CC7 /* ScrollStackController */,
 			);
 			productName = Tallyvision;
 			productReference = FCC679BC2CC8D4BC00050D65 /* Tallyvision.app */;
@@ -586,6 +589,7 @@
 				FCC679D92CC8E01F00050D65 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				FCC679DC2CC8E04500050D65 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				FCCBAF6B2CF87A78000F75BD /* XCRemoteSwiftPackageReference "AlertKit" */,
+				FC4C17E92D315FE800DB7CC7 /* XCRemoteSwiftPackageReference "ScrollStackController" */,
 			);
 			productRefGroup = FCC679BD2CC8D4BC00050D65 /* Products */;
 			projectDirPath = "";
@@ -681,12 +685,12 @@
 				FC44685D2D1310B5004CFAB2 /* HorizontalLine.swift in Sources */,
 				FC5C79342CF6FDC90016BB87 /* SectionTitleReusableView.swift in Sources */,
 				FCD0B4CA2CDA0E3A0042E05C /* Image.swift in Sources */,
-				FCECD01F2D116BBF00214673 /* ShowMetadataView.swift in Sources */,
+				FCECD01F2D116BBF00214673 /* ShowOveriewView.swift in Sources */,
 				FCEBB31D2D12C07F00EAE4B7 /* CastCell.swift in Sources */,
 				FC359CA72D098863004E9D95 /* Person.swift in Sources */,
 				FC53223C2CC92DA2001BCC3D /* UIView+Extensions.swift in Sources */,
 				FC5322262CC8F817001BCC3D /* UIImage+Resize.swift in Sources */,
-				FCA028AB2D084341002FC29B /* IntroductionView.swift in Sources */,
+				FCA028AB2D084341002FC29B /* StorylineView.swift in Sources */,
 				FC0366D52CE33DFF003EBE4A /* ShowCardView.swift in Sources */,
 				FC5322312CC8FB5D001BCC3D /* StatisticsViewController.swift in Sources */,
 				FCD0B4D52CDA29630042E05C /* NetworkError.swift in Sources */,
@@ -927,6 +931,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FC4C17E92D315FE800DB7CC7 /* XCRemoteSwiftPackageReference "ScrollStackController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/ScrollStackController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.0;
+			};
+		};
 		FCC679D92CC8E01F00050D65 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver";
@@ -954,6 +966,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FC4C17EA2D315FE800DB7CC7 /* ScrollStackController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC4C17E92D315FE800DB7CC7 /* XCRemoteSwiftPackageReference "ScrollStackController" */;
+			productName = ScrollStackController;
+		};
 		FCC679DA2CC8E01F00050D65 /* SwiftyBeaver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FCC679D92CC8E01F00050D65 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
