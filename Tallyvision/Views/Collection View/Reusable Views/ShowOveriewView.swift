@@ -8,8 +8,14 @@
 import UIKit
 import AlertKit
 
+protocol ShowOveriewDelegate: AnyObject {
+    func presentEpisodes()
+}
+
 class ShowOveriewView: UICollectionReusableView {
     // MARK: - Properties
+    
+    weak var delegate: ShowOveriewDelegate?
     
     var show: Show?
     var seasons: [Season]?
@@ -58,9 +64,10 @@ class ShowOveriewView: UICollectionReusableView {
     
     lazy var episodesButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.titleLabel?.font = UIFont(name: "RedHatDisplay-Regular", size: 18)
+        button.titleLabel?.font = UIFont(name: "RedHatDisplay-SemiBold", size: 18)
         button.setTitleColor(.baseYellow, for: .normal)
         button.setTitle("See All", for: .normal)
+        button.addTarget(self, action: #selector(presentEpisodes), for: .touchUpInside)
         return button.forAutoLayout()
     }()
     
@@ -244,6 +251,10 @@ class ShowOveriewView: UICollectionReusableView {
     }
     
     // MARK: - Actions
+    
+    @objc private func presentEpisodes() {
+        delegate?.presentEpisodes()
+    }
     
     @objc private func openURL() {
         guard let urlString = show?.officialSite,

@@ -9,7 +9,6 @@ import UIKit
 import AlertKit
 
 class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
-    
     // MARK: - Properties
     
     var show: Show    
@@ -104,7 +103,6 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         castService = CastService(httpClinet: TVMazeClient())
         seasonService = SeasonService(httpClient: TVMazeClient())
     }
-    
     
     private func setupBackgroundImage() {
         backgroundImage.configure(image: show.image?.original)
@@ -242,6 +240,7 @@ extension ShowViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 withReuseIdentifier: ShowOveriewView.reuseIdentifier,
                 for: indexPath
             ) as? ShowOveriewView else { break }
+            footer.delegate = self
             footer.configure(withShow: show, seasons: seasons)
             return footer
             
@@ -281,7 +280,13 @@ extension ShowViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 // CastViewControllerDelegate
 
-extension ShowViewController: CastViewControllerDelegate {
+extension ShowViewController: CastViewControllerDelegate, ShowOveriewDelegate {
+    
+    func presentEpisodes() {
+        let episodesVC = EpisodesViewController()
+        let episodesNavigationVC = UINavigationController(rootViewController: episodesVC)
+        present(episodesNavigationVC, animated: true)
+    }
    
     func pushShowViewController(for show: Show) {
         navigateToDetails(for: show)

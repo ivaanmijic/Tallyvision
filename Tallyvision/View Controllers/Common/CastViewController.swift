@@ -50,7 +50,8 @@ class CastViewController: UIViewController {
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-        
+       
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
         collectionView.register(
             SectionTitleReusableView.self,
@@ -85,7 +86,7 @@ class CastViewController: UIViewController {
     
     
     private func setupUI() {
-        view.backgroundColor = .appColor
+        view.backgroundColor = .secondaryAppColor
         addSubviews()
         configureCollectionView()
         configureCompositionalLayout()
@@ -99,7 +100,7 @@ class CastViewController: UIViewController {
     }
     
     private func configureCollectionView() {
-        collectionView.backgroundColor = .appColor
+        collectionView.backgroundColor = .secondaryAppColor
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -118,13 +119,13 @@ class CastViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             profileImageView.widthAnchor.constraint(equalToConstant: imageWidth),
             profileImageView.heightAnchor.constraint(equalToConstant: imageHeight),
             
             contentStackView.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
             contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            contentStackView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
+            contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             
             collectionView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 16),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
