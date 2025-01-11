@@ -6,8 +6,15 @@
 //
 
 import UIKit
+import Vision
 
-class CastDetailsViewController: UIViewController {
+protocol CastViewControllerDelegate: AnyObject {
+    func pushShowViewController(for show: Show)
+}
+
+class CastViewController: UIViewController {
+    
+    weak var delegate: CastViewControllerDelegate?
     
     var actor: Person
     var shows = [Show]()
@@ -16,33 +23,7 @@ class CastDetailsViewController: UIViewController {
     
     // MARK: UI Components
     
-    private lazy var backButton: TransparentButton = {
-        let button = TransparentButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var saveButton: TransparentButton = {
-        let button = TransparentButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        button.setImage(UIImage(systemName: "heart"), for: .normal)
-//        button.addTarget(self, action: #selector(goBack), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var blurredImage = BlurredImageView().forAutoLayout()
-    
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .appColor
-        view.layer.cornerRadius = 40
-        view.layer.masksToBounds = true
-        return view.forAutoLayout()
-    }()
-    
-    private lazy var actorImage: UIImageView = {
+    private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
@@ -51,19 +32,21 @@ class CastDetailsViewController: UIViewController {
     }()
     
     private lazy var nameLabel: UILabel = {
-        let label = UILabel.appLabel(fontSize: 32, fontStyle: "bold")
-        label.textAlignment = .center
+        let label = UILabel.appLabel(fontSize: 24, fontStyle: "bold")
+        label.textAlignment = .left
+        label.numberOfLines = 0
         return label.forAutoLayout()
     }()
     
-    private lazy var stackView: UIStackView = {
+    private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 16
+        stackView.spacing = 8
         stackView.alignment = .leading
-        
+        stackView.distribution = .fillProportionally
         return stackView.forAutoLayout()
     }()
+    
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
@@ -78,7 +61,7 @@ class CastDetailsViewController: UIViewController {
         return collectionView.forAutoLayout()
     }()
     
-    // MARK: - Constructors
+    // MARK: - Intializers
     
     init(actor: Person) {
         self.actor = actor
@@ -97,13 +80,9 @@ class CastDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
         setupUI()
     }
     
-    private func setupNavigationBar() {
-        navigationController?.configureNavigationBar(leftButton: backButton, rightButton: saveButton, target: self)
-    }
     
     private func setupUI() {
         view.backgroundColor = .appColor
@@ -112,13 +91,11 @@ class CastDetailsViewController: UIViewController {
         configureCompositionalLayout()
         activateConstraints()
     }
+    
     private func addSubviews() {
-        view.addSubview(blurredImage)
-        view.addSubview(contentView)
-        view.addSubview(actorImage)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(collectionView)
-        contentView.addSubview(stackView)
+        view.addSubview(profileImageView)
+        view.addSubview(contentStackView)
+        view.addSubview(collectionView)
     }
     
     private func configureCollectionView() {
@@ -134,42 +111,30 @@ class CastDetailsViewController: UIViewController {
         collectionView.setCollectionViewLayout(layout, animated: true)
     }
     
+    
     private func activateConstraints() {
-        let imageWidth = AppConstants.screenWidth / 2
+        let imageWidth = AppConstants.screenWidth * 0.3
+        let imageHeight = imageWidth * AppConstants.posterImageRatio
+        
         NSLayoutConstraint.activate([
-            blurredImage.topAnchor.constraint(equalTo: view.topAnchor),
-            blurredImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blurredImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            blurredImage.heightAnchor.constraint(equalToConstant: AppConstants.screenWidth * AppConstants.posterImageRatio),
+            profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            profileImageView.widthAnchor.constraint(equalToConstant: imageWidth),
+            profileImageView.heightAnchor.constraint(equalToConstant: imageHeight),
             
-            contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: AppConstants.screenHeight * 0.6),
+            contentStackView.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
+            contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            contentStackView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
             
-            actorImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            actorImage.widthAnchor.constraint(equalToConstant: imageWidth),
-            actorImage.heightAnchor.constraint(equalToConstant: imageWidth * AppConstants.posterImageRatio),
-            actorImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20),
-            
-            nameLabel.topAnchor.constraint(equalTo: actorImage.bottomAnchor, constant: 24),
-            nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            nameLabel.widthAnchor.constraint(equalToConstant: AppConstants.screenWidth * 0.6),
-            
-            collectionView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
-            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: AppConstants.posterHeight + 40),
-            
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor),
-            stackView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 16),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40)
+            collectionView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 16),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
         ])
     }
     
     // MARK: UI Update
-   
+    
     private func updateUI() {
         updateImage()
         updateLabels()
@@ -183,55 +148,51 @@ class CastDetailsViewController: UIViewController {
     
     private func updateImage() {
         let image = actor.image?.original
-        blurredImage.configure(image: image)
-        actorImage.configure(image: image, placeholder: "placeholder")
+        profileImageView.configure(image: image, placeholder: "placeholder")
     }
     
     private func updateLabels() {
+        contentStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
         nameLabel.text = actor.name
+        contentStackView.addArrangedSubview(nameLabel)
         
         if let gender = actor.gender {
-            stackView.addArrangedSubview(createKeyValueLabel(key: "Gender: ", value: gender))
+            contentStackView.addArrangedSubview(createKeyValueLabel(key: "Gender", value: gender))
         }
         
         if let birthday = actor.birthday {
-            stackView.addArrangedSubview(createKeyValueLabel(key: "Born: ", value: birthday))
+            contentStackView.addArrangedSubview(createKeyValueLabel(key: "Born: ", value: formattedDate(birthday)))
         }
         
         if let deathday = actor.deathday {
-            stackView.addArrangedSubview(createKeyValueLabel(key: "Died: ", value: deathday))
+            contentStackView.addArrangedSubview(createKeyValueLabel(key: "Death", value: formattedDate(deathday)))
         }
         
         if let country = actor.country {
-            log.info(country.name)
-            stackView.addArrangedSubview(createKeyValueLabel(key: "Born in:", value: country.name))
+            contentStackView.addArrangedSubview(createKeyValueLabel(key: "Nationality: ", value: country.name))
         }
-        
     }
     
     private func updateShows() async {
         do {
-           shows = try await castService.getCastCredit(personId: actor.id)
+            shows = try await castService.getCastCredit(personId: actor.id)
         } catch {
             log.error("CastDetailsVC: updateShows()")
         }
     }
     
+    // MARK: - Helper methods
+    
     private func createKeyValueLabel(key: String, value: String) -> UIView {
         let container = UIView()
         
-        let keyLabel = UILabel.appLabel(fontSize: 16, fontStyle: "bold")
-        keyLabel.text = key
-        keyLabel.textColor = .textColor
-        keyLabel.translatesAutoresizingMaskIntoConstraints = false
+        let keyLabel = createLabel(text: key, fontSize: 16, fontStyle: "bold", textColor: .textColor)
+        let valueLabel = createLabel(text: value, fontSize: 16, fontStyle: "regular", textColor: .textColor.withAlphaComponent(0.7))
         
-        let valueLabel = UILabel.appLabel(fontSize: 16, fontStyle: "regular")
-        valueLabel.text = value
-        valueLabel.textColor = .textColor.withAlphaComponent(0.7)
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        container.addSubview(keyLabel)
-        container.addSubview(valueLabel)
+        [keyLabel, valueLabel].forEach {
+            container.addSubview($0)
+        }
         
         NSLayoutConstraint.activate([
             keyLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
@@ -241,18 +202,37 @@ class CastDetailsViewController: UIViewController {
             valueLabel.leadingAnchor.constraint(equalTo: keyLabel.trailingAnchor, constant: 4),
             valueLabel.topAnchor.constraint(equalTo: container.topAnchor),
             valueLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            
             valueLabel.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor)
         ])
         
         return container.forAutoLayout()
     }
     
+    private func createLabel(text: String, fontSize: CGFloat, fontStyle: String, textColor: UIColor) -> UILabel {
+        let label = UILabel.appLabel(fontSize: fontSize, fontStyle: fontStyle)
+        label.text = text
+        label.textColor = textColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    private func formattedDate(_ date: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let parsedDate = formatter.date(from: date) {
+            formatter.dateStyle = .medium
+            return formatter.string(from: parsedDate)
+        }
+        return date
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension CastDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension CastViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -268,7 +248,7 @@ extension CastDetailsViewController: UICollectionViewDelegate, UICollectionViewD
                 as? ShowCell else {
             return UICollectionViewCell()
         }
-       
+        
         if let image = shows[indexPath.row].image,
            let imageURL = image.medium {
             cell.configure(withImageURL: imageURL)
@@ -293,12 +273,15 @@ extension CastDetailsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        navigateToDetails(for: shows[indexPath.row])
+        self.dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.pushShowViewController(for: self.shows[indexPath.row])
+        }
     }
     
 }
 
-extension CastDetailsViewController: UIScrollViewDelegate {
+extension CastViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.contentOffset.y = 0

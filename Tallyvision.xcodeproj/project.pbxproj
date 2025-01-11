@@ -15,7 +15,7 @@
 		FC359CA92D09911C004E9D95 /* ShowCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC359CA82D09911C004E9D95 /* ShowCast.swift */; };
 		FC359CAD2D09A4D5004E9D95 /* CastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC359CAC2D09A4D5004E9D95 /* CastResponse.swift */; };
 		FC44685D2D1310B5004CFAB2 /* HorizontalLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC44685C2D1310B5004CFAB2 /* HorizontalLine.swift */; };
-		FC4468652D1317DE004CFAB2 /* CastDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4468642D1317DE004CFAB2 /* CastDetailsViewController.swift */; };
+		FC4468652D1317DE004CFAB2 /* CastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4468642D1317DE004CFAB2 /* CastViewController.swift */; };
 		FC4AA0392CF5ADBB00A67A74 /* AppLayouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AA0382CF5ADBB00A67A74 /* AppLayouts.swift */; };
 		FC4AA03B2CF5BC9C00A67A74 /* ShowCardsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AA03A2CF5BC9C00A67A74 /* ShowCardsCell.swift */; };
 		FC4B3BC72CE4962C0055ECAF /* BlurredImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */; };
@@ -53,7 +53,7 @@
 		FCB2C0852D009A2200456CF4 /* RedHatDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB2C0822D009A2200456CF4 /* RedHatDisplay-Medium.ttf */; };
 		FCB2C0862D009A2200456CF4 /* RedHatDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB2C0832D009A2200456CF4 /* RedHatDisplay-Regular.ttf */; };
 		FCB2C08A2D009DB300456CF4 /* DecoratedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB2C0892D009DB300456CF4 /* DecoratedLabel.swift */; };
-		FCBB94912CFF028A0097B766 /* ShowDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBB94902CFF028A0097B766 /* ShowDetailsViewController.swift */; };
+		FCBB94912CFF028A0097B766 /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBB94902CFF028A0097B766 /* ShowViewController.swift */; };
 		FCBB94942CFF11D70097B766 /* TransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBB94932CFF11D70097B766 /* TransparentButton.swift */; };
 		FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */; };
 		FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */; };
@@ -93,7 +93,7 @@
 		FC359CA82D09911C004E9D95 /* ShowCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCast.swift; sourceTree = "<group>"; };
 		FC359CAC2D09A4D5004E9D95 /* CastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastResponse.swift; sourceTree = "<group>"; };
 		FC44685C2D1310B5004CFAB2 /* HorizontalLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalLine.swift; sourceTree = "<group>"; };
-		FC4468642D1317DE004CFAB2 /* CastDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastDetailsViewController.swift; sourceTree = "<group>"; };
+		FC4468642D1317DE004CFAB2 /* CastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastViewController.swift; sourceTree = "<group>"; };
 		FC4AA0382CF5ADBB00A67A74 /* AppLayouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayouts.swift; sourceTree = "<group>"; };
 		FC4AA03A2CF5BC9C00A67A74 /* ShowCardsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCardsCell.swift; sourceTree = "<group>"; };
 		FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredImageView.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		FCB2C0822D009A2200456CF4 /* RedHatDisplay-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Medium.ttf"; sourceTree = "<group>"; };
 		FCB2C0832D009A2200456CF4 /* RedHatDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Regular.ttf"; sourceTree = "<group>"; };
 		FCB2C0892D009DB300456CF4 /* DecoratedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratedLabel.swift; sourceTree = "<group>"; };
-		FCBB94902CFF028A0097B766 /* ShowDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsViewController.swift; sourceTree = "<group>"; };
+		FCBB94902CFF028A0097B766 /* ShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
 		FCBB94932CFF11D70097B766 /* TransparentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
 		FCC679BC2CC8D4BC00050D65 /* Tallyvision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tallyvision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -375,8 +375,8 @@
 		FCBB948F2CFF025F0097B766 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				FCBB94902CFF028A0097B766 /* ShowDetailsViewController.swift */,
-				FC4468642D1317DE004CFAB2 /* CastDetailsViewController.swift */,
+				FCBB94902CFF028A0097B766 /* ShowViewController.swift */,
+				FC4468642D1317DE004CFAB2 /* CastViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -677,7 +677,7 @@
 				FC4D183B2D2D790C00B88C39 /* SearchService.swift in Sources */,
 				FC038A932D244825006FBB14 /* CastCredit.swift in Sources */,
 				FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */,
-				FCBB94912CFF028A0097B766 /* ShowDetailsViewController.swift in Sources */,
+				FCBB94912CFF028A0097B766 /* ShowViewController.swift in Sources */,
 				FC9CEC132D2E814600F09992 /* AppButton.swift in Sources */,
 				FCD7CFFC2CEB7E4800A3B18F /* DotsIndicatorView.swift in Sources */,
 				FCCDF3922D22E9DE00B6DDAB /* UIImageView+Extension.swift in Sources */,
@@ -705,7 +705,7 @@
 				FCEBB31B2D12AF6900EAE4B7 /* ShowTitleView.swift in Sources */,
 				FC4AA03B2CF5BC9C00A67A74 /* ShowCardsCell.swift in Sources */,
 				FCCBAF6A2CF86BDD000F75BD /* ScheduleService.swift in Sources */,
-				FC4468652D1317DE004CFAB2 /* CastDetailsViewController.swift in Sources */,
+				FC4468652D1317DE004CFAB2 /* CastViewController.swift in Sources */,
 				FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */,
 				FC81954E2D10662A006D1CDF /* CastService.swift in Sources */,
 				FC53222D2CC8FB3B001BCC3D /* DiscoverViewController.swift in Sources */,

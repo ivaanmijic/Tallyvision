@@ -8,7 +8,7 @@
 import UIKit
 import AlertKit
 
-class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
+class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
@@ -198,7 +198,7 @@ class ShowDetailsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
-extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ShowViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -229,7 +229,6 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
             
         default:
             return collectionView.dequeueReusableCell(withReuseIdentifier: "mask", for: indexPath)
-            
         }
     }
     
@@ -265,14 +264,34 @@ extension ShowDetailsViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.section == 1 else { return }
-        navigateToDetails(for: cast[indexPath.row])
+        let castVC = CastViewController(actor: cast[indexPath.row])
+        castVC.modalPresentationStyle = .pageSheet
+        castVC.delegate = self
+        
+        if let sheet = castVC.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+        }
+        
+        present(castVC, animated: true)
+        
+    }
+    
+}
+
+// CastViewControllerDelegate
+
+extension ShowViewController: CastViewControllerDelegate {
+   
+    func pushShowViewController(for show: Show) {
+        navigateToDetails(for: show)
     }
     
 }
 
 // MARK: - UIScrollViewDelegate
 
-extension ShowDetailsViewController: UIScrollViewDelegate {
+extension ShowViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
