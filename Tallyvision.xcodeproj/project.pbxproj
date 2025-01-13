@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1352530FDBC3329E91129D6D /* Pods_Tallyvision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5170C047995B2EAB46448C67 /* Pods_Tallyvision.framework */; };
 		FC0320192D328F3C001F002A /* EpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0320182D328F3C001F002A /* EpisodesViewController.swift */; };
+		FC03201B2D329FA8001F002A /* EpisodesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC03201A2D329FA8001F002A /* EpisodesTableViewCell.swift */; };
 		FC0366D52CE33DFF003EBE4A /* ShowCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0366D42CE33DFF003EBE4A /* ShowCardView.swift */; };
 		FC038A932D244825006FBB14 /* CastCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC038A922D244825006FBB14 /* CastCredit.swift */; };
 		FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */; };
@@ -88,6 +89,7 @@
 		3978372BE3E61B2A62FAFF9D /* Pods-Tallyvision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tallyvision.release.xcconfig"; path = "Target Support Files/Pods-Tallyvision/Pods-Tallyvision.release.xcconfig"; sourceTree = "<group>"; };
 		5170C047995B2EAB46448C67 /* Pods_Tallyvision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tallyvision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC0320182D328F3C001F002A /* EpisodesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesViewController.swift; sourceTree = "<group>"; };
+		FC03201A2D329FA8001F002A /* EpisodesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesTableViewCell.swift; sourceTree = "<group>"; };
 		FC0366D42CE33DFF003EBE4A /* ShowCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCardView.swift; sourceTree = "<group>"; };
 		FC038A922D244825006FBB14 /* CastCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCredit.swift; sourceTree = "<group>"; };
 		FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Log.swift"; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */,
+				FC03201A2D329FA8001F002A /* EpisodesTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -718,6 +721,7 @@
 				FC6459942CFDFEB000809245 /* Date+Operators.swift in Sources */,
 				FCB2C08A2D009DB300456CF4 /* DecoratedLabel.swift in Sources */,
 				FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */,
+				FC03201B2D329FA8001F002A /* EpisodesTableViewCell.swift in Sources */,
 				FC5322332CC91843001BCC3D /* UIColor+Extensions.swift in Sources */,
 				FCECD0182D11675200214673 /* TabBarController+RoundedTabBar.swift in Sources */,
 				FCA028AD2D0853B5002FC29B /* PaddingLabel.swift in Sources */,

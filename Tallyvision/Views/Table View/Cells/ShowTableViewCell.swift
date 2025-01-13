@@ -82,31 +82,31 @@ class ShowTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-                cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-                cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-                cellView.heightAnchor.constraint(equalToConstant: cellHeight),
-
-                ratingLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 25),
-                ratingLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
-
-                poster.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
-                poster.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
-                poster.widthAnchor.constraint(equalToConstant: imageWidth),
-                poster.heightAnchor.constraint(equalToConstant: imageHeight),
-
-                titleLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
-                titleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
-                titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: ratingLabel.leadingAnchor, constant: -10),
-
-                firstSubtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 1),
-                firstSubtitleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
-                firstSubtitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: cellView.trailingAnchor, constant: -10),
-
-                secondSubtitleLabel.topAnchor.constraint(equalTo: firstSubtitleLabel.bottomAnchor, constant: 5),
-                secondSubtitleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
-                secondSubtitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: cellView.trailingAnchor, constant: -10),
-                secondSubtitleLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10)
+            cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            cellView.heightAnchor.constraint(equalToConstant: cellHeight),
+            
+            ratingLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 25),
+            ratingLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
+            
+            poster.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
+            poster.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
+            poster.widthAnchor.constraint(equalToConstant: imageWidth),
+            poster.heightAnchor.constraint(equalToConstant: imageHeight),
+            
+            titleLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: ratingLabel.leadingAnchor, constant: -10),
+            
+            firstSubtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 1),
+            firstSubtitleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
+            firstSubtitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: cellView.trailingAnchor, constant: -10),
+            
+            secondSubtitleLabel.topAnchor.constraint(equalTo: firstSubtitleLabel.bottomAnchor, constant: 5),
+            secondSubtitleLabel.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
+            secondSubtitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: cellView.trailingAnchor, constant: -10),
+            secondSubtitleLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10)
         ])
     }
     

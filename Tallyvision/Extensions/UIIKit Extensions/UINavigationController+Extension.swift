@@ -9,12 +9,17 @@ import UIKit
 
 extension UINavigationController {
    
-    func configureNavigationBar(leftButton: UIButton? = nil, rightButton: UIButton? = nil, target: Any) {
+    func configureNavigationBar(
+        leftButton: UIButton? = nil,
+        rightButton: UIButton? = nil,
+        target: Any,
+        isTrancluent: Bool = true
+    ) {
         interactivePopGestureRecognizer?.delegate = target as? UIGestureRecognizerDelegate
-        navigationBar.isTranslucent = true
+        navigationBar.isTranslucent = isTrancluent
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
-       
+        
         if let leftButton = leftButton {
             topViewController?.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
         }
