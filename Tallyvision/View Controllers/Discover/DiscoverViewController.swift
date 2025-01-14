@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import AlertKit
+import Lottie
 
 class DiscoverViewController: UIViewController {
     
@@ -47,14 +48,14 @@ class DiscoverViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
-       
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.scrollsToTop = true
         return collectionView.forAutoLayout()
     }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ShowTableViewCell.self, forCellReuseIdentifier: ShowTableViewCell.identifier)
-        tableView.register(SearchResultsHeaderView.self, forHeaderFooterViewReuseIdentifier: SearchResultsHeaderView.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         return tableView.forAutoLayout()
@@ -66,12 +67,22 @@ class DiscoverViewController: UIViewController {
         return indicator.forAutoLayout()
     }()
     
+    lazy var animationView: LottieAnimationView = {
+        let animation = LottieAnimationView(name: "search-animation")
+        animation.frame = view.bounds
+        animation.contentMode = .scaleAspectFit
+        animation.loopMode = .loop
+        animation.animationSpeed = 1
+        return animation.forAutoLayout()
+    }()
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setupUI()
+        setupAnimation()
         setupSearchController()
         setupCollectionView()
         setupTableView()
@@ -80,6 +91,7 @@ class DiscoverViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
+        navigationController?.hidesBarsOnSwipe = true
     }
    
     private func setupUI() {
@@ -87,6 +99,7 @@ class DiscoverViewController: UIViewController {
         view.addSubview(collectionView)
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
+        view.addSubview(animationView)
         tableView.isHidden = true
         setupConstraints()
     }
@@ -94,11 +107,16 @@ class DiscoverViewController: UIViewController {
     private func setupConstraints() {
         collectionView.pin(to: view)
         tableView.pin(to: view)
+        animationView.pin(to: view)
         
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+    
+    private func setupAnimation() {
+        animationView.play()
     }
     
     private func setupSearchController() {
@@ -136,7 +154,7 @@ class DiscoverViewController: UIViewController {
 
 extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return 12
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -144,7 +162,7 @@ extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDe
                 as? ShowCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = .secondaryAppColor
+        cell.backgroundColor = .secondaryAppColor.withAlphaComponent(0.5)
         return cell
     }
 }
@@ -167,17 +185,6 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         navigateToDetails(for: shows[indexPath.row])
     }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SearchResultsHeaderView.reuseIdentifier)
-                as? SearchResultsHeaderView else {
-            return UITableViewHeaderFooterView()
-        }
-        
-        header.configure(with: "SHOWS FOUND: \(shows.count)")
-        return header
-    }
-    
 }
 
 // MARK: - UISearchBarDelegate
@@ -244,7 +251,7 @@ extension DiscoverViewController {
         if searchText.isEmpty {
             hideTableView()
         } else {
-            hideCollectionView()
+            showCollectionView()
         }
     }
     
@@ -252,7 +259,7 @@ extension DiscoverViewController {
         animateTransition(from: tableView, to: collectionView)
     }
     
-    private func hideCollectionView() {
+    private func showCollectionView() {
         animateTransition(from: collectionView, to: tableView)
     }
     
@@ -261,6 +268,13 @@ extension DiscoverViewController {
         to incomingView: UIView,
         duration: TimeInterval = 0.8
     ) {
+        let shouldShowAnimation = (incomingView == collectionView)
+        
+        if shouldShowAnimation {
+            animationView.isHidden = false
+            animationView.play()
+        }
+        
         incomingView.isHidden = false
         incomingView.transform = CGAffineTransform(translationX: 0, y: self.view.bounds.height)
         incomingView.alpha = 0
@@ -269,9 +283,15 @@ extension DiscoverViewController {
             incomingView.transform = .identity
             incomingView.alpha = 1
             outgoingView.alpha = 0
+            self.animationView.alpha = shouldShowAnimation ? 1 : 0
         }, completion: { _ in
             outgoingView.isHidden = true
             outgoingView.alpha = 1
+            
+            if !shouldShowAnimation {
+                self.animationView.stop()
+                self.animationView.isHidden = true
+            }
         })
         
     }
@@ -280,17 +300,6 @@ extension DiscoverViewController {
 }
 
 
-//extension DiscoverViewController: UIScrollViewDelegate {
-//    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        guard let headerView = tableView.headerView(forSection: 0) else { return }
-//        headerView.isHidden = true
-//        if scrollView.contentOffset.y <= 0 {
-//            headerView.isHidden = false
-//        }
-//    }
-//    
-//}
 
 
 

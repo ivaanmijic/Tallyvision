@@ -44,6 +44,7 @@
 		FC5C793F2CF758300016BB87 /* Database+Migrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C793E2CF758300016BB87 /* Database+Migrator.swift */; };
 		FC5C79412CF759BE0016BB87 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C79402CF759BE0016BB87 /* Rating.swift */; };
 		FC6459942CFDFEB000809245 /* Date+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6459932CFDFEB000809245 /* Date+Operators.swift */; };
+		FC64BBC22D369D4E003ECD24 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FC64BBC12D369D4E003ECD24 /* Lottie */; };
 		FC81954E2D10662A006D1CDF /* CastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC81954D2D10662A006D1CDF /* CastService.swift */; };
 		FC9CEC112D2E6D9C00F09992 /* SearchResultsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CEC102D2E6D9C00F09992 /* SearchResultsHeaderView.swift */; };
 		FC9CEC132D2E814600F09992 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CEC122D2E814600F09992 /* AppButton.swift */; };
@@ -171,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCC679DE2CC8E04500050D65 /* SDWebImage in Frameworks */,
+				FC64BBC22D369D4E003ECD24 /* Lottie in Frameworks */,
 				FCC679E02CC8E04500050D65 /* SDWebImageMapKit in Frameworks */,
 				FCCBAF6D2CF87A78000F75BD /* AlertKit in Frameworks */,
 				FCC679DB2CC8E01F00050D65 /* SwiftyBeaver in Frameworks */,
@@ -568,6 +570,7 @@
 				FCC679DF2CC8E04500050D65 /* SDWebImageMapKit */,
 				FCCBAF6C2CF87A78000F75BD /* AlertKit */,
 				FC4C17EA2D315FE800DB7CC7 /* ScrollStackController */,
+				FC64BBC12D369D4E003ECD24 /* Lottie */,
 			);
 			productName = Tallyvision;
 			productReference = FCC679BC2CC8D4BC00050D65 /* Tallyvision.app */;
@@ -602,6 +605,7 @@
 				FCC679DC2CC8E04500050D65 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				FCCBAF6B2CF87A78000F75BD /* XCRemoteSwiftPackageReference "AlertKit" */,
 				FC4C17E92D315FE800DB7CC7 /* XCRemoteSwiftPackageReference "ScrollStackController" */,
+				FC64BBC02D369D4E003ECD24 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = FCC679BD2CC8D4BC00050D65 /* Products */;
 			projectDirPath = "";
@@ -955,6 +959,14 @@
 				minimumVersion = 1.8.0;
 			};
 		};
+		FC64BBC02D369D4E003ECD24 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.1;
+			};
+		};
 		FCC679D92CC8E01F00050D65 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver";
@@ -986,6 +998,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FC4C17E92D315FE800DB7CC7 /* XCRemoteSwiftPackageReference "ScrollStackController" */;
 			productName = ScrollStackController;
+		};
+		FC64BBC12D369D4E003ECD24 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC64BBC02D369D4E003ECD24 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 		FCC679DA2CC8E01F00050D65 /* SwiftyBeaver */ = {
 			isa = XCSwiftPackageProductDependency;
