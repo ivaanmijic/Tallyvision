@@ -8,6 +8,32 @@
 import UIKit
 
 class EpisodesViewController: UIViewController {
+    // MARK: - Properties
+    
+    var episodeService: EpisodeService!
+    
+    var seasons: [Season]
+    var seasonEpisodes: [Int64 : [Episode]] = [:]
+   
+    var selectedSeason: Season {
+        didSet {
+            print("Test")
+            reloadTableView()
+        }
+    }
+    
+    // MARK: - Initializers
+    init(seasons: [Season]) {
+        self.seasons = seasons
+        self.selectedSeason = seasons[0]
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - UI Components
     
     lazy var titleLabel = UILabel.appLabel(withText: "Episodes", fontSize: 32).forAutoLayout()
     
@@ -26,6 +52,7 @@ class EpisodesViewController: UIViewController {
         tableView.backgroundColor = .appColor
         tableView.separatorStyle = .none
         tableView.register(EpisodesTableViewCell.self, forCellReuseIdentifier: EpisodesTableViewCell.identifier)
+        tableView.register(SeasonSelectionView.self, forHeaderFooterViewReuseIdentifier: SeasonSelectionView.identifier)
         return tableView.forAutoLayout()
     }()
     
@@ -33,6 +60,8 @@ class EpisodesViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupUI()
+        setupServices()
+        reloadTableView()
     }
     
     private func setupNavigationBar() {
@@ -49,23 +78,76 @@ class EpisodesViewController: UIViewController {
         tableView.dataSource = self
     }
     
+    private func setupServices() {
+        episodeService = EpisodeService(httpClient: TVMazeClient())
+    }
+    
 
     // MARK: - Actions
     @objc private func dismissController() {
         dismiss(animated: true)
     }
+    
+    private func reloadTableView() {
+        if seasonEpisodes[selectedSeason.number] == nil {
+            updateData()
+        } else {
+            tableView.reloadData()
+        }
+    }
+   
+    private func updateData() {
+        Task {
+            await updateEpisodes()
+            tableView.reloadData()
+        }
+    }
+    
+    private func updateEpisodes() async {
+        do {
+            let episodes = try await episodeService.fetchEpisodesForSeason(withId: selectedSeason.id)
+            seasonEpisodes[selectedSeason.number] = episodes
+            print("fetched episodes,", episodes)
+        } catch {
+            log.error("Error occured updating episodes:\n\(error)")
+        }
+    }
 }
 
 extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return Int(selectedSeason.episodeCount ?? 0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodesTableViewCell.identifier)
-                as? EpisodesTableViewCell else {
+                as? EpisodesTableViewCell,
+              let episodes = seasonEpisodes[selectedSeason.number] else {
             return UITableViewCell()
         }
+        cell.configure(episode: episodes[indexPath.row])
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SeasonSelectionView.identifier)
+                as? SeasonSelectionView else {
+            return UITableViewHeaderFooterView()
+        }
+        header.delegate = self
+        header.configure(seasons: seasons, selectedSeason: selectedSeason)
+        return header
+    }
+}
+
+extension EpisodesViewController: SeasonSelectionViewDelegate {
+    func selectSeason(withNumber number: Int64) {
+        selectedSeason = seasons.first { $0.number == number } ?? selectedSeason
+    }
+    
+    
 }

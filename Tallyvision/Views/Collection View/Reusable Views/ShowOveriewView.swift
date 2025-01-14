@@ -41,7 +41,7 @@ class ShowOveriewView: UICollectionReusableView {
     
     private lazy var showTitleView = ShowTitleView().forAutoLayout()
     
-    private lazy var introductionView = StorylineView().forAutoLayout()
+    private lazy var storylineView = StorylineView().forAutoLayout()
     
     private lazy var watchButton: AppButton = {
         let button = AppButton(
@@ -191,8 +191,8 @@ class ShowOveriewView: UICollectionReusableView {
     
     private func configureStorylineView() {
         guard let summary = show?.summary else { return }
-        introductionView.setText(summary)
-        verticalStackView.addArrangedSubview(introductionView)
+        storylineView.setText(summary)
+        verticalStackView.addArrangedSubview(storylineView)
     }
     
     private func createDecoratedLabel(icon: String, color: UIColor, text: String) -> DecoratedLabel {

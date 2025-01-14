@@ -19,7 +19,7 @@ class StorylineView: UIView {
         return view.forAutoLayout()
     }()
     
-    lazy var storylineTitle: UILabel = .appLabel(withText: "Introduction", fontSize: 18).forAutoLayout()
+    lazy var storylineTitle: UILabel = .appLabel(withText: "Storyline", fontSize: 18).forAutoLayout()
     lazy var storyline: UILabel = .paragraph().forAutoLayout()
     
     override init(frame: CGRect) {

@@ -283,7 +283,7 @@ extension ShowViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension ShowViewController: CastViewControllerDelegate, ShowOveriewDelegate {
     
     func presentEpisodes() {
-        let episodesVC = EpisodesViewController()
+        let episodesVC = EpisodesViewController(seasons: seasons)
         let episodesNavigationVC = UINavigationController(rootViewController: episodesVC)
         present(episodesNavigationVC, animated: true)
     }

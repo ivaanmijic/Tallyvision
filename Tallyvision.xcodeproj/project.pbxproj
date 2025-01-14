@@ -12,6 +12,7 @@
 		FC03201B2D329FA8001F002A /* EpisodesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC03201A2D329FA8001F002A /* EpisodesTableViewCell.swift */; };
 		FC0366D52CE33DFF003EBE4A /* ShowCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0366D42CE33DFF003EBE4A /* ShowCardView.swift */; };
 		FC038A932D244825006FBB14 /* CastCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC038A922D244825006FBB14 /* CastCredit.swift */; };
+		FC25DD7C2D3552BD00FEF559 /* SeasonSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC25DD7B2D3552BD00FEF559 /* SeasonSelectionView.swift */; };
 		FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */; };
 		FC359CA72D098863004E9D95 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC359CA62D098863004E9D95 /* Person.swift */; };
 		FC359CA92D09911C004E9D95 /* ShowCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC359CA82D09911C004E9D95 /* ShowCast.swift */; };
@@ -74,6 +75,7 @@
 		FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */; };
 		FCD0B4D52CDA29630042E05C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4D42CDA29630042E05C /* NetworkError.swift */; };
 		FCD7CFFC2CEB7E4800A3B18F /* DotsIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD7CFFB2CEB7E4800A3B18F /* DotsIndicatorView.swift */; };
+		FCE5594A2D35AF8100BC7C46 /* EpisodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE559492D35AF8100BC7C46 /* EpisodeService.swift */; };
 		FCEBB31B2D12AF6900EAE4B7 /* ShowTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEBB31A2D12AF6900EAE4B7 /* ShowTitleView.swift */; };
 		FCEBB31D2D12C07F00EAE4B7 /* CastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEBB31C2D12C07F00EAE4B7 /* CastCell.swift */; };
 		FCEBB31F2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEBB31E2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift */; };
@@ -92,6 +94,7 @@
 		FC03201A2D329FA8001F002A /* EpisodesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesTableViewCell.swift; sourceTree = "<group>"; };
 		FC0366D42CE33DFF003EBE4A /* ShowCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCardView.swift; sourceTree = "<group>"; };
 		FC038A922D244825006FBB14 /* CastCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCredit.swift; sourceTree = "<group>"; };
+		FC25DD7B2D3552BD00FEF559 /* SeasonSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonSelectionView.swift; sourceTree = "<group>"; };
 		FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Log.swift"; sourceTree = "<group>"; };
 		FC359CA62D098863004E9D95 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		FC359CA82D09911C004E9D95 /* ShowCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCast.swift; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 		FCD0B4D22CDA29430042E05C /* TVMazeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeClient.swift; sourceTree = "<group>"; };
 		FCD0B4D42CDA29630042E05C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		FCD7CFFB2CEB7E4800A3B18F /* DotsIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsIndicatorView.swift; sourceTree = "<group>"; };
+		FCE559492D35AF8100BC7C46 /* EpisodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeService.swift; sourceTree = "<group>"; };
 		FCEBB31A2D12AF6900EAE4B7 /* ShowTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTitleView.swift; sourceTree = "<group>"; };
 		FCEBB31C2D12C07F00EAE4B7 /* CastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCell.swift; sourceTree = "<group>"; };
 		FCEBB31E2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSupplementaryView.swift; sourceTree = "<group>"; };
@@ -365,6 +369,7 @@
 			isa = PBXGroup;
 			children = (
 				FC9CEC102D2E6D9C00F09992 /* SearchResultsHeaderView.swift */,
+				FC25DD7B2D3552BD00FEF559 /* SeasonSelectionView.swift */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -472,6 +477,7 @@
 				FC81954D2D10662A006D1CDF /* CastService.swift */,
 				FC4D183A2D2D790C00B88C39 /* SearchService.swift */,
 				FCA736472D2EE77600ABE551 /* SeasonService.swift */,
+				FCE559492D35AF8100BC7C46 /* EpisodeService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -686,6 +692,7 @@
 				FCBB94912CFF028A0097B766 /* ShowViewController.swift in Sources */,
 				FC9CEC132D2E814600F09992 /* AppButton.swift in Sources */,
 				FCD7CFFC2CEB7E4800A3B18F /* DotsIndicatorView.swift in Sources */,
+				FC25DD7C2D3552BD00FEF559 /* SeasonSelectionView.swift in Sources */,
 				FCCDF3922D22E9DE00B6DDAB /* UIImageView+Extension.swift in Sources */,
 				FCB2C07C2D0049E100456CF4 /* AppConstants.swift in Sources */,
 				FC44685D2D1310B5004CFAB2 /* HorizontalLine.swift in Sources */,
@@ -694,6 +701,7 @@
 				FCECD01F2D116BBF00214673 /* ShowOveriewView.swift in Sources */,
 				FCEBB31D2D12C07F00EAE4B7 /* CastCell.swift in Sources */,
 				FC359CA72D098863004E9D95 /* Person.swift in Sources */,
+				FCE5594A2D35AF8100BC7C46 /* EpisodeService.swift in Sources */,
 				FC53223C2CC92DA2001BCC3D /* UIView+Extensions.swift in Sources */,
 				FC5322262CC8F817001BCC3D /* UIImage+Resize.swift in Sources */,
 				FCA028AB2D084341002FC29B /* StorylineView.swift in Sources */,

@@ -15,8 +15,7 @@ class SeasonService {
     }
     
     func getSeasonsFowShow(withId showId: Int64) async throws -> [Season] {
-        let seasons = try await httpClient.fetchSeason(forShowId: showId)
-        log.debug("service: \(seasons.count)")
-        return seasons
+        return try await httpClient.fetchSeason(forShowId: showId)
+            .filter { $0.episodeCount != nil }
     }
 }

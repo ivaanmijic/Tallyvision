@@ -12,26 +12,28 @@ class EpisodesTableViewCell: UITableViewCell {
     
     static let identifier = String(describing: EpisodesTableViewCell.self)
     
-    private var episode: Episode?
+    private var episode: Episode? {
+        didSet {
+            updateUI()
+        }
+    }
     
     // MARK: - UIComponents
     
     private lazy var orderLabel: UILabel = {
         let label = UILabel.appLabel(fontSize: 38, fontStyle: "bold")
         label.textColor = .secondaryAppColor
-        label.text = "1"
         return label.forAutoLayout()
     }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel.appLabel(fontSize: 18, fontStyle: "bold")
         label.numberOfLines = 1
-        label.text = "Episode 1"
         return label.forAutoLayout()
     }()
     
     private lazy var premiereLabel: UILabel = {
-        let label = UILabel.appLabel(withText: "Jan 12, 2025", fontSize: 16, fontStyle: "regular", alpha: 0.7)
+        let label = UILabel.appLabel(fontSize: 16, fontStyle: "regular", alpha: 0.7)
         label.numberOfLines = 1
         return label.forAutoLayout()
     }()
@@ -90,6 +92,17 @@ class EpisodesTableViewCell: UITableViewCell {
             stackView.trailingAnchor.constraint(equalTo: tvButton.trailingAnchor, constant: -16),
             stackView.centerYAnchor.constraint(equalTo: orderLabel.centerYAnchor)
         ])
+    }
+   
+    // MARK: - Configuration
+    func configure(episode: Episode) {
+        self.episode = episode
+    }
+    
+    private func updateUI() {
+        guard let episode = self.episode else { return }
+        orderLabel.text = "\(episode.number ?? 0)"
+        titleLabel.text = episode.title
     }
     
 }
