@@ -120,13 +120,15 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Int(selectedSeason.episodeCount ?? 0)
+        guard let episodes = seasonEpisodes[selectedSeason.number] else { return 0 }
+        return Int(episodes.count)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodesTableViewCell.identifier)
                 as? EpisodesTableViewCell,
-              let episodes = seasonEpisodes[selectedSeason.number] else {
+              let episodes = seasonEpisodes[selectedSeason.number]
+        else {
             return UITableViewCell()
         }
         cell.configure(episode: episodes[indexPath.row])

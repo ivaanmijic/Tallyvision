@@ -20,7 +20,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     var seasonService: SeasonService!
     
     var previousOffset: CGFloat = 0
-    var isSaveButtonVisible = false
+    var isAddButtonVisible = false
     
     // MARK: - Constructors
     init(show: Show) {
@@ -67,10 +67,10 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         return collectionView.forAutoLayout()
     }()
     
-    lazy var saveButton: AppButton = {
-        let button = AppButton(color: .baseYellow, image: UIImage(systemName: "bookmark.fill")!, frame: .zero)
+    lazy var addButton: AppButton = {
+        let button = AppButton(color: .baseYellow, image: UIImage(named: "bookmark.fill")!, frame: .zero)
         button.alpha = 0.0
-        button.label.textColor = .textColor
+        button.label.textColor = .black
         return button.forAutoLayout()
     }()
     
@@ -85,6 +85,11 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         setupUI()
         setupServices()
         updateUI()
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        hideAddButton()
     }
     
     private func setupNavigationBar() {
@@ -116,14 +121,14 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func setupButtons() {
-        view.addSubview(saveButton)
-        saveButton.configure(title: "Add to Watchlist")
+        view.addSubview(addButton)
+        addButton.configure(title: "Add to Watchlist")
         NSLayoutConstraint.activate([
-            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 84),
-            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            saveButton.heightAnchor.constraint(equalToConstant: 50),
-            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 84),
+            addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addButton.heightAnchor.constraint(equalToConstant: 50),
+            addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
         ])
     }
     
@@ -151,7 +156,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         collectionView.setCollectionViewLayout(layout, animated: true)
     }
     
-    // MARK: - UI update
+    // MARK: - UI Update
     
     private func updateUI() {
         Task {
@@ -303,30 +308,34 @@ extension ShowViewController: UIScrollViewDelegate {
         let contentHeight = scrollView.contentSize.height
         let scrollViewHeight = scrollView.bounds.height
         
+        if contentHeight < 100 {
+            return
+        }
+        
         if offsetY + scrollViewHeight >= contentHeight - 50 {
-            if !isSaveButtonVisible {
-                showSaveButton()
+            if !isAddButtonVisible {
+                showAddButton()
             }
         } else {
-            if isSaveButtonVisible {
-                hideSaveButton()
+            if isAddButtonVisible {
+                hideAddButton()
             }
         }
     }
     
-    func showSaveButton() {
-        isSaveButtonVisible = true
+    func showAddButton() {
+        isAddButtonVisible = true
         UIView.animate(withDuration: 0.3) {
-            self.saveButton.alpha = 1.0
-            self.saveButton.transform = CGAffineTransform(translationX: 0, y: -100)
+            self.addButton.alpha = 1.0
+            self.addButton.transform = CGAffineTransform(translationX: 0, y: -100)
         }
     }
     
-    func hideSaveButton() {
-        isSaveButtonVisible = false
+    func hideAddButton() {
+        isAddButtonVisible = false
         UIView.animate(withDuration: 0.3) {
-            self.saveButton.alpha = 0.0
-            self.saveButton.transform = .identity
+            self.addButton.alpha = 0.0
+            self.addButton.transform = .identity
         }
     }
     

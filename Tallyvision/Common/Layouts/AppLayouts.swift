@@ -17,7 +17,7 @@ class AppLayouts {
             itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1)),
             groupSize: NSCollectionLayoutSize(widthDimension: .absolute(90), heightDimension: .estimated(210)),
             groupInsets: NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8),
-            sectionInsets: NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 40, trailing: 0),
+            sectionInsets: NSDirectionalEdgeInsets(top: 0, leading: 22, bottom: 70, trailing: 0),
             scrollingBehavior: .continuous,
             decorationElementKind: "backgroundDecoration"
         )

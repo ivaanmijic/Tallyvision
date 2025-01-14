@@ -94,9 +94,9 @@ class ShowOveriewView: UICollectionReusableView {
         addSubview(verticalStackView)
         
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
-            verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-            verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
+            verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
+            verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
+            verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
             verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
         ])
     }
@@ -139,9 +139,9 @@ class ShowOveriewView: UICollectionReusableView {
             let formattedRuntime: String
             
             if hours > 0 {
-                formattedRuntime = "\(hours) h \(minutes) min"
+                formattedRuntime = minutes > 0 ? "\(hours) h \(minutes) min" : "\(hours) h"
             } else {
-                formattedRuntime = "\(minutes) min"
+                formattedRuntime = minutes > 0 ? "\(minutes) min" : "0 min"
             }
             
             horizontalStackView.addArrangedSubview(createDecoratedLabel(icon: "clock.fill", color: .gray, text: formattedRuntime))
@@ -182,7 +182,7 @@ class ShowOveriewView: UICollectionReusableView {
         
         let episodesCount = calculateEpisodesCount(from: seasons)
         let showIsShowing = episodesCount > 0
-        let detailText = showIsShowing ? "\(episodesCount)" : "Coming Soon"
+        let detailText = showIsShowing ? "\(episodesCount)" : "Not Available"
         
         configureEpisodesLabel(with: detailText)
         configureEpisodesButton(isEnabled: showIsShowing)
@@ -211,7 +211,7 @@ class ShowOveriewView: UICollectionReusableView {
     
     private func configureEpisodesButton(isEnabled: Bool) {
         episodesButton.isEnabled = isEnabled
-        episodesButton.alpha = isEnabled ? 1.0 : 0.5
+        episodesButton.isHidden = !isEnabled
     }
     
     private func setupEpisodesContainerView() {

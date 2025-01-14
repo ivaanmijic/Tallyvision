@@ -23,12 +23,13 @@ class EpisodesTableViewCell: UITableViewCell {
     private lazy var orderLabel: UILabel = {
         let label = UILabel.appLabel(fontSize: 38, fontStyle: "bold")
         label.textColor = .secondaryAppColor
+        label.textAlignment = .center
         return label.forAutoLayout()
     }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel.appLabel(fontSize: 18, fontStyle: "bold")
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         return label.forAutoLayout()
     }()
     
@@ -80,8 +81,9 @@ class EpisodesTableViewCell: UITableViewCell {
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             orderLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            orderLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            orderLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             orderLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            orderLabel.widthAnchor.constraint(equalToConstant: 75),
            
             tvButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             tvButton.heightAnchor.constraint(equalToConstant: 30),
@@ -89,7 +91,7 @@ class EpisodesTableViewCell: UITableViewCell {
             tvButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             stackView.leadingAnchor.constraint(equalTo: orderLabel.trailingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: tvButton.trailingAnchor, constant: -16),
+            stackView.trailingAnchor.constraint(equalTo: tvButton.leadingAnchor, constant: -16),
             stackView.centerYAnchor.constraint(equalTo: orderLabel.centerYAnchor)
         ])
     }
@@ -103,6 +105,7 @@ class EpisodesTableViewCell: UITableViewCell {
         guard let episode = self.episode else { return }
         orderLabel.text = "\(episode.number ?? 0)"
         titleLabel.text = episode.title
+//        premiereLabel.text = episode.airDate
     }
     
 }
