@@ -59,6 +59,7 @@
 		FCB2C08A2D009DB300456CF4 /* DecoratedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB2C0892D009DB300456CF4 /* DecoratedLabel.swift */; };
 		FCBB94912CFF028A0097B766 /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBB94902CFF028A0097B766 /* ShowViewController.swift */; };
 		FCBB94942CFF11D70097B766 /* TransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBB94932CFF11D70097B766 /* TransparentButton.swift */; };
+		FCBBA95E2D3A59D900B03C21 /* ShowRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBBA95D2D3A59D900B03C21 /* ShowRepository.swift */; };
 		FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */; };
 		FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */; };
 		FCC679C92CC8D4BE00050D65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCC679C82CC8D4BE00050D65 /* Assets.xcassets */; };
@@ -140,6 +141,7 @@
 		FCB2C0892D009DB300456CF4 /* DecoratedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratedLabel.swift; sourceTree = "<group>"; };
 		FCBB94902CFF028A0097B766 /* ShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
 		FCBB94932CFF11D70097B766 /* TransparentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
+		FCBBA95D2D3A59D900B03C21 /* ShowRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRepository.swift; sourceTree = "<group>"; };
 		FCC679BC2CC8D4BC00050D65 /* Tallyvision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tallyvision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC679BF2CC8D4BC00050D65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCC679C12CC8D4BC00050D65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -252,7 +254,8 @@
 			children = (
 				FCB2C07A2D0049C000456CF4 /* Constants */,
 				FCD0B4D12CDA29230042E05C /* Networking */,
-				FCF77A222CD0DF0900456132 /* Persistence */,
+				FCF77A222CD0DF0900456132 /* Database */,
+				FCBBA95C2D3A59B900B03C21 /* Repositories */,
 				FCCBAF662CF86B8D000F75BD /* Services */,
 				FCF77A1E2CD0D0FE00456132 /* Models */,
 				FC4AA0372CF5AD1B00A67A74 /* Layouts */,
@@ -409,6 +412,14 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		FCBBA95C2D3A59B900B03C21 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				FCBBA95D2D3A59D900B03C21 /* ShowRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 		FCC679B32CC8D4BC00050D65 = {
 			isa = PBXGroup;
 			children = (
@@ -537,13 +548,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		FCF77A222CD0DF0900456132 /* Persistence */ = {
+		FCF77A222CD0DF0900456132 /* Database */ = {
 			isa = PBXGroup;
 			children = (
 				FCF77A232CD0DF2000456132 /* Database.swift */,
 				FC5C793E2CF758300016BB87 /* Database+Migrator.swift */,
 			);
-			path = Persistence;
+			path = Database;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -680,6 +691,7 @@
 			files = (
 				FC9CEC112D2E6D9C00F09992 /* SearchResultsHeaderView.swift in Sources */,
 				FC4D18332D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift in Sources */,
+				FCBBA95E2D3A59D900B03C21 /* ShowRepository.swift in Sources */,
 				FCBB94942CFF11D70097B766 /* TransparentButton.swift in Sources */,
 				FCD0B4CC2CDA0E8F0042E05C /* Season.swift in Sources */,
 				FCEBB31F2D12DA0500EAE4B7 /* BackgroundSupplementaryView.swift in Sources */,

@@ -19,6 +19,8 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     var castService: CastService!
     var seasonService: SeasonService!
     
+    let showRepository = ShowRepository()
+    
     var previousOffset: CGFloat = 0
     var isAddButtonVisible = false
     
@@ -67,16 +69,19 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         return collectionView.forAutoLayout()
     }()
     
-    lazy var addButton: AppButton = {
-        let button = AppButton(color: .baseYellow, image: UIImage(named: "bookmark")!, frame: .zero)
+    lazy var watchlistButton: AppButton = {
+        let button = AppButton(
+            color: .baseYellow, 
+            image: UIImage(named: "bookmark")!,
+            frame: .zero)
         button.alpha = 0.0
-        button.label.textColor = .black
+        button.titleLabel?.textColor = .black
+        button.addTarget(self, action: #selector(addShowToWatchlist), for: .touchUpInside)
         return button.forAutoLayout()
     }()
     
-   
+//    lazy var transparentMaskView = UIView().forAutoLayout()
     
-    lazy var transparentMaskView = UIView().forAutoLayout()
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -101,7 +106,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         setupBackgroundImage()
         configureCollectionView()
         configureCompositionalLayout()
-        setupButtons()
+        setupWatchlistButton()
     }
     
     private func setupServices() {
@@ -120,17 +125,21 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         ])
     }
     
-    private func setupButtons() {
-        view.addSubview(addButton)
-        addButton.configure(title: "Add to Watchlist")
+    private func setupWatchlistButton() {
+        view.addSubview(watchlistButton)
+        watchlistButton.configure(title: "Add to Watchlist")
+        watchlistButton.updateButtonAppearance(isListed: show.isListed)
         NSLayoutConstraint.activate([
-            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 84),
-            addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addButton.heightAnchor.constraint(equalToConstant: 50),
-            addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
+            watchlistButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 84),
+            watchlistButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            watchlistButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            watchlistButton.heightAnchor.constraint(equalToConstant: 50),
+            watchlistButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
         ])
     }
+    
+    
+    
     
     
     private func configureCollectionView() {
@@ -156,13 +165,31 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         collectionView.setCollectionViewLayout(layout, animated: true)
     }
     
+    // MARK: - Actions
+    
+    @objc private func addShowToWatchlist() {
+        show.isListed.toggle()
+        writeShowInDatabase(show)
+        watchlistButton.updateButtonAppearance(isListed: show.isListed)
+    }
+    
+    private func writeShowInDatabase(_ show: Show) {
+        do {
+            try showRepository.create(show: show)
+        } catch {
+            log.error(error.localizedDescription)
+        }
+    }
+    
     // MARK: - UI Update
     
     private func updateUI() {
         Task {
             await updateSeasons()
             await updateCast()
-            reloadData()
+            await MainActor.run {
+                reloadData()
+            }
         }
     }
     
@@ -185,6 +212,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private func reloadData() {
         collectionView.reloadData()
+        watchlistButton.updateButtonAppearance(isListed: show.isListed)
     }
     
     private func displayError(_ error: Error) {
@@ -326,16 +354,16 @@ extension ShowViewController: UIScrollViewDelegate {
     func showAddButton() {
         isAddButtonVisible = true
         UIView.animate(withDuration: 0.3) {
-            self.addButton.alpha = 1.0
-            self.addButton.transform = CGAffineTransform(translationX: 0, y: -100)
+            self.watchlistButton.alpha = 1.0
+            self.watchlistButton.transform = CGAffineTransform(translationX: 0, y: -100)
         }
     }
     
     func hideAddButton() {
         isAddButtonVisible = false
         UIView.animate(withDuration: 0.3) {
-            self.addButton.alpha = 0.0
-            self.addButton.transform = .identity
+            self.watchlistButton.alpha = 0.0
+            self.watchlistButton.transform = .identity
         }
     }
     

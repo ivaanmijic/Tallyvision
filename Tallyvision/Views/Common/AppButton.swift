@@ -8,11 +8,11 @@
 import UIKit
 
 class AppButton: UIButton {
-
+    
     var color: UIColor
     var image: UIImage
     
-    lazy var label = UILabel.appLabel(withText: "nesto", fontSize: 18, fontStyle: "Regular").forAutoLayout()
+    lazy var label = UILabel.appLabel(fontSize: 18, fontStyle: "Regular").forAutoLayout()
     
     lazy var buttonImageView: UIImageView = {
         let imageView = UIImageView()
@@ -38,7 +38,7 @@ class AppButton: UIButton {
         buttonImageView.image = image
         addSubviews()
         activateConstraints()
-     }
+    }
     
     private func addSubviews() {
         addSubview(buttonImageView)
@@ -58,8 +58,22 @@ class AppButton: UIButton {
         ])
     }
     
+    
     func configure(title: String) {
         label.text = title
     }
     
+    func updateButtonAppearance(isListed: Bool) {
+        if isListed {
+            self.backgroundColor = .appGreen
+            self.buttonImageView.image = UIImage(named: "check")!.withTintColor(.white)
+            self.label.text = "Listed"
+            self.label.textColor = .white
+        } else {
+            self.backgroundColor = .baseYellow
+            self.label.textColor = .black
+            self.buttonImageView.image = UIImage(named: "bookmark")!.withTintColor(.black)
+            self.label.text = "Add to Watchlist"
+        }
+    }
 }

@@ -27,6 +27,8 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
     var network: Network?
     var image: Image?
     var summary: String?
+    
+    var isListed = false
    
     
     struct Schedule: Codable {
