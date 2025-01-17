@@ -68,7 +68,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     }()
     
     lazy var addButton: AppButton = {
-        let button = AppButton(color: .baseYellow, image: UIImage(named: "bookmark.fill")!, frame: .zero)
+        let button = AppButton(color: .baseYellow, image: UIImage(named: "bookmark")!, frame: .zero)
         button.alpha = 0.0
         button.label.textColor = .black
         return button.forAutoLayout()

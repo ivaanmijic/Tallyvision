@@ -46,7 +46,7 @@ class ShowOveriewView: UICollectionReusableView {
     private lazy var watchButton: AppButton = {
         let button = AppButton(
             color: .secondaryAppColor,
-            image: UIImage(systemName: "play.tv.fill")!,
+            image: UIImage(named: "monitor.play")!.withTintColor(.textColor),
             frame: .zero
         )
         button.addTarget(self, action: #selector(openURL), for: .touchUpInside)
@@ -122,7 +122,7 @@ class ShowOveriewView: UICollectionReusableView {
     
     private func configureMetadata() {
         if let rating = show?.rating {
-            horizontalStackView.addArrangedSubview(createDecoratedLabel(icon: "star.fill", color: .systemYellow, text: "\(rating)"))
+            horizontalStackView.addArrangedSubview(createDecoratedLabel(icon: "star", color: .systemYellow, text: "\(rating)"))
         }
         
         if let premiereDate = show?.premiereDate {
@@ -144,7 +144,7 @@ class ShowOveriewView: UICollectionReusableView {
                 formattedRuntime = minutes > 0 ? "\(minutes) min" : "0 min"
             }
             
-            horizontalStackView.addArrangedSubview(createDecoratedLabel(icon: "clock.fill", color: .gray, text: formattedRuntime))
+            horizontalStackView.addArrangedSubview(createDecoratedLabel(icon: "clock", color: .gray, text: formattedRuntime))
         }
         
         verticalStackView.addArrangedSubview(horizontalStackView)
@@ -197,7 +197,7 @@ class ShowOveriewView: UICollectionReusableView {
     
     private func createDecoratedLabel(icon: String, color: UIColor, text: String) -> DecoratedLabel {
         let label = DecoratedLabel()
-        label.configure(icon: UIImage(systemName: icon), withColor: color, text: text)
+        label.configure(icon: UIImage(named: icon)?.withTintColor(color), withColor: color, text: text)
         return label
     }
     

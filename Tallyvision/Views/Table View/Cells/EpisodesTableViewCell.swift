@@ -29,7 +29,7 @@ class EpisodesTableViewCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel.appLabel(fontSize: 18, fontStyle: "bold")
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label.forAutoLayout()
     }()
     
@@ -41,7 +41,7 @@ class EpisodesTableViewCell: UITableViewCell {
     
     private lazy var tvButton: UIButton = {
         let button = UIButton(type: .custom)
-        let image = UIImage(named: "tv.fill")!.withTintColor(.secondaryAppColor)
+        let image = UIImage(named: "television")!.withTintColor(.secondaryAppColor)
         button.setImage(image, for: .normal)
         return button.forAutoLayout()
     }()
@@ -105,7 +105,7 @@ class EpisodesTableViewCell: UITableViewCell {
         guard let episode = self.episode else { return }
         orderLabel.text = "\(episode.number ?? 0)"
         titleLabel.text = episode.title
-//        premiereLabel.text = episode.airDate
+        premiereLabel.text = episode.airdate?.formattedDate()
     }
     
 }

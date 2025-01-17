@@ -16,8 +16,8 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
     var season: Int64
     var number: Int64?
     var type: String
-    var airDate: String?
-    var airTime: String?
+    var airdate: String?
+    var airtime: String?
     var runtime: Int64?
     var rating: Double?
     var image: Image?
@@ -36,7 +36,7 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, url, season, number, type, airDate, airTime, runtime, rating, image, summary
+        case id, url, season, number, type, airdate, airtime, runtime, rating, image, summary
         case title = "name"
         case _show = "show"
         case _embeddedShow = "_embedded"
@@ -55,8 +55,8 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
         number = try container.decodeIfPresent(Int64.self, forKey: .number)
         type = try container.decode(String.self, forKey: .type)
         
-        airDate = try container.decodeIfPresent(String.self, forKey: .airDate)
-        airTime = try container.decodeIfPresent(String.self, forKey: .airTime)
+        airdate = try container.decodeIfPresent(String.self, forKey: .airdate)
+        airtime = try container.decodeIfPresent(String.self, forKey: .airtime)
         
         runtime = try container.decodeIfPresent(Int64.self, forKey: .runtime)
         

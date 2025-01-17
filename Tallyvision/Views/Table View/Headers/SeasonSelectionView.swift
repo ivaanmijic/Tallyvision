@@ -66,7 +66,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
     
     private lazy var tvButton: UIButton = {
         let button = UIButton(type: .custom)
-        let image = UIImage(named: "tv.fill")!.withTintColor(.secondaryAppColor)
+        let image = UIImage(named: "television")!.withTintColor(.secondaryAppColor)
         button.setImage(image, for: .normal)
         return button.forAutoLayout()
     }()

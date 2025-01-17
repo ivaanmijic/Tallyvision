@@ -148,8 +148,9 @@ class CastViewController: UIViewController {
     }
     
     private func updateImage() {
+        let placeholder = actor.gender == "male" ? "actor" : "actress"
         let image = actor.image?.original
-        profileImageView.configure(image: image, placeholder: "placeholder")
+        profileImageView.configure(image: image, placeholder: "actor")
     }
     
     private func updateLabels() {
@@ -163,11 +164,11 @@ class CastViewController: UIViewController {
         }
         
         if let birthday = actor.birthday {
-            contentStackView.addArrangedSubview(createKeyValueLabel(key: "Born: ", value: formattedDate(birthday)))
+            contentStackView.addArrangedSubview(createKeyValueLabel(key: "Born: ", value: birthday.formattedDate()))
         }
         
         if let deathday = actor.deathday {
-            contentStackView.addArrangedSubview(createKeyValueLabel(key: "Death", value: formattedDate(deathday)))
+                contentStackView.addArrangedSubview(createKeyValueLabel(key: "Death", value: deathday.formattedDate()))
         }
         
         if let country = actor.country {
@@ -215,18 +216,6 @@ class CastViewController: UIViewController {
         label.textColor = textColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }
-    
-    private func formattedDate(_ date: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        if let parsedDate = formatter.date(from: date) {
-            formatter.dateStyle = .medium
-            return formatter.string(from: parsedDate)
-        }
-        return date
     }
     
 }

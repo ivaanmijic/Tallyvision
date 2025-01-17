@@ -114,7 +114,7 @@ class ShowTableViewCell: UITableViewCell {
     private func updateUI() {
         guard let show = show else { return }
         
-        poster.configure(image: show.image?.medium, placeholder: "placeholder")
+        poster.configure(image: show.image?.medium, placeholder: "show")
         titleLabel.text = show.title
         
         if let premiereDate = show.premiereDate {
@@ -128,7 +128,7 @@ class ShowTableViewCell: UITableViewCell {
         secondSubtitleLabel.text = secondSubtitle
         
         if let rating = show.rating {
-            ratingLabel.configure(icon: UIImage(systemName: "star.fill"), withColor: .baseYellow, text: String("\(rating)"))
+            ratingLabel.configure(icon: UIImage(named: "star"), withColor: .baseYellow, text: String("\(rating)"))
         }
     }
     

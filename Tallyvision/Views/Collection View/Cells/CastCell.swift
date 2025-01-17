@@ -79,7 +79,7 @@ class CastCell: UICollectionViewCell {
     }
     
     private func setupImageView() {
-        imageView.configure(image: imageURL, placeholder: "placeholder")
+        imageView.configure(image: imageURL, placeholder: "actor")
     }
     
     func configure(name: String, characterName: String, imageURL: String?) {
