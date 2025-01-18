@@ -17,7 +17,6 @@ class EpisodesViewController: UIViewController {
    
     var selectedSeason: Season {
         didSet {
-            print("Test")
             reloadTableView()
         }
     }
@@ -107,7 +106,6 @@ class EpisodesViewController: UIViewController {
         do {
             let episodes = try await episodeService.fetchEpisodesForSeason(withId: selectedSeason.id)
             seasonEpisodes[selectedSeason.number] = episodes
-            print("fetched episodes,", episodes)
         } catch {
             log.error("Error occured updating episodes:\n\(error)")
         }

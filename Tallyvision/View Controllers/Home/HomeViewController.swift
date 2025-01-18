@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
    
     private var selectedShow: Show?
     
-    var scheduleService: ScheduleService!
+    var showService: ShowService!
     
     //MARK: - UIComponents
     
@@ -82,7 +82,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupServices() {
-        scheduleService = ScheduleService(httpClient: TVMazeClient())
+        showService = ShowService(httpClient: TVMazeClient())
     }
    
     // MARK: UI Update
@@ -98,7 +98,7 @@ class HomeViewController: UIViewController {
     
     private func updateTodayShows() async {
         do {
-            todayShows = try await scheduleService.getTodaysShows()
+            todayShows = try await showService.getTodaysShows()
         } catch {
             log.error(error)
         }
@@ -106,7 +106,7 @@ class HomeViewController: UIViewController {
     
     private func updateRecentShows() async {
         do {
-            recentShows = try await scheduleService.getRecentShows()
+            recentShows = try await showService.getRecentShows()
         } catch {
             log.error(error)
         }
@@ -114,7 +114,7 @@ class HomeViewController: UIViewController {
     
     private func updateUpcomingShows() async {
         do {
-            upcomingShows = try await scheduleService.getUpcomingShows()
+            upcomingShows = try await showService.getUpcomingShows()
         } catch {
             log.error(error)
         }

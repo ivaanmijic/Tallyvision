@@ -16,7 +16,7 @@ class DiscoverViewController: UIViewController {
     private var recentShows: [Show] = []
     private var shows:[Show] = []
         
-    private var searchService: SearchService!
+    private var showService: ShowService!
     
     private var cancellables = Set<AnyCancellable>()
    
@@ -145,7 +145,7 @@ class DiscoverViewController: UIViewController {
     }
     
     private func setupServices() {
-        searchService = SearchService(httpClient: TVMazeClient())
+        showService = ShowService(httpClient: TVMazeClient())
     }
     
 }
@@ -207,7 +207,7 @@ extension DiscoverViewController: UISearchBarDelegate {
             guard let self = self else { return }
             Task {
                 do {
-                    self.shows = try await self.searchService.searchShows(forQuery: query)
+                    self.shows = try await self.showService.searchShows(forQuery: query)
                     DispatchQueue.main.async {
                         self.updateUI()
                         self.hideLoadingIndicator()

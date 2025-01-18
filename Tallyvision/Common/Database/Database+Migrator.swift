@@ -32,9 +32,8 @@ extension Database {
                 t.column("network", .jsonText)
                 t.column("country", .jsonText)
                 t.column("image", .text)
+                t.column("isListed", .boolean).notNull()
             }
-            
-            
            
             migrator.registerMigration("createSeasons") { db in
                 try db.create(table: Season.databaseTableName) { t in

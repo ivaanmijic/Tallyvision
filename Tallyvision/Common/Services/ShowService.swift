@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ScheduleService {
+class ShowService {
     private let currentDate = Date()
     private let daysToFetch = 10
     
@@ -25,6 +25,15 @@ class ScheduleService {
             .filter { $0.image?.original != nil }
            
         return Array(Set(shows))
+    }
+    
+    func searchShows(forQuery query: String) async throws -> [Show] {
+        var shows = [Show]()
+        let results = try await httpClient.fetchShows(forQuery: query)
+        for result in results {
+            shows.append(result.show)
+        }
+        return shows
     }
     
     func getRecentShows() async throws -> [Show] {

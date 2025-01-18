@@ -142,7 +142,9 @@ class CastViewController: UIViewController {
         
         Task {
             await updateShows()
-            collectionView.reloadData()
+            await MainActor.run {
+                collectionView.reloadData()
+            }
         }
         
     }
@@ -150,7 +152,7 @@ class CastViewController: UIViewController {
     private func updateImage() {
         let placeholder = actor.gender == "male" ? "actor" : "actress"
         let image = actor.image?.original
-        profileImageView.configure(image: image, placeholder: "actor")
+        profileImageView.configure(image: image, placeholder: placeholder)
     }
     
     private func updateLabels() {

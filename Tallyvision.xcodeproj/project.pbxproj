@@ -27,7 +27,6 @@
 		FC4D182F2D2D2FCE00B88C39 /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */; };
 		FC4D18332D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D18322D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift */; };
 		FC4D18392D2D789300B88C39 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D18382D2D789300B88C39 /* SearchResponse.swift */; };
-		FC4D183B2D2D790C00B88C39 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4D183A2D2D790C00B88C39 /* SearchService.swift */; };
 		FC5209C32D19B0F4001A3180 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5209C22D19B0F4001A3180 /* UINavigationController+Extension.swift */; };
 		FC5209C52D19B371001A3180 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5209C42D19B371001A3180 /* UIViewController+Extension.swift */; };
 		FC5322222CC8F4B1001BCC3D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5322212CC8F4B1001BCC3D /* TabBarController.swift */; };
@@ -67,7 +66,7 @@
 		FCC679DB2CC8E01F00050D65 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DA2CC8E01F00050D65 /* SwiftyBeaver */; };
 		FCC679DE2CC8E04500050D65 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DD2CC8E04500050D65 /* SDWebImage */; };
 		FCC679E02CC8E04500050D65 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCC679DF2CC8E04500050D65 /* SDWebImageMapKit */; };
-		FCCBAF6A2CF86BDD000F75BD /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */; };
+		FCCBAF6A2CF86BDD000F75BD /* ShowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCBAF692CF86BDD000F75BD /* ShowService.swift */; };
 		FCCBAF6D2CF87A78000F75BD /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = FCCBAF6C2CF87A78000F75BD /* AlertKit */; };
 		FCCDF3922D22E9DE00B6DDAB /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDF3912D22E9DE00B6DDAB /* UIImageView+Extension.swift */; };
 		FCD0B4CA2CDA0E3A0042E05C /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD0B4C92CDA0E3A0042E05C /* Image.swift */; };
@@ -110,7 +109,6 @@
 		FC4D182E2D2D2FCE00B88C39 /* ShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
 		FC4D18322D2D4FF800B88C39 /* DispatchQueue+Dedupe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Dedupe.swift"; sourceTree = "<group>"; };
 		FC4D18382D2D789300B88C39 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
-		FC4D183A2D2D790C00B88C39 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		FC5209C22D19B0F4001A3180 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FC5209C42D19B371001A3180 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		FC5322212CC8F4B1001BCC3D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -148,7 +146,7 @@
 		FCC679C82CC8D4BE00050D65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCC679CD2CC8D4BE00050D65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCC679D62CC8D5B300050D65 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
+		FCCBAF692CF86BDD000F75BD /* ShowService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowService.swift; sourceTree = "<group>"; };
 		FCCDF3912D22E9DE00B6DDAB /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		FCD0B4C92CDA0E3A0042E05C /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		FCD0B4CB2CDA0E8F0042E05C /* Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Season.swift; sourceTree = "<group>"; };
@@ -486,9 +484,8 @@
 		FCCBAF662CF86B8D000F75BD /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				FCCBAF692CF86BDD000F75BD /* ScheduleService.swift */,
+				FCCBAF692CF86BDD000F75BD /* ShowService.swift */,
 				FC81954D2D10662A006D1CDF /* CastService.swift */,
-				FC4D183A2D2D790C00B88C39 /* SearchService.swift */,
 				FCA736472D2EE77600ABE551 /* SeasonService.swift */,
 				FCE559492D35AF8100BC7C46 /* EpisodeService.swift */,
 			);
@@ -702,7 +699,6 @@
 				FC359CA92D09911C004E9D95 /* ShowCast.swift in Sources */,
 				FC5322412CC933EB001BCC3D /* UILabel+Extension.swift in Sources */,
 				FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */,
-				FC4D183B2D2D790C00B88C39 /* SearchService.swift in Sources */,
 				FC038A932D244825006FBB14 /* CastCredit.swift in Sources */,
 				FCC679C22CC8D4BC00050D65 /* SceneDelegate.swift in Sources */,
 				FCBB94912CFF028A0097B766 /* ShowViewController.swift in Sources */,
@@ -735,7 +731,7 @@
 				FC5209C32D19B0F4001A3180 /* UINavigationController+Extension.swift in Sources */,
 				FCEBB31B2D12AF6900EAE4B7 /* ShowTitleView.swift in Sources */,
 				FC4AA03B2CF5BC9C00A67A74 /* ShowCardsCell.swift in Sources */,
-				FCCBAF6A2CF86BDD000F75BD /* ScheduleService.swift in Sources */,
+				FCCBAF6A2CF86BDD000F75BD /* ShowService.swift in Sources */,
 				FC4468652D1317DE004CFAB2 /* CastViewController.swift in Sources */,
 				FCD0B4CE2CDA17840042E05C /* Network.swift in Sources */,
 				FC81954E2D10662A006D1CDF /* CastService.swift in Sources */,

@@ -76,17 +76,17 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
             frame: .zero)
         button.alpha = 0.0
         button.titleLabel?.textColor = .black
-        button.addTarget(self, action: #selector(addShowToWatchlist), for: .touchUpInside)
+        button.addTarget(self, action: #selector(toggleWatchlistStatus), for: .touchUpInside)
         return button.forAutoLayout()
     }()
     
-//    lazy var transparentMaskView = UIView().forAutoLayout()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        updateShowStatus()
         setupUI()
         setupServices()
         updateUI()
@@ -99,6 +99,18 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private func setupNavigationBar() {
         navigationController?.configureNavigationBar(leftButton: backButton, target: self)
+    }
+    
+    private func updateShowStatus() {
+        do {
+            let isListed = try showRepository.fetchStatus(forID: show.showId)
+            if let isListed = isListed {
+                show.isListed = isListed
+                watchlistButton.updateButtonAppearance(isListed: show.isListed)
+            }
+        } catch {
+            log.error("Error fetching show status: \(error)")
+        }
     }
     
     private func setupUI() {
@@ -167,19 +179,52 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Actions
     
-    @objc private func addShowToWatchlist() {
-        show.isListed.toggle()
-        writeShowInDatabase(show)
-        watchlistButton.updateButtonAppearance(isListed: show.isListed)
+    @objc private func toggleWatchlistStatus() {
+        !show.isListed ? addShowToWatchlist() : presentAlert()
     }
-    
-    private func writeShowInDatabase(_ show: Show) {
+  
+    private func addShowToWatchlist() {
         do {
+            show.isListed.toggle()
             try showRepository.create(show: show)
+            updateShowStatus()
         } catch {
-            log.error(error.localizedDescription)
+            log.error("Error adding show \(show.title) \(show.showId) to wathclist:\n \(error)")
         }
     }
+    
+    private func presentAlert() {
+        let title = "Remove from Watchlist?"
+        let message = "Are you sure you want to remove \(show.title) from your watchlist?"
+        
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { [weak self] _ in
+            self?.removeShowFromWatchlist()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(removeAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func removeShowFromWatchlist() {
+        do {
+            show.isListed.toggle()
+            _ = try showRepository.remove(show: show)
+//            updateShowStatus()
+            watchlistButton.updateButtonAppearance(isListed: show.isListed)
+        } catch {
+            log.error("Error deleteing show \(show.showId) from database:\n \(error)")
+        }
+    }
+    
     
     // MARK: - UI Update
     
@@ -187,9 +232,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         Task {
             await updateSeasons()
             await updateCast()
-            await MainActor.run {
-                reloadData()
-            }
+            reloadData()
         }
     }
     
@@ -212,7 +255,6 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private func reloadData() {
         collectionView.reloadData()
-        watchlistButton.updateButtonAppearance(isListed: show.isListed)
     }
     
     private func displayError(_ error: Error) {
