@@ -41,11 +41,6 @@ extension Database {
                     t.column("showId", .integer).references(Show.databaseTableName, onDelete: .cascade)
                     t.column("number", .integer).notNull()
                     t.column("episodeOrder", .integer).notNull()
-                    t.column("premiereDate", .text)
-                    t.column("endDate", .text)
-                    t.column("network", .jsonText)
-                    t.column("image", .text)
-                    t.column("summary", .text)
                 }
             }
             
