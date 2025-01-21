@@ -10,7 +10,8 @@ import UIKit
 
 class AppConstants {
     
-    static let posterImageRatio: CGFloat = 295/210
+    static let posterImageRatio: CGFloat = 295 / 210
+    static let episodeImageRation: CGFloat = 3 / 4
     
     static let screenHeight: CGFloat = UIScreen.main.bounds.height
     static let screenWidth: CGFloat = UIScreen.main.bounds.width

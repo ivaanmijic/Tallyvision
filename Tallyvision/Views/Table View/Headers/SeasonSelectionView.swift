@@ -66,7 +66,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
     
     private lazy var tvButton: UIButton = {
         let button = UIButton(type: .custom)
-        let image = UIImage(named: "television")!.withTintColor(.secondaryAppColor)
+        let image = UIImage(named: "television")!.withTintColor(.textColor.withAlphaComponent(0.5))
         button.setImage(image, for: .normal)
         return button.forAutoLayout()
     }()
@@ -101,6 +101,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
         NSLayoutConstraint.activate([
             selectionButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             selectionButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            selectionButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             
             tvButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             tvButton.heightAnchor.constraint(equalToConstant: 30),
