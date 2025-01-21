@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
         collectionView.register(SectionTitleReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionTitleReusableView.identifier)
         
-        return collectionView.forAutoLayout().forAutoLayout()
+        return collectionView.forAutoLayout()
     }()
     
     

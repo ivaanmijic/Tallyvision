@@ -14,23 +14,31 @@ class ShowRepository {
         self.dbQueue = Database.dbQueue
     }
     
-    func create(show: Show) throws {
-        try dbQueue.write { db in
+    func create(show: Show) async throws {
+        try await dbQueue.write { db in
             try show.insert(db)
         }
     }
     
-    func fetchStatus(forID id: Int64) throws -> Bool? {
-        try dbQueue.read { db in
+    func fetchStatus(forID id: Int64) async throws -> Bool? {
+        try await dbQueue.read { db in
             let shows = Show.databaseTableName
             let status = try Bool.fetchOne(db, sql: "SELECT isListed FROM \(shows) WHERE id = ?", arguments: [id])
             return status
         }
     }
     
-    func remove(show: Show) throws -> Bool? {
-        try dbQueue.write { db in
+    func remove(show: Show) async throws -> Bool? {
+        try await dbQueue.write { db in
             try show.delete(db)
+        }
+    }
+    
+    func fetchListedShows() async throws -> [Show] {
+        try await dbQueue.read { db in
+            let shows = Show.databaseTableName
+            let query = "SELECT * FROM \(shows) WHERE isListed = True"
+            return try Show.fetchAll(db, sql: query)
         }
     }
     

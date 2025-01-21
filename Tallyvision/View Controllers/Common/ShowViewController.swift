@@ -102,14 +102,16 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func updateShowStatus() {
-        do {
-            let isListed = try showRepository.fetchStatus(forID: show.showId)
-            if let isListed = isListed {
-                show.isListed = isListed
-                watchlistButton.updateButtonAppearance(isListed: show.isListed)
+        Task {
+            do {
+                let isListed = try await showRepository.fetchStatus(forID: show.showId)
+                if let isListed = isListed {
+                    show.isListed = isListed
+                    watchlistButton.updateButtonAppearance(isListed: show.isListed)
+                }
+            } catch {
+                log.error("Error fetching show status: \(error)")
             }
-        } catch {
-            log.error("Error fetching show status: \(error)")
         }
     }
     
@@ -184,12 +186,14 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     }
   
     private func addShowToWatchlist() {
-        do {
-            show.isListed.toggle()
-            try showRepository.create(show: show)
-            updateShowStatus()
-        } catch {
-            log.error("Error adding show \(show.title) \(show.showId) to wathclist:\n \(error)")
+        Task {
+            do {
+                show.isListed.toggle()
+                try await showRepository.create(show: show)
+                updateShowStatus()
+            } catch {
+                log.error("Error adding show \(show.title) \(show.showId) to wathclist:\n \(error)")
+            }
         }
     }
     
@@ -215,13 +219,14 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func removeShowFromWatchlist() {
-        do {
-            show.isListed.toggle()
-            _ = try showRepository.remove(show: show)
-//            updateShowStatus()
-            watchlistButton.updateButtonAppearance(isListed: show.isListed)
-        } catch {
-            log.error("Error deleteing show \(show.showId) from database:\n \(error)")
+        Task {
+            do {
+                show.isListed.toggle()
+                _ = try await showRepository.remove(show: show)
+                watchlistButton.updateButtonAppearance(isListed: show.isListed)
+            } catch {
+                log.error("Error deleteing show \(show.showId) from database:\n \(error)")
+            }
         }
     }
     

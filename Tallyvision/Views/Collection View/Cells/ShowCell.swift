@@ -47,7 +47,7 @@ class ShowCell: UICollectionViewCell {
         imageView.configure(image: imageURL)
     }
     
-    func configure(withImageURL imageURL: String) {
+    func configure(withImageURL imageURL: String?) {
         self.imageURL = imageURL
     }
     
