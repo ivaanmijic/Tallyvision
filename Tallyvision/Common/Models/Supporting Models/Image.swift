@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import GRDB
 
-struct Image: Codable {
+struct Image: Codable, DatabaseValueConvertible {
     let medium: String?
     let original: String?
 }

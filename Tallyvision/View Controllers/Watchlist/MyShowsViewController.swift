@@ -7,10 +7,10 @@
 
 import UIKit
 
-class WatchlistViewController: UIViewController {
+class MyShowsViewController: UIViewController {
     // MARK: - Properties
     
-    var listedShows = [Show]() {
+    var watchlistShows = [Show]() {
         didSet {
             collectionView.reloadData()
         }
@@ -21,7 +21,7 @@ class WatchlistViewController: UIViewController {
     // MARK: - UI Components
     
     lazy var titleLabel: UILabel = {
-        return UILabel.appLabel(withText: "WATCHLIST").forAutoLayout()
+        return UILabel.appLabel(withText: "MY SHOWS").forAutoLayout()
     }()
     
     lazy var collectionView: UICollectionView = {
@@ -30,6 +30,10 @@ class WatchlistViewController: UIViewController {
         collectionView.backgroundColor = .appColor
         
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
+        
+        collectionView.register(SectionTitleReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: SectionTitleReusableView.identifier)
         
         return collectionView.forAutoLayout()
     }()
@@ -77,7 +81,7 @@ class WatchlistViewController: UIViewController {
     private func loadData() {
         Task {
             do {
-                listedShows = try await showRepository.fetchListedShows()
+                watchlistShows = try await showRepository.fetchListedShows()
             } catch {
                 log.error("Error reading listedShows from database:\n\(error)")
             }
@@ -88,7 +92,7 @@ class WatchlistViewController: UIViewController {
 
 // MARK: UICollectionViewDelegate, UICollectionViewDataSource
 
-extension WatchlistViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MyShowsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -96,7 +100,7 @@ extension WatchlistViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return listedShows.count
+        case 0: return watchlistShows.count
         default: return 0
         }
     }
@@ -107,7 +111,7 @@ extension WatchlistViewController: UICollectionViewDelegate, UICollectionViewDat
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCell.identifier, for: indexPath)
                     as? ShowCell else { return UICollectionViewCell()}
             
-            let imageURL = listedShows[indexPath.row].image?.medium
+            let imageURL = watchlistShows[indexPath.row].image?.medium
             cell.configure(withImageURL: imageURL)
             
             return cell
@@ -119,11 +123,28 @@ extension WatchlistViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         default:
-            let selectedShow = listedShows[indexPath.row]
+            let selectedShow = watchlistShows[indexPath.row]
             navigateToDetails(for: selectedShow)
             
             
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SectionTitleReusableView.identifier,
+                for: indexPath
+              ) as? SectionTitleReusableView else {
+            return UICollectionReusableView()
+        }
+        
+        switch indexPath.section {
+        default: header.configure(title: "Watchlist")
+        }
+        
+        return header
     }
     
 }

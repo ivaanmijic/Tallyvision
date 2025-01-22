@@ -20,6 +20,14 @@ class ShowRepository {
         }
     }
     
+    func exists(showId: Int64) async throws -> Bool {
+        try await dbQueue.read { db in
+            let sql = "SELECT COUNT(*) FROM \(Show.databaseTableName) WHERE id = ?"
+            let count: Int = try Int.fetchOne(db, sql: sql, arguments: [showId]) ?? 0
+            return count > 0
+        }
+    }
+    
     func fetchStatus(forID id: Int64) async throws -> Bool? {
         try await dbQueue.read { db in
             let shows = Show.databaseTableName

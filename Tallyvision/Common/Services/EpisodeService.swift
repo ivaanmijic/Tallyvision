@@ -14,9 +14,9 @@ class EpisodeService {
         self.httpClient = httpClient
     }
     
-    func fetchEpisodesForSeason(withId id: Int64) async throws -> [Episode] {
-        let episodes =  try await httpClient.fetchEpisodes(forSeasonId: id)
-        log.debug(episodes.count)
+    func fetchEpisodes(forSeason seasonId: Int64) async throws -> [Episode] {
+        let episodes =  try await httpClient.fetchEpisodes(forSeasonId: seasonId)
+        log.info("Fetched \(episodes.count) episodes for \(seasonId)")
         return episodes
     }
 

@@ -7,11 +7,16 @@
 
 import UIKit
 
-class EpisodesTableViewCell: UITableViewCell {
+protocol EpisodeTableViewCellDelegate: AnyObject {
+    func episodeSeenStatusChanged(for episode: Episode)
+}
+
+class EpisodeTableViewCell: UITableViewCell {
     // MARK: - Properties
-    
-    static let identifier = String(describing: EpisodesTableViewCell.self)
-    
+   
+    static let identifier = String(describing: EpisodeTableViewCell.self)
+    weak var delegate: EpisodeTableViewCellDelegate?
+   
     private var episode: Episode? {
         didSet {
             updateUI()
@@ -19,6 +24,8 @@ class EpisodesTableViewCell: UITableViewCell {
     }
     
     // MARK: - UIComponents
+    
+    lazy var tvIcon = UIImage(named: "television")!
     
     lazy var poster: UIImageView = {
         let imageView = UIImageView()
@@ -47,8 +54,7 @@ class EpisodesTableViewCell: UITableViewCell {
     
     private lazy var tvButton: UIButton = {
         let button = UIButton(type: .custom)
-        let image = UIImage(named: "television")!.withTintColor(.textColor.withAlphaComponent(0.5))
-        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(toggleEpisodeSeenStatus), for: .touchUpInside)
         return button.forAutoLayout()
     }()
     
@@ -114,6 +120,7 @@ class EpisodesTableViewCell: UITableViewCell {
     private func updateUI() {
         guard let episode = self.episode else { return }
         poster.configure(image: episode.image?.medium, placeholder: "show")
+        setTvButtonAppearance(status: episode.hasBeenSeen)
         configureOrderLabel()
         titleLabel.text = episode.title
         premiereLabel.text = episode.airdate?.formattedDate()
@@ -121,13 +128,28 @@ class EpisodesTableViewCell: UITableViewCell {
     
     private func configureOrderLabel() {
         if let number = episode?.number,
-           let seasonNumber = episode?.season {
+           let seasonNumber = episode?.seasonId {
             let formattedSeason = String(format: "S%02d", seasonNumber)
             let formattedEpisode = String(format: "E%02d", number)
             orderLabel.text = "\(formattedSeason) \(formattedEpisode)"
         } else {
             orderLabel.text = "Special"
         }
+    }
+    
+    // MARK: - Actions
+
+    @objc private func toggleEpisodeSeenStatus() {
+        guard let episode = episode else { return }
+        delegate?.episodeSeenStatusChanged(for: episode)
+        setTvButtonAppearance(status: !episode.hasBeenSeen)
+    }
+    
+    // MARK: - Helpers
+    
+    private func setTvButtonAppearance(status: Bool) {
+        let color: UIColor = status == true ? .baseYellow : .textColor.withAlphaComponent(0.5)
+        tvButton.setImage(tvIcon.withTintColor(color), for: .normal)
     }
     
 }

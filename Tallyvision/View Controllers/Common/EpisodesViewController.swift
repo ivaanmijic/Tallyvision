@@ -10,19 +10,23 @@ import UIKit
 class EpisodesViewController: UIViewController {
     // MARK: - Properties
     
-    var episodeService: EpisodeService!
+    private var episodeService: EpisodeService!
+    private var seasonServcie: SeasonService!
+    private var showService: ShowService!
+    private let episodeRepository = EpisodeRepository()
+    private let showRepository = ShowRepository()
     
-    var seasons: [Season]
-    var seasonEpisodes: [Int64 : [Episode]] = [:]
-   
-    var selectedSeason: Season {
-        didSet {
-            reloadTableView()
-        }
+    private var show: Show
+    private var seasons: [Season]
+    private var seasonEpisodes: [Int64 : [Episode]] = [:]
+    private var selectedSeason: Season {
+        didSet { fetchEpisodesForSelectedSeason() }
     }
     
     // MARK: - Initializers
-    init(seasons: [Season]) {
+    
+    init(seasons: [Season], show: Show) {
+        self.show = show
         self.seasons = seasons
         self.selectedSeason = seasons[0]
         super.init(nibName: nil, bundle: nil)
@@ -50,8 +54,10 @@ class EpisodesViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = .appColor
         tableView.separatorStyle = .none
-        tableView.register(EpisodesTableViewCell.self, forCellReuseIdentifier: EpisodesTableViewCell.identifier)
+        tableView.register(EpisodeTableViewCell.self, forCellReuseIdentifier: EpisodeTableViewCell.identifier)
         tableView.register(SeasonSelectionView.self, forHeaderFooterViewReuseIdentifier: SeasonSelectionView.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
         return tableView.forAutoLayout()
     }()
     
@@ -60,7 +66,7 @@ class EpisodesViewController: UIViewController {
         setupNavigationBar()
         setupUI()
         setupServices()
-        reloadTableView()
+        fetchEpisodesForSelectedSeason()
     }
     
     private func setupNavigationBar() {
@@ -73,44 +79,44 @@ class EpisodesViewController: UIViewController {
         view.backgroundColor = .blue
         view.addSubview(tableView)
         tableView.pin(to: view)
-        tableView.delegate = self
-        tableView.dataSource = self
     }
     
     private func setupServices() {
         episodeService = EpisodeService(httpClient: TVMazeClient())
+        seasonServcie = SeasonService(httpClient: TVMazeClient())
+        showService = ShowService(httpClient: TVMazeClient())
+    }
+   
+    // MARK: - Data Handling
+    
+    private func fetchEpisodesForSelectedSeason() {
+        Task {
+            do {
+                let episodes = try await fetchEpisodes(for: selectedSeason)
+                seasonEpisodes[selectedSeason.number] = episodes
+                tableView.reloadData()
+            } catch {
+                log.error("Failed to fetch episodes for season \(selectedSeason.number):\n \(error)")
+            }
+        }
     }
     
+    private func fetchEpisodes(for season: Season) async throws -> [Episode] {
+        let cachedEpisodes = try await episodeRepository.fetchEpisodes(forSeason: season.number, show: show.showId)
+        if !cachedEpisodes.isEmpty {
+            return cachedEpisodes
+        }
+        return try await episodeService.fetchEpisodes(forSeason: season.id)
+    }
 
     // MARK: - Actions
+    
     @objc private func dismissController() {
         dismiss(animated: true)
     }
-    
-    private func reloadTableView() {
-        if seasonEpisodes[selectedSeason.number] == nil {
-            updateData()
-        } else {
-            tableView.reloadData()
-        }
-    }
-   
-    private func updateData() {
-        Task {
-            await updateEpisodes()
-            tableView.reloadData()
-        }
-    }
-    
-    private func updateEpisodes() async {
-        do {
-            let episodes = try await episodeService.fetchEpisodesForSeason(withId: selectedSeason.id)
-            seasonEpisodes[selectedSeason.number] = episodes
-        } catch {
-            log.error("Error occured updating episodes:\n\(error)")
-        }
-    }
 }
+
+// MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -123,12 +129,13 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodesTableViewCell.identifier)
-                as? EpisodesTableViewCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeTableViewCell.identifier)
+                as? EpisodeTableViewCell,
               let episodes = seasonEpisodes[selectedSeason.number]
         else {
             return UITableViewCell()
         }
+        cell.delegate = self
         cell.configure(episode: episodes[indexPath.row])
         return cell
     }
@@ -144,10 +151,69 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension EpisodesViewController: SeasonSelectionViewDelegate {
+// MARK: SeasonSelectionViewDelegate, EpisodeTableViewCellDelegate
+
+extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewCellDelegate {
+    
     func selectSeason(withNumber number: Int64) {
         selectedSeason = seasons.first { $0.number == number } ?? selectedSeason
     }
     
+    func episodeSeenStatusChanged(for episode: Episode) {
+        Task {
+            log.debug("Attempting to update seen status for episode \(episode.id)")
+            var updatedEpisode = episode
+            updatedEpisode.showId = show.showId
+            updatedEpisode.hasBeenSeen = true
+            
+            do {
+                try await updateSeenStatusForEpisode(updatedEpisode)
+                log.debug("Episode \(updatedEpisode.id) updated succesfully")
+            } catch {
+                await handleUpdateFailure(for: updatedEpisode, error: error)
+            }
+        }
+    }
     
+    private func handleUpdateFailure(for episode: Episode, error: Error) async {
+        do {
+            try await ensureShowExists()
+            try await ensureSeasonsExist()
+            try await updateSeenStatusForEpisode(episode)
+            log.debug("Episode \(episode.id) updated succesfully")
+        } catch {
+            log.error("Failed to update seen status for episode \(episode.id):\n \(error)")
+        }
+    }
+    
+    private func updateSeenStatusForEpisode(_ episode: Episode) async throws {
+        try await episodeRepository.update(episode: episode)
+        log.info(episode.hasBeenSeen)
+    }
+    
+    private func ensureShowExists() async throws {
+        if !(try await showRepository.exists(showId: show.showId)) {
+            try await showRepository.create(show: show)
+        }
+    }
+    
+    private func ensureSeasonsExist() async throws {
+        log.info(seasons.count)
+        for season in self.seasons {
+            try await ensureEpisodesExist(for: season)
+        }
+    }
+    
+    private func ensureEpisodesExist(for season: Season) async throws {
+        let episodes = try await episodeService.fetchEpisodes(forSeason: season.id)
+        log.debug(episodes.count)
+        for var episode in episodes {
+            episode.setShowId(show.showId)
+            
+            if !(try await episodeRepository.exists(episode.id)) {
+                try await episodeRepository.create(episode: episode)
+            }
+        }
+    }
 }
+    

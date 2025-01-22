@@ -17,6 +17,10 @@ class ShowService {
         self.httpClient = httpClient
     }
     
+    func getShow(withId id: Int64) async throws -> Show {
+        return try await httpClient.fetchShow(byId: Int(id))
+    }
+    
     func getTodaysShows() async throws -> [Show] {
         let todayEpisodes = try await fetchEpisodes(forDate: currentDate)
        
@@ -49,6 +53,7 @@ class ShowService {
         
         return Array(Set(shows))
     }
+    
     
     private func fetchShows(daysToFetch: Int, relativeTo direction: Int) async throws -> [Show] {
         let dates = (1...daysToFetch).map {

@@ -1,0 +1,60 @@
+//
+//  EpisodeRepository.swift
+//  Tallyvision
+//
+//  Created by Ivan Mijic on 21. 1. 2025..
+//
+
+import Foundation
+import GRDB
+
+class EpisodeRepository {
+    private let dbQueue: DatabaseQueue!
+    
+    init() {
+        self.dbQueue = Database.dbQueue
+    }
+    
+    func create(episode: Episode) async throws {
+        try await dbQueue.write { db in
+            try episode.insert(db)
+        }
+    }
+    
+    func exists(_ episodeId: Int64) async throws -> Bool{
+        try await dbQueue.read { db in
+            let sql = "SELECT COUNT(*) FROM \(Episode.databaseTableName) WHERE id = ?"
+            let count: Int = try Int.fetchOne(db, sql: sql, arguments: [episodeId]) ?? 0
+            log.debug("Episode \(episodeId) in database: \(count > 0)")
+            return count > 0
+        }
+    }
+    
+    func update(episode: Episode) async throws {
+        try await dbQueue.write { db in
+            try episode.insert(db, onConflict: .replace)
+        }
+    }
+    
+    func update(episodes: [Episode]) async throws {
+        try await dbQueue.write { db in
+            try episodes.forEach {
+                try $0.insert(db, onConflict: .replace)
+            }
+        }
+    }
+    
+    func fetchAllEpisodes() async throws -> [Episode] {
+        try await dbQueue.read { db in
+            return try Episode.fetchAll(db)
+        }
+    }
+    
+    func fetchEpisodes(forSeason seasonNumber: Int64, show showId: Int64) async throws -> [Episode] {
+        try await dbQueue.read { db in
+            let table = Episode.databaseTableName
+            let query = "SELECT * FROM \(table) WHERE season = ? AND showId = ?"
+            return try Episode.fetchAll(db, sql: query, arguments: [seasonNumber, showId])
+        }
+    }
+}

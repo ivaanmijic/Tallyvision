@@ -19,10 +19,10 @@ class TabBarController: UITabBarController {
     private func setupViewControllers() {
         let homeViewController = createNavigationController(HomeViewController(), withImage: "house.simple")
         let discoverViewController = createNavigationController(DiscoverViewController(), withImage: "magnifer")
-        let watchlistViewController = createNavigationController(WatchlistViewController(), withImage: "bookmark")
+        let myShowsViewController = createNavigationController(MyShowsViewController(), withImage: "bookmark")
         let statisticsViewController = createNavigationController(StatisticsViewController(), withImage: "user")
         
-        viewControllers = [homeViewController, discoverViewController, watchlistViewController, statisticsViewController]
+        viewControllers = [homeViewController, discoverViewController, myShowsViewController, statisticsViewController]
     }
     
     private func createNavigationController(_ controller: UIViewController, withImage imageName: String) -> UINavigationController {
