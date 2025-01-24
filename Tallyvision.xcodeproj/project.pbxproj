@@ -15,6 +15,8 @@
 		FC25DD7C2D3552BD00FEF559 /* SeasonSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC25DD7B2D3552BD00FEF559 /* SeasonSelectionView.swift */; };
 		FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */; };
 		FC30F8C92D40E3630040E96A /* SeasonRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC30F8C82D40E3630040E96A /* SeasonRepository.swift */; };
+		FC32AABB2D438F5200B3B920 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC32AABA2D438F5200B3B920 /* DatabaseError.swift */; };
+		FC32AABE2D4397E300B3B920 /* EpisodeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC32AABD2D4397E300B3B920 /* EpisodeTracker.swift */; };
 		FC359CA72D098863004E9D95 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC359CA62D098863004E9D95 /* Person.swift */; };
 		FC359CA92D09911C004E9D95 /* ShowCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC359CA82D09911C004E9D95 /* ShowCast.swift */; };
 		FC359CAD2D09A4D5004E9D95 /* CastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC359CAC2D09A4D5004E9D95 /* CastResponse.swift */; };
@@ -100,6 +102,8 @@
 		FC25DD7B2D3552BD00FEF559 /* SeasonSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonSelectionView.swift; sourceTree = "<group>"; };
 		FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Log.swift"; sourceTree = "<group>"; };
 		FC30F8C82D40E3630040E96A /* SeasonRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonRepository.swift; sourceTree = "<group>"; };
+		FC32AABA2D438F5200B3B920 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
+		FC32AABD2D4397E300B3B920 /* EpisodeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTracker.swift; sourceTree = "<group>"; };
 		FC359CA62D098863004E9D95 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		FC359CA82D09911C004E9D95 /* ShowCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCast.swift; sourceTree = "<group>"; };
 		FC359CAC2D09A4D5004E9D95 /* CastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastResponse.swift; sourceTree = "<group>"; };
@@ -213,6 +217,14 @@
 			path = "AppDelegate Extensions";
 			sourceTree = "<group>";
 		};
+		FC32AABC2D4397C300B3B920 /* Tracker */ = {
+			isa = PBXGroup;
+			children = (
+				FC32AABD2D4397E300B3B920 /* EpisodeTracker.swift */,
+			);
+			path = Tracker;
+			sourceTree = "<group>";
+		};
 		FC4468602D1313F5004CFAB2 /* Collection View */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +271,7 @@
 				FCF77A222CD0DF0900456132 /* Database */,
 				FCBBA95C2D3A59B900B03C21 /* Repositories */,
 				FCCBAF662CF86B8D000F75BD /* Services */,
+				FC32AABC2D4397C300B3B920 /* Tracker */,
 				FCF77A1E2CD0D0FE00456132 /* Models */,
 				FC4AA0372CF5AD1B00A67A74 /* Layouts */,
 			);
@@ -556,6 +569,7 @@
 			children = (
 				FCF77A232CD0DF2000456132 /* Database.swift */,
 				FC5C793E2CF758300016BB87 /* Database+Migrator.swift */,
+				FC32AABA2D438F5200B3B920 /* DatabaseError.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -704,6 +718,7 @@
 				FC4B3BC72CE4962C0055ECAF /* BlurredImageView.swift in Sources */,
 				FC359CA92D09911C004E9D95 /* ShowCast.swift in Sources */,
 				FC5322412CC933EB001BCC3D /* UILabel+Extension.swift in Sources */,
+				FC32AABE2D4397E300B3B920 /* EpisodeTracker.swift in Sources */,
 				FCC679C02CC8D4BC00050D65 /* AppDelegate.swift in Sources */,
 				FCDAFBC12D3FDDC000E40659 /* EpisodeRepository.swift in Sources */,
 				FC038A932D244825006FBB14 /* CastCredit.swift in Sources */,
@@ -754,6 +769,7 @@
 				FCECD0182D11675200214673 /* TabBarController+RoundedTabBar.swift in Sources */,
 				FCA028AD2D0853B5002FC29B /* PaddingLabel.swift in Sources */,
 				FCD0B4D32CDA29430042E05C /* TVMazeClient.swift in Sources */,
+				FC32AABB2D438F5200B3B920 /* DatabaseError.swift in Sources */,
 				FC5C79372CF704E30016BB87 /* DateFormatter+Extension.swift in Sources */,
 				FC5209C52D19B371001A3180 /* UIViewController+Extension.swift in Sources */,
 				FCF77A242CD0DF2000456132 /* Database.swift in Sources */,

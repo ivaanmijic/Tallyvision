@@ -35,14 +35,6 @@ extension Database {
             }
         }
         
-//        migrator.registerMigration("createSeasons") { db in
-//            try db.create(table: Season.databaseTableName) { t in
-//                t.column("id", .integer).primaryKey()
-//                t.column("number", .integer).notNull()
-//                t.column("episodeOrder", .integer).notNull()
-//            }
-//        }
-        
         migrator.registerMigration("createEpisodes") { db in
             try db.create(table: Episode.databaseTableName) { t in
                 t.column("id", .integer).primaryKey()
@@ -88,20 +80,6 @@ extension Database {
 #endif
         
         return migrator
-    }
-    
-    
-    // MARK: - Test
-    func insertShow(_ show: Show) {
-        try? Self.dbQueue?.write { db in
-            try show.insert(db)
-        }
-    }
-    
-    func fetchShows() -> [Show]? {
-        return try? Self.dbQueue.read { db in
-            try Show.fetchAll(db)
-        }
     }
     
 }

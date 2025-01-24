@@ -36,10 +36,23 @@ class EpisodeRepository {
         }
     }
     
-    func update(episodes: [Episode]) async throws {
+    func update(episodes: [Episode], showId: Int64) async throws {
+        guard episodes.count > 0 else { throw DatabaseError.noEpisodesToUpdate }
+        
         try await dbQueue.write { db in
-            try episodes.forEach {
-                try $0.insert(db, onConflict: .replace)
+            for var episode in episodes {
+                episode.hasBeenSeen = true
+                episode.showId = showId
+                try episode.update(db, onConflict: .replace)
+            }
+        }
+    }
+    
+    func insert(episodes: [Episode], showId: Int64) async throws {
+        try await dbQueue.write { db in
+            for var episode in episodes {
+                episode.showId = showId
+                try episode.insert(db)
             }
         }
     }
@@ -55,6 +68,18 @@ class EpisodeRepository {
             let table = Episode.databaseTableName
             let query = "SELECT * FROM \(table) WHERE season = ? AND showId = ?"
             return try Episode.fetchAll(db, sql: query, arguments: [seasonNumber, showId])
+        }
+    }
+    
+    func countOfSeenEpisodes(forSeason seasonNumber: Int64, showId: Int64) async throws -> Int {
+        try await dbQueue.read { db in
+            let sql = """
+                      SELECT COUNT(*) FROM \(Episode.databaseTableName)
+                        WHERE season = ? 
+                        AND showId = ?
+                        AND hasBeenSeen = true
+                      """
+            return try Int.fetchOne(db, sql: sql, arguments: [seasonNumber, showId]) ?? 0
         }
     }
 }

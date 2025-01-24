@@ -16,7 +16,7 @@ class ShowRepository {
     
     func create(show: Show) async throws {
         try await dbQueue.write { db in
-            try show.insert(db)
+            try show.insert(db, onConflict: .replace)
         }
     }
     

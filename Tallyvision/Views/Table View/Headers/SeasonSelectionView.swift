@@ -8,7 +8,8 @@
 import UIKit
 
 protocol SeasonSelectionViewDelegate: AnyObject {
-    func selectSeason(withNumber number: Int64)
+    func seasonSelected(withNumber number: Int64)
+    func seasonMarkedAsWatched()
 }
 
 class SeasonSelectionView: UITableViewHeaderFooterView {
@@ -17,25 +18,21 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
     static let identifier = String(describing: SeasonSelectionView.self)
     
     weak var delegate: SeasonSelectionViewDelegate?
-   
+  
     var selectedSeason: Season? {
         didSet {
             createUIMenu()
             updateUI()
+            configureTvButtonAppearance()
         }
     }
 
     var seasons: [Season] = []
-//        didSet {
-//            guard !seasons.isEmpty else { return }
-//            selectedSeason = seasons[0]
-//        }
-//    }
-
-    
+    var seenEpisodesCount: Int?
     
     // MARK: - UI Components
     
+    lazy var tvIcon = UIImage(named: "television")!
     
     lazy var selectionButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
@@ -66,14 +63,13 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
     
     private lazy var tvButton: UIButton = {
         let button = UIButton(type: .custom)
-        let image = UIImage(named: "television")!.withTintColor(.textColor.withAlphaComponent(0.5))
-        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(toggleSeasonSeenStatus), for: .touchUpInside)
         return button.forAutoLayout()
     }()
     
-    private lazy var episodesWatchedLabel = UILabel.appLabel(withText: "0", fontSize: 18, fontStyle: "bold").forAutoLayout()
-    private lazy var slashLabel = UILabel.appLabel(withText: "/", fontSize: 18, fontStyle: "regular", alpha: 0.7).forAutoLayout()
-    private lazy var totalEpisodesLabel = UILabel.appLabel(fontSize: 18, fontStyle: "bold").forAutoLayout()
+    private lazy var episodesWatchedLabel = UILabel.appLabel(fontSize: 18, fontStyle: "Bold").forAutoLayout()
+    private lazy var slashLabel = UILabel.appLabel(withText: "/", fontSize: 18, fontStyle: "Regular", alpha: 0.7).forAutoLayout()
+    private lazy var totalEpisodesLabel = UILabel.appLabel(fontSize: 18, fontStyle: "Bold").forAutoLayout()
     
     // MARK: - Initializers
     
@@ -114,17 +110,22 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
             slashLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             episodesWatchedLabel.trailingAnchor.constraint(equalTo: slashLabel.leadingAnchor, constant: -4),
             episodesWatchedLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-
-
         ])
     }
     
     // MARK: - Configuration
-    func configure(seasons: [Season], selectedSeason: Season) {
+    func configure(seasons: [Season], selectedSeason: Season, countOfSeen: Int) {
+        self.seenEpisodesCount = countOfSeen
         self.seasons = seasons
         self.selectedSeason = selectedSeason
     }
+   
+    // MARK: - Actions
     
+    @objc private func toggleSeasonSeenStatus() {
+        guard let selectedSeason = selectedSeason else { return }
+        delegate?.seasonMarkedAsWatched()
+    }
     
     // MARK: - Helpers
     
@@ -138,7 +139,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
                 guard let self = self else { return }
                 self.selectedSeason = season
                 self.createUIMenu()
-                self.delegate?.selectSeason(withNumber: selectedSeason!.number)
+                self.delegate?.seasonSelected(withNumber: selectedSeason!.number)
             }
         }
         
@@ -156,6 +157,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
             return
         }
         totalEpisodesLabel.text = "\(episodeCount)"
+        episodesWatchedLabel.text = "\(seenEpisodesCount ?? 0)"
     }
     
     private func updateButtonTitle(_ button: UIButton, withText text: String) {
@@ -169,5 +171,15 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
         
         button.configuration = configuration
     }
-    
+   
+    private func configureTvButtonAppearance() {
+        guard let episodeCount = selectedSeason?.episodeCount,
+              let seenEpisodesCount = seenEpisodesCount else { return }
+        
+        let color: UIColor = episodeCount == seenEpisodesCount
+        ? .baseYellow
+        : .textColor.withAlphaComponent(0.5)
+        
+        tvButton.setImage(tvIcon.withTintColor(color), for: .normal)
+    }
 }

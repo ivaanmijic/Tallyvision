@@ -129,12 +129,9 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeTableViewCell.identifier)
-                as? EpisodeTableViewCell,
-              let episodes = seasonEpisodes[selectedSeason.number]
-        else {
-            return UITableViewCell()
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeTableViewCell.identifier) as? EpisodeTableViewCell,
+              let episodes = seasonEpisodes[selectedSeason.number] else { return UITableViewCell() }
+        
         cell.delegate = self
         cell.configure(episode: episodes[indexPath.row])
         return cell
@@ -142,11 +139,12 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SeasonSelectionView.identifier)
-                as? SeasonSelectionView else {
-            return UITableViewHeaderFooterView()
-        }
+                as? SeasonSelectionView else { return UITableViewHeaderFooterView() }
+        
+        let seenEpisdoesCount = seasonEpisodes[selectedSeason.number]?.filter { $0.hasBeenSeen }.count ?? 0
+        
         header.delegate = self
-        header.configure(seasons: seasons, selectedSeason: selectedSeason)
+        header.configure(seasons: seasons, selectedSeason: selectedSeason, countOfSeen: seenEpisdoesCount)
         return header
     }
 }
@@ -155,8 +153,19 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewCellDelegate {
     
-    func selectSeason(withNumber number: Int64) {
+    func seasonSelected(withNumber number: Int64) {
         selectedSeason = seasons.first { $0.number == number } ?? selectedSeason
+    }
+    
+    func seasonMarkedAsWatched() {
+        Task {
+            do {
+                try await updateSeenStatusForSelectedSeason()
+                fetchEpisodesForSelectedSeason()
+            } catch {
+                log.error("Error updating seen status for \(show.showId), season \(selectedSeason.number)")
+            }
+        }
     }
     
     func episodeSeenStatusChanged(for episode: Episode) {
@@ -172,7 +181,29 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
             } catch {
                 await handleUpdateFailure(for: updatedEpisode, error: error)
             }
+            fetchEpisodesForSelectedSeason()
         }
+    }
+    
+    private func updateSeenStatusForSelectedSeason() async throws {
+        do {
+            log.debug("Attempting to update seen status \(show.showId), season \(selectedSeason.number)")
+            let episodes = try await getEpisodes(forSeason: selectedSeason.number)
+            try await markEpisodesAsWatched(episodes)
+        } catch {
+            try await ensureShowExists()
+            try await ensureSeasonsExist()
+            let episodes = try await getEpisodes(forSeason: selectedSeason.number)
+            try await markEpisodesAsWatched(episodes)
+        }
+    }
+    
+    private func getEpisodes(forSeason seasonNumber: Int64) async throws -> [Episode] {
+        return try await episodeRepository.fetchEpisodes(forSeason: seasonNumber, show: show.showId)
+    }
+    
+    private func markEpisodesAsWatched(_ episodes: [Episode]) async throws {
+        try await episodeRepository.update(episodes: episodes, showId: show.showId)
     }
     
     private func handleUpdateFailure(for episode: Episode, error: Error) async {
@@ -188,7 +219,6 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
     
     private func updateSeenStatusForEpisode(_ episode: Episode) async throws {
         try await episodeRepository.update(episode: episode)
-        log.info(episode.hasBeenSeen)
     }
     
     private func ensureShowExists() async throws {
@@ -206,14 +236,7 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
     
     private func ensureEpisodesExist(for season: Season) async throws {
         let episodes = try await episodeService.fetchEpisodes(forSeason: season.id)
-        log.debug(episodes.count)
-        for var episode in episodes {
-            episode.setShowId(show.showId)
-            
-            if !(try await episodeRepository.exists(episode.id)) {
-                try await episodeRepository.create(episode: episode)
-            }
-        }
+        try await episodeRepository.insert(episodes: episodes, showId: show.showId)
     }
 }
     
