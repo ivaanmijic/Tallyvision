@@ -18,8 +18,8 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var castService: CastService!
     var seasonService: SeasonService!
-    
     let showRepository = ShowRepository()
+    var episodeTracker: EpisodeTracker!
     
     var previousOffset: CGFloat = 0
     var isAddButtonVisible = false
@@ -188,6 +188,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     private func addShowToWatchlist() {
         Task {
             do {
+                try await episodeTracker.ensureContentExists()
                 show.isListed.toggle()
                 try await showRepository.create(show: show)
                 updateShowStatus()
@@ -237,6 +238,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         Task {
             await updateSeasons()
             await updateCast()
+            episodeTracker = EpisodeTracker(show: show, seasons: seasons)
             reloadData()
         }
     }

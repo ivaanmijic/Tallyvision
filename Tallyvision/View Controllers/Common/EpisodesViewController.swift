@@ -15,6 +15,7 @@ class EpisodesViewController: UIViewController {
     private var showService: ShowService!
     private let episodeRepository = EpisodeRepository()
     private let showRepository = ShowRepository()
+    private let episodeTracker: EpisodeTracker
     
     private var show: Show
     private var seasons: [Season]
@@ -29,6 +30,7 @@ class EpisodesViewController: UIViewController {
         self.show = show
         self.seasons = seasons
         self.selectedSeason = seasons[0]
+        episodeTracker = EpisodeTracker(show: show, seasons: seasons)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -181,6 +183,7 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
             } catch {
                 await handleUpdateFailure(for: updatedEpisode, error: error)
             }
+            
             fetchEpisodesForSelectedSeason()
         }
     }
@@ -191,8 +194,7 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
             let episodes = try await getEpisodes(forSeason: selectedSeason.number)
             try await markEpisodesAsWatched(episodes)
         } catch {
-            try await ensureShowExists()
-            try await ensureSeasonsExist()
+            try await episodeTracker.ensureContentExists()
             let episodes = try await getEpisodes(forSeason: selectedSeason.number)
             try await markEpisodesAsWatched(episodes)
         }
@@ -208,8 +210,7 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
     
     private func handleUpdateFailure(for episode: Episode, error: Error) async {
         do {
-            try await ensureShowExists()
-            try await ensureSeasonsExist()
+            try await episodeTracker.ensureContentExists()
             try await updateSeenStatusForEpisode(episode)
             log.debug("Episode \(episode.id) updated succesfully")
         } catch {
@@ -221,22 +222,5 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
         try await episodeRepository.update(episode: episode)
     }
     
-    private func ensureShowExists() async throws {
-        if !(try await showRepository.exists(showId: show.showId)) {
-            try await showRepository.create(show: show)
-        }
-    }
-    
-    private func ensureSeasonsExist() async throws {
-        log.info(seasons.count)
-        for season in self.seasons {
-            try await ensureEpisodesExist(for: season)
-        }
-    }
-    
-    private func ensureEpisodesExist(for season: Season) async throws {
-        let episodes = try await episodeService.fetchEpisodes(forSeason: season.id)
-        try await episodeRepository.insert(episodes: episodes, showId: show.showId)
-    }
 }
     

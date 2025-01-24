@@ -14,7 +14,6 @@
 		FC038A932D244825006FBB14 /* CastCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC038A922D244825006FBB14 /* CastCredit.swift */; };
 		FC25DD7C2D3552BD00FEF559 /* SeasonSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC25DD7B2D3552BD00FEF559 /* SeasonSelectionView.swift */; };
 		FC2AE5CC2CCFDFED0072FB95 /* AppDelegate+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */; };
-		FC30F8C92D40E3630040E96A /* SeasonRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC30F8C82D40E3630040E96A /* SeasonRepository.swift */; };
 		FC32AABB2D438F5200B3B920 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC32AABA2D438F5200B3B920 /* DatabaseError.swift */; };
 		FC32AABE2D4397E300B3B920 /* EpisodeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC32AABD2D4397E300B3B920 /* EpisodeTracker.swift */; };
 		FC359CA72D098863004E9D95 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC359CA62D098863004E9D95 /* Person.swift */; };
@@ -101,7 +100,6 @@
 		FC038A922D244825006FBB14 /* CastCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCredit.swift; sourceTree = "<group>"; };
 		FC25DD7B2D3552BD00FEF559 /* SeasonSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonSelectionView.swift; sourceTree = "<group>"; };
 		FC2AE5CB2CCFDFED0072FB95 /* AppDelegate+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Log.swift"; sourceTree = "<group>"; };
-		FC30F8C82D40E3630040E96A /* SeasonRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonRepository.swift; sourceTree = "<group>"; };
 		FC32AABA2D438F5200B3B920 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		FC32AABD2D4397E300B3B920 /* EpisodeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTracker.swift; sourceTree = "<group>"; };
 		FC359CA62D098863004E9D95 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
@@ -432,7 +430,6 @@
 			children = (
 				FCBBA95D2D3A59D900B03C21 /* ShowRepository.swift */,
 				FCDAFBC02D3FDDC000E40659 /* EpisodeRepository.swift */,
-				FC30F8C82D40E3630040E96A /* SeasonRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -749,7 +746,6 @@
 				FC4D182F2D2D2FCE00B88C39 /* ShowTableViewCell.swift in Sources */,
 				FC359CAD2D09A4D5004E9D95 /* CastResponse.swift in Sources */,
 				FC5C793D2CF750D90016BB87 /* Episode.swift in Sources */,
-				FC30F8C92D40E3630040E96A /* SeasonRepository.swift in Sources */,
 				FC5C793F2CF758300016BB87 /* Database+Migrator.swift in Sources */,
 				FC5209C32D19B0F4001A3180 /* UINavigationController+Extension.swift in Sources */,
 				FCEBB31B2D12AF6900EAE4B7 /* ShowTitleView.swift in Sources */,

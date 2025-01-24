@@ -30,6 +30,14 @@ class EpisodeRepository {
         }
     }
     
+    func episodesExist(forSeason seasonNumber: Int64, showId: Int64) async throws -> Bool {
+        try await dbQueue.read { db in
+            let sql = "SELECT COUNT(*) FROM \(Episode.databaseTableName) WHERE season = ? AND showId = ?"
+            let count: Int = try Int.fetchOne(db, sql: sql, arguments: [seasonNumber, showId]) ?? 0
+            return count > 0
+        }
+    }
+    
     func update(episode: Episode) async throws {
         try await dbQueue.write { db in
             try episode.insert(db, onConflict: .replace)

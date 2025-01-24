@@ -34,8 +34,10 @@ class EpisodeTracker {
     }
     
     private func ensureEpisodesExist(for season: Season) async throws {
-        let episodes = try await episodeService.fetchEpisodes(forSeason: season.id)
-        try await episodeRepository.insert(episodes: episodes, showId: show.showId)
+        if !(try await episodeRepository.episodesExist(forSeason: season.number, showId: show.showId)) {
+            let episodes = try await episodeService.fetchEpisodes(forSeason: season.id)
+            try await episodeRepository.insert(episodes: episodes, showId: show.showId)
+        }
     }
     
     func ensureContentExists() async throws {
