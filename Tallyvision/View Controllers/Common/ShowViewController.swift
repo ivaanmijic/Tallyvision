@@ -19,6 +19,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     var castService: CastService!
     var seasonService: SeasonService!
     let showRepository = ShowRepository()
+    let episodeRepository = EpisodeRepository()
     var episodeTracker: EpisodeTracker!
     
     var previousOffset: CGFloat = 0
@@ -152,10 +153,6 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         ])
     }
     
-    
-    
-    
-    
     private func configureCollectionView() {
         view.addSubview(collectionView)
         collectionView.dataSource = self
@@ -188,9 +185,12 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     private func addShowToWatchlist() {
         Task {
             do {
-                try await episodeTracker.ensureContentExists()
                 show.isListed.toggle()
-                try await showRepository.create(show: show)
+                try await showRepository.update(show: show)
+                let episodeService = EpisodeService(httpClient: TVMazeClient())
+                let episodes = try await episodeService.getEpisodes(forShow: show.showId)
+                log.debug("get episodes \(episodes.count)")
+                try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
                 updateShowStatus()
             } catch {
                 log.error("Error adding show \(show.title) \(show.showId) to wathclist:\n \(error)")

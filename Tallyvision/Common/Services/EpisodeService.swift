@@ -15,9 +15,11 @@ class EpisodeService {
     }
     
     func fetchEpisodes(forSeason seasonId: Int64) async throws -> [Episode] {
-        let episodes =  try await httpClient.fetchEpisodes(forSeasonId: seasonId)
-        log.info("Fetched \(episodes.count) episodes for \(seasonId)")
-        return episodes
+        return try await httpClient.fetchEpisodes(forSeasonId: seasonId)
+    }
+    
+    func getEpisodes(forShow showId: Int64) async throws -> [Episode] {
+        return try await httpClient.fetchEpisodes(forShowId: showId)
     }
 
 }

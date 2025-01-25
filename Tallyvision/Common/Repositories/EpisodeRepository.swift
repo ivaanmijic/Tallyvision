@@ -34,6 +34,7 @@ class EpisodeRepository {
         try await dbQueue.read { db in
             let sql = "SELECT COUNT(*) FROM \(Episode.databaseTableName) WHERE season = ? AND showId = ?"
             let count: Int = try Int.fetchOne(db, sql: sql, arguments: [seasonNumber, showId]) ?? 0
+            log.info("Episodes in season: \(count)")
             return count > 0
         }
     }
@@ -61,6 +62,22 @@ class EpisodeRepository {
             for var episode in episodes {
                 episode.showId = showId
                 try episode.insert(db)
+            }
+        }
+    }
+    
+    func insertOrIgnore(episodes: [Episode], showId: Int64) async throws {
+        guard !episodes.isEmpty else { return }
+        
+        let updatedEpisodes = episodes.map { episode -> Episode in
+            var mutableEpisode = episode
+            mutableEpisode.showId = showId
+            return mutableEpisode
+        }
+        
+        try await dbQueue.write { db in
+            for episode in updatedEpisodes {
+                try episode.insert(db, onConflict: .ignore)
             }
         }
     }

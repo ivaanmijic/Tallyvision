@@ -210,7 +210,9 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
     
     private func handleUpdateFailure(for episode: Episode, error: Error) async {
         do {
-            try await episodeTracker.ensureContentExists()
+            try await showRepository.insertOrIgnore(show: show)
+            let episodes = try await episodeService.getEpisodes(forShow: show.showId)
+            try await episodeRepository.insertOrIgnore(episodes: [episode], showId: show.showId)
             try await updateSeenStatusForEpisode(episode)
             log.debug("Episode \(episode.id) updated succesfully")
         } catch {

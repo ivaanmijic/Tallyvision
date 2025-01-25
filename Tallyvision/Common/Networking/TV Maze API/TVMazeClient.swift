@@ -29,6 +29,11 @@ class TVMazeClient {
         return try await fetchData(from: url)
     }
     
+    func fetchEpisodes(forShowId showId: Int64) async throws -> [Episode] {
+        let url = URL(string: "\(baseURL)shows/\(showId)/episodes")!
+        return try await fetchData(from: url)
+    }
+    
     func fetchEpisodes(forSeasonId seasonId: Int64) async throws -> [Episode] {
         let url = URL(string: "\(baseURL)seasons/\(seasonId)/episodes")!
         log.info(url)

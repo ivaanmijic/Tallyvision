@@ -20,6 +20,20 @@ class ShowRepository {
         }
     }
     
+    func insertOrIgnore(show: Show) async throws {
+        try await dbQueue.write { db in
+            try show.insert(db, onConflict: .ignore)
+        }
+    }
+    
+    func update(show: Show) async throws {
+        try await dbQueue.write { db in
+            var updatingShow = try Show.fetchOne(db, key: show.showId) ?? show
+            updatingShow.isListed = show.isListed
+            try updatingShow.save(db)
+        }
+    }
+    
     func exists(showId: Int64) async throws -> Bool {
         try await dbQueue.read { db in
             let sql = "SELECT COUNT(*) FROM \(Show.databaseTableName) WHERE id = ?"
