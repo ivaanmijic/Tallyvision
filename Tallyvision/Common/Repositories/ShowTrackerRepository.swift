@@ -20,6 +20,12 @@ class ShowTrackerRepository {
         }
     }
     
+    func fetchAll() async throws -> [ShowTracker] {
+        try await dbQueue.read { db in
+            try ShowTracker.fetchAll(db)
+        }
+    }
+    
     func fetchShowTracker(for showId: Int64) async throws -> ShowTracker {
         try await dbQueue.read { db in
             guard let tracker = try ShowTracker.fetchOne(db, key: showId) else {

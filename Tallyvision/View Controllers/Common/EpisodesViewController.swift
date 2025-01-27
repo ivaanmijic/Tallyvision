@@ -67,14 +67,18 @@ class EpisodesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        updateShowTracker()
         setupUI()
         setupServices()
         fetchEpisodesForSelectedSeason()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        updateShowTracker()
+    
+    
+    private func setupNavigationBar() {
+        navigationController?.configureNavigationBar(rightButton: dismissButton, target: self, isTrancluent: false)
+        navigationController?.navigationBar.backgroundColor = .appColor
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
     
     private func updateShowTracker() {
@@ -82,12 +86,6 @@ class EpisodesViewController: UIViewController {
             showTracker = try await showTrackerRepository.fetchShowTracker(for: show.showId)
             await MainActor.run { tableView.reloadData() }
         }
-    }
-    
-    private func setupNavigationBar() {
-        navigationController?.configureNavigationBar(rightButton: dismissButton, target: self, isTrancluent: false)
-        navigationController?.navigationBar.backgroundColor = .appColor
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
     
     private func setupUI() {

@@ -93,14 +93,14 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         updateUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupShowTracker()
+    }
+    
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         hideAddButton()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setupShowTracker()
     }
     
     private func setupNavigationBar() {

@@ -16,7 +16,10 @@ class MyShowsViewController: UIViewController {
         }
     }
     
+    var showTrackers: [ShowTracker]!
+    
     let showRepository = ShowRepository()
+    let showTrackerRepository = ShowTrackerRepository()
     
     // MARK: - UI Components
     
@@ -48,7 +51,7 @@ class MyShowsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadData()
+        setupDataSources()
     }
     
     private func setupNavigationBar() {
@@ -77,14 +80,31 @@ class MyShowsViewController: UIViewController {
         collectionView.setCollectionViewLayout(layout, animated: true)
     }
     
-    // MARK: - Data loading
-    private func loadData() {
+    // MARK: - Data Sources
+    
+    private func setupDataSources() {
         Task {
-            do {
-                watchlistShows = try await showRepository.fetchListedShows()
-            } catch {
-                log.error("Error reading listedShows from database:\n\(error)")
-            }
+            await setupTrackers()
+            await setupWatchlistShows()
+        }
+    }
+    
+    private func setupTrackers() async {
+        do {
+            showTrackers = try await showTrackerRepository.fetchAll()
+        } catch {
+            log.error("Failed to setup Show Trackers:\n\(error)")
+        }
+    }
+    
+    private func setupWatchlistShows() async {
+        do {
+            let watchlistedShowIDs = showTrackers
+                .filter { $0.isWatchlisted }
+                .map { $0.showID }
+            watchlistShows = try await showRepository.fetchAll(withIDs: watchlistedShowIDs)
+        } catch {
+            log.error("Failed to setup Watchlist:\n\(error)")
         }
     }
 

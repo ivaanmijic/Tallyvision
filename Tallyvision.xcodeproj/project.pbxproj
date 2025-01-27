@@ -342,12 +342,12 @@
 			path = Discover;
 			sourceTree = "<group>";
 		};
-		FC5322282CC8FA5C001BCC3D /* Watchlist */ = {
+		FC5322282CC8FA5C001BCC3D /* MyShows */ = {
 			isa = PBXGroup;
 			children = (
 				FC53222E2CC8FB49001BCC3D /* MyShowsViewController.swift */,
 			);
-			path = Watchlist;
+			path = MyShows;
 			sourceTree = "<group>";
 		};
 		FC5322292CC8FA6A001BCC3D /* Statistics */ = {
@@ -480,7 +480,7 @@
 				FCBB948F2CFF025F0097B766 /* Common */,
 				FCC679D82CC8D60B00050D65 /* Home */,
 				FC5322272CC8FA54001BCC3D /* Discover */,
-				FC5322282CC8FA5C001BCC3D /* Watchlist */,
+				FC5322282CC8FA5C001BCC3D /* MyShows */,
 				FC5322292CC8FA6A001BCC3D /* Statistics */,
 				FCECD0162D11672B00214673 /* Tab Bar */,
 			);
