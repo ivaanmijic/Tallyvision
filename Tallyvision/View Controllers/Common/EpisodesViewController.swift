@@ -15,7 +15,6 @@ class EpisodesViewController: UIViewController {
     private var showService: ShowService!
     private let episodeRepository = EpisodeRepository()
     private let showRepository = ShowRepository()
-    private let episodeTracker: EpisodeTracker
     
     private var show: Show
     private var seasons: [Season]
@@ -30,7 +29,6 @@ class EpisodesViewController: UIViewController {
         self.show = show
         self.seasons = seasons
         self.selectedSeason = seasons[0]
-        episodeTracker = EpisodeTracker(show: show, seasons: seasons)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -194,8 +192,9 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
             let episodes = try await getEpisodes(forSeason: selectedSeason.number)
             try await markEpisodesAsWatched(episodes)
         } catch {
-            try await episodeTracker.ensureContentExists()
-            let episodes = try await getEpisodes(forSeason: selectedSeason.number)
+            try await showRepository.insertOrIgnore(show: show)
+            let episodes = try await episodeService.getEpisodes(forShow: show.showId)
+            try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
             try await markEpisodesAsWatched(episodes)
         }
     }
@@ -212,7 +211,7 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
         do {
             try await showRepository.insertOrIgnore(show: show)
             let episodes = try await episodeService.getEpisodes(forShow: show.showId)
-            try await episodeRepository.insertOrIgnore(episodes: [episode], showId: show.showId)
+            try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
             try await updateSeenStatusForEpisode(episode)
             log.debug("Episode \(episode.id) updated succesfully")
         } catch {

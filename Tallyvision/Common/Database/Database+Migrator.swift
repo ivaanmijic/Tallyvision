@@ -31,7 +31,6 @@ extension Database {
                 t.column("network", .jsonText)
                 t.column("country", .jsonText)
                 t.column("image", .text)
-                t.column("isListed", .boolean).notNull()
             }
         }
         
@@ -54,23 +53,13 @@ extension Database {
             }
         }
         
-        migrator.registerMigration("createCast") { db in
-            try db.create(table: Person.databaseTableName) { t in
-                t.column("id", .integer).primaryKey()
-                t.column("name", .text).notNull()
-                t.column("country", .jsonText)
-                t.column("birthday", .text)
-                t.column("deathday", .text)
-                t.column("gender", .text)
-                t.column("image", .text)
-            }
-        }
-        
-        migrator.registerMigration("createShowCast") { db in
-            try db.create(table: ShowCast.databaseTableName) { t in
-                t.column("id", .integer).primaryKey(autoincrement: true)
-                t.column("showId", .integer).notNull().references(Show.databaseTableName, onDelete: .cascade)
-                t.column("castId", .integer).notNull().references(Person.databaseTableName, onDelete: .cascade)
+        migrator.registerMigration("createShowTracker") { db in
+            try db.create(table: ShowTracker.databaseTableName) { t in
+                t.column("showID", .integer).notNull().primaryKey()
+                t.column("watchedEpisodeIndices", .text).notNull()
+                t.column("totalTimeSpent", .integer).notNull()
+                t.column("status", .text).notNull()
+                t.column("isWatchlisted", .boolean).notNull().defaults(to: false)
             }
         }
         

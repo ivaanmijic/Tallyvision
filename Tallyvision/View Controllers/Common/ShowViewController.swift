@@ -11,16 +11,17 @@ import AlertKit
 class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Properties
     
-    var show: Show    
+    var show: Show
     var showCast = [ShowCast]()
     var cast = [Person]()
     var seasons = [Season]()
+    var showTracker: ShowTracker!
     
     var castService: CastService!
     var seasonService: SeasonService!
     let showRepository = ShowRepository()
     let episodeRepository = EpisodeRepository()
-    var episodeTracker: EpisodeTracker!
+    let showTrackerRepository = ShowTrackerRepository()
     
     var previousOffset: CGFloat = 0
     var isAddButtonVisible = false
@@ -87,7 +88,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        updateShowStatus()
+        setupShowTracker()
         setupUI()
         setupServices()
         updateUI()
@@ -101,17 +102,15 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     private func setupNavigationBar() {
         navigationController?.configureNavigationBar(leftButton: backButton, target: self)
     }
-    
-    private func updateShowStatus() {
+   
+    private func setupShowTracker() {
         Task {
             do {
-                let isListed = try await showRepository.fetchStatus(forID: show.showId)
-                if let isListed = isListed {
-                    show.isListed = isListed
-                    watchlistButton.updateButtonAppearance(isListed: show.isListed)
-                }
+                showTracker = try await showTrackerRepository.fetchShowTracker(for: show.showId)
+                watchlistButton.updateButtonAppearance(isListed: showTracker.isWatchlisted)
             } catch {
-                log.error("Error fetching show status: \(error)")
+                showTracker = ShowTracker(showID: show.showId, watchedEpisodeIndices: [], totalTimeSpent: 0, status: .watching, isWatchlisted: false)
+                watchlistButton.updateButtonAppearance(isListed: false)
             }
         }
     }
@@ -143,7 +142,6 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     private func setupWatchlistButton() {
         view.addSubview(watchlistButton)
         watchlistButton.configure(title: "Add to Watchlist")
-        watchlistButton.updateButtonAppearance(isListed: show.isListed)
         NSLayoutConstraint.activate([
             watchlistButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 84),
             watchlistButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
@@ -179,19 +177,19 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Actions
     
     @objc private func toggleWatchlistStatus() {
-        !show.isListed ? addShowToWatchlist() : presentAlert()
+        showTracker.isWatchlisted ? presentAlert() : addShowToWatchlist()
     }
   
     private func addShowToWatchlist() {
         Task {
             do {
-                show.isListed.toggle()
-                try await showRepository.update(show: show)
+                showTracker.addToWatchlist()
+                try await showTrackerRepository.save(showTracker)
+                try await showRepository.insertOrIgnore(show: show)
                 let episodeService = EpisodeService(httpClient: TVMazeClient())
                 let episodes = try await episodeService.getEpisodes(forShow: show.showId)
-                log.debug("get episodes \(episodes.count)")
                 try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
-                updateShowStatus()
+                setupShowTracker()
             } catch {
                 log.error("Error adding show \(show.title) \(show.showId) to wathclist:\n \(error)")
             }
@@ -222,9 +220,9 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     private func removeShowFromWatchlist() {
         Task {
             do {
-                show.isListed.toggle()
-                _ = try await showRepository.remove(show: show)
-                watchlistButton.updateButtonAppearance(isListed: show.isListed)
+                showTracker.removeFromWatchlist()
+                try await showTrackerRepository.save(showTracker)
+                watchlistButton.updateButtonAppearance(isListed: showTracker.isWatchlisted)
             } catch {
                 log.error("Error deleteing show \(show.showId) from database:\n \(error)")
             }
@@ -238,7 +236,6 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
         Task {
             await updateSeasons()
             await updateCast()
-            episodeTracker = EpisodeTracker(show: show, seasons: seasons)
             reloadData()
         }
     }

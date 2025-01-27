@@ -27,7 +27,6 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
     var network: Network?
     var image: Image?
     var summary: String?
-    var isListed: Bool = false
    
     
     struct Schedule: Codable {
@@ -37,7 +36,7 @@ struct Show: Codable, FetchableRecord, PersistableRecord {
     
     
     private enum CodingKeys: String, CodingKey {
-        case type, language, rating, summary, officialSite, genres, status, averageRuntime, schedule, network, image, url, isListed
+        case type, language, rating, summary, officialSite, genres, status, averageRuntime, schedule, network, image, url
         case showId = "id"
         case title = "name"
         case premiereDate = "premiered"

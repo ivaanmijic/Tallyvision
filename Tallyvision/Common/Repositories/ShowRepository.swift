@@ -26,13 +26,6 @@ class ShowRepository {
         }
     }
     
-    func update(show: Show) async throws {
-        try await dbQueue.write { db in
-            var updatingShow = try Show.fetchOne(db, key: show.showId) ?? show
-            updatingShow.isListed = show.isListed
-            try updatingShow.save(db)
-        }
-    }
     
     func exists(showId: Int64) async throws -> Bool {
         try await dbQueue.read { db in
