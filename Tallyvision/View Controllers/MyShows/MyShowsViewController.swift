@@ -16,9 +16,12 @@ class MyShowsViewController: UIViewController {
         }
     }
     
+    var testEpisodes =  [Episode]()
+    
     var showTrackers: [ShowTracker]!
     
     let showRepository = ShowRepository()
+    let episodeRepository = EpisodeRepository()
     let showTrackerRepository = ShowTrackerRepository()
     
     // MARK: - UI Components
@@ -33,6 +36,7 @@ class MyShowsViewController: UIViewController {
         collectionView.backgroundColor = .appColor
         
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
+        collectionView.register(EpisodeCollectionViewCell.self, forCellWithReuseIdentifier: EpisodeCollectionViewCell.identifier)
         
         collectionView.register(SectionTitleReusableView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -74,7 +78,8 @@ class MyShowsViewController: UIViewController {
     private func configureCompositionalLayout() {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
             switch sectionIndex {
-            default: return AppLayouts.shared.posterSection()
+            case 0: return AppLayouts.shared.posterSection()
+            default: return AppLayouts.shared.episodesListSection()
             }
         }
         collectionView.setCollectionViewLayout(layout, animated: true)
@@ -86,6 +91,9 @@ class MyShowsViewController: UIViewController {
         Task {
             await setupTrackers()
             await setupWatchlistShows()
+            // TODO: test
+            testEpisodes = try await episodeRepository.fetchEpisodes(forSeason: 1, show: watchlistShows.first?.showId ?? 0)
+            collectionView.reloadData()
         }
     }
     
@@ -115,13 +123,13 @@ class MyShowsViewController: UIViewController {
 extension MyShowsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return watchlistShows.count
-        default: return 0
+        default: return testEpisodes.count
         }
     }
     
@@ -129,24 +137,31 @@ extension MyShowsViewController: UICollectionViewDelegate, UICollectionViewDataS
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCell.identifier, for: indexPath)
-                    as? ShowCell else { return UICollectionViewCell()}
+                    as? ShowCell else { break }
             
             let imageURL = watchlistShows[indexPath.row].image?.medium
             cell.configure(withImageURL: imageURL)
             
             return cell
             
-        default: return UICollectionViewCell()
+        default:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EpisodeCollectionViewCell.identifier, for: indexPath)
+                    as? EpisodeCollectionViewCell else { break }
+           
+            cell.configure(episode: testEpisodes[indexPath.row], showTitle: "Tv Show Title")
+            return cell
+            
         }
+        return UICollectionViewCell()
     }
+        
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
-        default:
+        case 0:
             let selectedShow = watchlistShows[indexPath.row]
             navigateToDetails(for: selectedShow)
-            
-            
+        default: break
         }
     }
     

@@ -10,7 +10,20 @@ import UIKit
 
 class AppLayouts {
     static let shared = AppLayouts()
-    
+   
+    func episodesListSection() -> NSCollectionLayoutSection {
+        let section = createSection(
+            itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
+            groupSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(AppConstants.screenWidth / 3)),
+            groupInsets: NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0),
+            sectionInsets: NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
+        )
+        
+        let header = createHeader()
+        section.boundarySupplementaryItems = [header]
+        
+        return section
+    }
     
     func castSection() -> NSCollectionLayoutSection {
          let section = createSection(
