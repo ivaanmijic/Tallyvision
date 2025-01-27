@@ -56,7 +56,7 @@ extension Database {
         migrator.registerMigration("createShowTracker") { db in
             try db.create(table: ShowTracker.databaseTableName) { t in
                 t.column("showID", .integer).notNull().primaryKey()
-                t.column("watchedEpisodeIndices", .text).notNull()
+                t.column("watchedEpisodes", .text).notNull()
                 t.column("totalTimeSpent", .integer).notNull()
                 t.column("status", .text).notNull()
                 t.column("isWatchlisted", .boolean).notNull().defaults(to: false)

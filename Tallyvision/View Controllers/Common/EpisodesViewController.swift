@@ -15,8 +15,10 @@ class EpisodesViewController: UIViewController {
     private var showService: ShowService!
     private let episodeRepository = EpisodeRepository()
     private let showRepository = ShowRepository()
+    private let showTrackerRepository = ShowTrackerRepository()
     
     private var show: Show
+    private var showTracker: ShowTracker
     private var seasons: [Season]
     private var seasonEpisodes: [Int64 : [Episode]] = [:]
     private var selectedSeason: Season {
@@ -25,9 +27,10 @@ class EpisodesViewController: UIViewController {
     
     // MARK: - Initializers
     
-    init(seasons: [Season], show: Show) {
+    init(seasons: [Season], show: Show, tracker: ShowTracker) {
         self.show = show
         self.seasons = seasons
+        self.showTracker = tracker
         self.selectedSeason = seasons[0]
         super.init(nibName: nil, bundle: nil)
     }
@@ -69,6 +72,18 @@ class EpisodesViewController: UIViewController {
         fetchEpisodesForSelectedSeason()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateShowTracker()
+    }
+    
+    private func updateShowTracker() {
+        Task {
+            showTracker = try await showTrackerRepository.fetchShowTracker(for: show.showId)
+            await MainActor.run { tableView.reloadData() }
+        }
+    }
+    
     private func setupNavigationBar() {
         navigationController?.configureNavigationBar(rightButton: dismissButton, target: self, isTrancluent: false)
         navigationController?.navigationBar.backgroundColor = .appColor
@@ -76,7 +91,7 @@ class EpisodesViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .blue
+        view.backgroundColor = .appColor
         view.addSubview(tableView)
         tableView.pin(to: view)
     }
@@ -131,9 +146,11 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeTableViewCell.identifier) as? EpisodeTableViewCell,
               let episodes = seasonEpisodes[selectedSeason.number] else { return UITableViewCell() }
-        
+    
+        let episode = episodes[indexPath.row]
+        let status = showTracker.hasSeenEpisode(inSeason: selectedSeason.number, episode: episode.number ?? 0)
         cell.delegate = self
-        cell.configure(episode: episodes[indexPath.row])
+        cell.configure(episode: episode, status: status)
         return cell
     }
     
@@ -141,10 +158,14 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SeasonSelectionView.identifier)
                 as? SeasonSelectionView else { return UITableViewHeaderFooterView() }
         
-        let seenEpisdoesCount = seasonEpisodes[selectedSeason.number]?.filter { $0.hasBeenSeen }.count ?? 0
+        let episodesInSelectedSeason = seasonEpisodes[selectedSeason.number] ?? []
+        
+        let watchedEpisodesCount = episodesInSelectedSeason.filter { episode in
+            showTracker.hasSeenEpisode(inSeason: selectedSeason.number, episode: episode.number ?? 0)
+        }.count
         
         header.delegate = self
-        header.configure(seasons: seasons, selectedSeason: selectedSeason, countOfSeen: seenEpisdoesCount)
+        header.configure(seasons: seasons, selectedSeason: selectedSeason, countOfSeen: watchedEpisodesCount)
         return header
     }
 }
@@ -160,67 +181,82 @@ extension EpisodesViewController: SeasonSelectionViewDelegate, EpisodeTableViewC
     func seasonMarkedAsWatched() {
         Task {
             do {
-                try await updateSeenStatusForSelectedSeason()
-                fetchEpisodesForSelectedSeason()
+                try await updateAndMarkSeasonAsWatched()
+                await MainActor.run { tableView.reloadData() }
             } catch {
-                log.error("Error updating seen status for \(show.showId), season \(selectedSeason.number)")
+                log.error("Error updating seen status for \(show.showId), season \(selectedSeason.number): \(error)")
             }
         }
     }
     
     func episodeSeenStatusChanged(for episode: Episode) {
         Task {
-            log.debug("Attempting to update seen status for episode \(episode.id)")
-            var updatedEpisode = episode
-            updatedEpisode.showId = show.showId
-            updatedEpisode.hasBeenSeen = true
-            
             do {
-                try await updateSeenStatusForEpisode(updatedEpisode)
-                log.debug("Episode \(updatedEpisode.id) updated succesfully")
+                try await updateAndMarkEpisodeAsWatched(episode)
+                await MainActor.run { tableView.reloadData() }
             } catch {
-                await handleUpdateFailure(for: updatedEpisode, error: error)
+                log.error("Failed to update seen status for episode \(episode.id): \(error)")
             }
-            
-            fetchEpisodesForSelectedSeason()
         }
     }
     
-    private func updateSeenStatusForSelectedSeason() async throws {
-        do {
-            log.debug("Attempting to update seen status \(show.showId), season \(selectedSeason.number)")
-            let episodes = try await getEpisodes(forSeason: selectedSeason.number)
-            try await markEpisodesAsWatched(episodes)
-        } catch {
-            try await showRepository.insertOrIgnore(show: show)
-            let episodes = try await episodeService.getEpisodes(forShow: show.showId)
-            try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
-            try await markEpisodesAsWatched(episodes)
+    // MARK: - Helper Functions
+    
+    private func updateAndMarkSeasonAsWatched() async throws {
+        await updateShowTracker()
+        try await ensureContentExists()
+        log.info("Marking all episodes as watched for season \(selectedSeason.number)")
+        
+        let episodes = try await getEpisodes(forSeason: selectedSeason.number)
+        for episode in episodes {
+            guard let episodeNumber = episode.number,
+                  !showTracker.hasSeenEpisode(inSeason: selectedSeason.number, episode: episodeNumber) else { continue }
+            
+            showTracker.markEpisodeAsWatched(
+                inSeason: selectedSeason.number,
+                episode: episodeNumber,
+                runtime: episode.runtime ?? 0
+            )
         }
+        try await showTrackerRepository.save(showTracker)
+    }
+    
+    private func updateAndMarkEpisodeAsWatched(_ episode: Episode) async throws {
+        await updateShowTracker()
+        try await ensureContentExists()
+        
+        guard let episodeNumber = episode.number,
+              !showTracker.hasSeenEpisode(inSeason: selectedSeason.number, episode: episodeNumber) else { return }
+        
+        showTracker.markEpisodeAsWatched(
+            inSeason: selectedSeason.number,
+            episode: episodeNumber,
+            runtime: episode.runtime ?? 0
+        )
+        try await showTrackerRepository.save(showTracker)
+    }
+    
+    private func updateShowTracker() async {
+        do {
+            showTracker = try await showTrackerRepository.fetchShowTracker(for: show.showId)
+        } catch {
+            log.error("Error updating Show Tracker for \(show.showId): \(error)")
+        }
+    }
+    
+    private func ensureContentExists() async throws {
+        try await showRepository.insertOrIgnore(show: show)
+        let episodes = try await fetchEpisodesFromService()
+        try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
+    }
+    
+    private func fetchEpisodesFromService() async throws -> [Episode] {
+        let episodeService = EpisodeService(httpClient: TVMazeClient())
+        return try await episodeService.getEpisodes(forShow: show.showId)
     }
     
     private func getEpisodes(forSeason seasonNumber: Int64) async throws -> [Episode] {
         return try await episodeRepository.fetchEpisodes(forSeason: seasonNumber, show: show.showId)
-    }
-    
-    private func markEpisodesAsWatched(_ episodes: [Episode]) async throws {
-        try await episodeRepository.update(episodes: episodes, showId: show.showId)
-    }
-    
-    private func handleUpdateFailure(for episode: Episode, error: Error) async {
-        do {
-            try await showRepository.insertOrIgnore(show: show)
-            let episodes = try await episodeService.getEpisodes(forShow: show.showId)
-            try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
-            try await updateSeenStatusForEpisode(episode)
-            log.debug("Episode \(episode.id) updated succesfully")
-        } catch {
-            log.error("Failed to update seen status for episode \(episode.id):\n \(error)")
-        }
-    }
-    
-    private func updateSeenStatusForEpisode(_ episode: Episode) async throws {
-        try await episodeRepository.update(episode: episode)
     }
     
 }

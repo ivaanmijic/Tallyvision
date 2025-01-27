@@ -10,7 +10,7 @@ import GRDB
 
 struct ShowTracker: Codable, FetchableRecord, PersistableRecord {
     let showID: Int64
-    var watchedEpisodeIndices: Set<Int64>
+    var watchedEpisodes: Set<EpisodeTracker>
     var totalTimeSpent: Int64
     var status: Status
     var isWatchlisted: Bool
@@ -25,12 +25,14 @@ struct ShowTracker: Codable, FetchableRecord, PersistableRecord {
         isWatchlisted = false
     }
 
-    func hasSeenEpisode(at index: Int64) -> Bool {
-        return watchedEpisodeIndices.contains(index)
+    func hasSeenEpisode(inSeason season: Int64, episode: Int64) -> Bool {
+        let episodeTracker = EpisodeTracker(season: season, episode: episode)
+        return watchedEpisodes.contains(episodeTracker)
     }
 
-    mutating func markEpisodeAsWatched(at index: Int64, runtime: Int64) {
-        watchedEpisodeIndices.insert(index)
+    mutating func markEpisodeAsWatched(inSeason season: Int64, episode: Int64, runtime: Int64) {
+        let episodeTracker = EpisodeTracker(season: season, episode: episode)
+        watchedEpisodes.insert(episodeTracker)
         totalTimeSpent += runtime
     }
 }

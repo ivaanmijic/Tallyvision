@@ -29,10 +29,10 @@ class ShowTrackerRepository {
         }
     }
     
-    func markEpisodeAsWatched(tracker: ShowTracker, at index: Int64, runtime: Int64) async throws {
+    func markEpisodeAsWatched(tracker: ShowTracker, inSeason season: Int64, episode: Int64, runtime: Int64) async throws {
         try await dbQueue.write { db in
             var mutableTracker = tracker
-            mutableTracker.markEpisodeAsWatched(at: index, runtime: runtime)
+            mutableTracker.markEpisodeAsWatched(inSeason: season, episode: episode, runtime: runtime)
             try mutableTracker.save(db)
         }
     }

@@ -88,7 +88,6 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        setupShowTracker()
         setupUI()
         setupServices()
         updateUI()
@@ -97,6 +96,11 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         hideAddButton()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupShowTracker()
     }
     
     private func setupNavigationBar() {
@@ -109,7 +113,7 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
                 showTracker = try await showTrackerRepository.fetchShowTracker(for: show.showId)
                 watchlistButton.updateButtonAppearance(isListed: showTracker.isWatchlisted)
             } catch {
-                showTracker = ShowTracker(showID: show.showId, watchedEpisodeIndices: [], totalTimeSpent: 0, status: .watching, isWatchlisted: false)
+                showTracker = ShowTracker(showID: show.showId, watchedEpisodes: [], totalTimeSpent: 0, status: .watching, isWatchlisted: false)
                 watchlistButton.updateButtonAppearance(isListed: false)
             }
         }
@@ -185,15 +189,19 @@ class ShowViewController: UIViewController, UIGestureRecognizerDelegate {
             do {
                 showTracker.addToWatchlist()
                 try await showTrackerRepository.save(showTracker)
-                try await showRepository.insertOrIgnore(show: show)
-                let episodeService = EpisodeService(httpClient: TVMazeClient())
-                let episodes = try await episodeService.getEpisodes(forShow: show.showId)
-                try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
+                try await ensureContentExists()
                 setupShowTracker()
             } catch {
                 log.error("Error adding show \(show.title) \(show.showId) to wathclist:\n \(error)")
             }
         }
+    }
+    
+    private func ensureContentExists() async throws {
+        try await showRepository.insertOrIgnore(show: show)
+        let episodeService = EpisodeService(httpClient: TVMazeClient())
+        let episodes = try await episodeService.getEpisodes(forShow: show.showId)
+        try await episodeRepository.insertOrIgnore(episodes: episodes, showId: show.showId)
     }
     
     private func presentAlert() {
@@ -362,7 +370,7 @@ extension ShowViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension ShowViewController: CastViewControllerDelegate, ShowOveriewDelegate {
     
     func presentEpisodes() {
-        let episodesVC = EpisodesViewController(seasons: seasons, show: show)
+        let episodesVC = EpisodesViewController(seasons: seasons, show: show, tracker: showTracker)
         let episodesNavigationVC = UINavigationController(rootViewController: episodesVC)
         present(episodesNavigationVC, animated: true)
     }

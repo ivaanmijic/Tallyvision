@@ -23,6 +23,12 @@ class EpisodeTableViewCell: UITableViewCell {
         }
     }
     
+    private var isEpisodeWatched: Bool? {
+        didSet {
+            setTvButtonAppearance(isEpisodeWatched: isEpisodeWatched ?? false)
+        }
+    }
+    
     // MARK: - UIComponents
     
     lazy var tvIcon = UIImage(named: "television")!
@@ -113,14 +119,15 @@ class EpisodeTableViewCell: UITableViewCell {
     }
    
     // MARK: - Configuration
-    func configure(episode: Episode) {
+    func configure(episode: Episode, status: Bool) {
         self.episode = episode
+        self.isEpisodeWatched = status
     }
     
     private func updateUI() {
         guard let episode = self.episode else { return }
         poster.configure(image: episode.image?.medium, placeholder: "show")
-        setTvButtonAppearance(status: episode.hasBeenSeen)
+        setTvButtonAppearance(isEpisodeWatched: episode.hasBeenSeen)
         configureOrderLabel()
         titleLabel.text = episode.title
         premiereLabel.text = episode.airdate?.formattedDate()
@@ -142,13 +149,13 @@ class EpisodeTableViewCell: UITableViewCell {
     @objc private func toggleEpisodeSeenStatus() {
         guard let episode = episode else { return }
         delegate?.episodeSeenStatusChanged(for: episode)
-        setTvButtonAppearance(status: !episode.hasBeenSeen)
+        setTvButtonAppearance(isEpisodeWatched: !episode.hasBeenSeen)
     }
     
     // MARK: - Helpers
     
-    private func setTvButtonAppearance(status: Bool) {
-        let color: UIColor = status == true ? .baseYellow : .textColor.withAlphaComponent(0.5)
+    private func setTvButtonAppearance(isEpisodeWatched: Bool) {
+        let color: UIColor = isEpisodeWatched == true ? .baseYellow : .textColor.withAlphaComponent(0.5)
         tvButton.setImage(tvIcon.withTintColor(color), for: .normal)
     }
     
