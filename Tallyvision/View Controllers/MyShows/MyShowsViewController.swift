@@ -10,17 +10,11 @@ import UIKit
 class MyShowsViewController: UIViewController {
     // MARK: - Properties
     
-    var watchlistShows = [Show]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    var watchlistShows = [Show]()
     
     var nextToWatchItems = [Int64: Episode]() {
         didSet {
             Task {
-                await categorizeEpisodes()
-                collectionView.reloadData()
             }
         }
     }
@@ -102,6 +96,7 @@ class MyShowsViewController: UIViewController {
             await setupTrackers()
             await setupWatchlistShows()
             await fetchNextEpisodesToWatch()
+            await categorizeEpisodes()
             collectionView.reloadData()
         }
     }
@@ -249,7 +244,8 @@ extension MyShowsViewController: UICollectionViewDelegate, UICollectionViewDataS
             case 3: episodeWithShowTitle = upcomingEpisodes[indexPath.row]
             default: return UICollectionViewCell()
             }
-            
+           
+            cell.delegate = self
             cell.configure(episode: episodeWithShowTitle.episode, showTitle: episodeWithShowTitle.showTitle, buttonDisabled: buttonDisabled)
             return cell
             
@@ -290,4 +286,54 @@ extension MyShowsViewController: UICollectionViewDelegate, UICollectionViewDataS
         return header
     }
     
+}
+
+// MARK: - EpisodeCollectionViewCellDelegate
+
+extension MyShowsViewController: EpisodeCollectionViewCellDelegate {
+    func checkButtonClicked(for episode: Episode) {
+        Task {
+            let showID = episode.showId ?? nextToWatchItems.first(where: { $0.value == episode })?.key
+            guard let showID = showID,
+                  var showTracker = await getShowTracker(for: showID) else { return }
+            await markEpisodeAsWatched(episode, for: &showTracker)
+            await displayNewEpisode(for: &showTracker)
+            await categorizeEpisodes()
+            await MainActor.run { collectionView.reloadData() }
+        }
+    }
+    
+    private func getShowTracker(for showID: Int64) async -> ShowTracker? {
+        do {
+            return try await showTrackerRepository.fetchShowTracker(for: showID)
+        } catch {
+            log.error("Failed to fetch Tracker for show \(showID):\n\(error)")
+            return nil
+        }
+    }
+    
+    private func markEpisodeAsWatched(_ episode: Episode, for tracker: inout ShowTracker) async {
+        do {
+            guard let episodeNumber = episode.number else { return }
+            tracker.markEpisodeAsWatched(inSeason: episode.season, episode: episodeNumber, runtime: episode.runtime ?? 0)
+            try await showTrackerRepository.save(tracker)
+        } catch {
+            log.error("Failed to mark episode \(episode.id) as wathced:\n\(error)")
+        }
+    }
+    
+    private func displayNewEpisode(for tracker: inout ShowTracker) async {
+        do {
+            if let nextEpisode = try await fetchNextEpisode(for: tracker) {
+                nextToWatchItems[tracker.showID] = nextEpisode
+            } else {
+                tracker.markAsCompleted()
+                try await showTrackerRepository.save(tracker)
+            }
+        } catch {
+            log.error("Unable to find next episode for show \(tracker.showID):\n\(error)")
+        }
+    }
+    
+   
 }

@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol EpisodeCollectionViewCellDelegate: AnyObject {
+    func checkButtonClicked(for episode: Episode)
+}
+
 class EpisodeCollectionViewCell: UICollectionViewCell {
     // MARK: - Properites
+    weak var delegate: EpisodeCollectionViewCellDelegate?
     
     static let identifier = String(describing: EpisodeCollectionViewCell.self)
     
@@ -126,9 +131,7 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
     func configure(episode: Episode, showTitle: String, buttonDisabled: Bool = false) {
         self.episode = episode
         self.showTitleLabel.text = showTitle
-        if buttonDisabled {
-            tvButton.removeFromSuperview()
-        }
+        tvButton.isHidden = buttonDisabled
     }
     
     private func updateUI() {
@@ -153,7 +156,8 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
     // MARK: - Actions
     
     @objc private func checkButtonClicked() {
-        
+        guard let episode = episode else { return }
+        delegate?.checkButtonClicked(for: episode)
     }
     
 }
