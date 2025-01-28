@@ -38,4 +38,25 @@ class ShowRepository {
         }
     }
     
+    func fetchShowTitles(forIds showIds: [Int64]) async throws -> [Int64: String] {
+        guard !showIds.isEmpty else { return [:] }
+        
+        return try await dbQueue.read { db in
+            let sql = """
+                    SELECT id, name
+                    FROM \(Show.databaseTableName)
+                    WHERE id IN (\(showIds.map { _ in "?" }.joined(separator: ",")))
+                    """
+           
+            log.debug(sql)
+            let rows = try Row.fetchAll(db, sql: sql, arguments: StatementArguments(showIds))
+            log.debug(rows)
+            return rows.reduce(into: [Int64: String]()) { result, row in
+                if let id: Int64 = row["id"], let title: String = row["name"] {
+                    result[id] = title
+                }
+            }
+        }
+    }
+    
 }

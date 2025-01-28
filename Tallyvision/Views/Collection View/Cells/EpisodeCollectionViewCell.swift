@@ -21,8 +21,6 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
     private lazy var cellView: UIView = {
         let view = UIView()
         view.backgroundColor = .secondaryAppColor
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
         return view.forAutoLayout()
     }()
     
@@ -59,7 +57,7 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
     
     private lazy var tvButton: UIButton = {
         let button = UIButton(type: .custom)
-        let image = UIImage(named: "check")!.withTintColor(.baseYellow)
+        let image = UIImage(named: "television")!.withTintColor(.textColor.withAlphaComponent(0.5))
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(checkButtonClicked), for: .touchUpInside)
         return button.forAutoLayout()
@@ -125,9 +123,12 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Configuration
     
-    func configure(episode: Episode, showTitle: String) {
+    func configure(episode: Episode, showTitle: String, buttonDisabled: Bool = false) {
         self.episode = episode
         self.showTitleLabel.text = showTitle
+        if buttonDisabled {
+            tvButton.removeFromSuperview()
+        }
     }
     
     private func updateUI() {
@@ -140,7 +141,7 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
     
     private func configureOrderLabel() {
         if let number = episode?.number,
-           let seasonNumber = episode?.seasonId {
+           let seasonNumber = episode?.season {
             let formattedSeason = String(format: "S%02d", seasonNumber)
             let formattedEpisode = String(format: "E%02d", number)
             orderLabel.text = "\(formattedSeason) \(formattedEpisode)"

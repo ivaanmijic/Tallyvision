@@ -82,9 +82,10 @@ class EpisodeRepository {
         }
     }
     
-    func fetchAllEpisodes() async throws -> [Episode] {
+    func fetchAll(forShow showID: Int64) async throws -> [Episode]? {
         try await dbQueue.read { db in
-            return try Episode.fetchAll(db)
+            let sql = "SELECT * FROM \(Episode.databaseTableName) WHERE AND showId = ?"
+            return try Episode.fetchAll(db, sql: sql, arguments: [showID])
         }
     }
     
@@ -96,15 +97,11 @@ class EpisodeRepository {
         }
     }
     
-    func countOfSeenEpisodes(forSeason seasonNumber: Int64, showId: Int64) async throws -> Int {
+    func fetchEpisode(forSeason season: Int64, number: Int64, showId: Int64) async throws -> Episode? {
         try await dbQueue.read { db in
-            let sql = """
-                      SELECT COUNT(*) FROM \(Episode.databaseTableName)
-                        WHERE season = ? 
-                        AND showId = ?
-                        AND hasBeenSeen = true
-                      """
-            return try Int.fetchOne(db, sql: sql, arguments: [seasonNumber, showId]) ?? 0
+            let sql = "SELECT * FROM \(Episode.databaseTableName) WHERE showId = ? AND season = ? AND number = ?"
+            return try Episode.fetchOne(db, sql: sql, arguments: [showId, season, number])
         }
     }
+    
 }

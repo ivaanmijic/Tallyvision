@@ -35,4 +35,19 @@ struct ShowTracker: Codable, FetchableRecord, PersistableRecord {
         watchedEpisodes.insert(episodeTracker)
         totalTimeSpent += runtime
     }
+    
+    func lastWatchedEpisode() -> EpisodeTracker? {
+        return watchedEpisodes.max(by: {
+            $0.season < $1.season || ($0.season == $1.season && $0.episode < $1.episode)
+        })
+    }
+    
+    mutating func markAsAbandoned() {
+        status = .abandoned
+    }
+    
+    mutating func markAsCompleted() {
+        status = .completed
+    }
+    
 }

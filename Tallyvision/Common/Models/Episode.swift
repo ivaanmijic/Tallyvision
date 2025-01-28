@@ -13,7 +13,7 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
     var id: Int64
     var url: URL
     var title: String
-    var seasonId: Int64
+    var season: Int64
     var number: Int64?
     var type: String
     var airdate: String?
@@ -39,9 +39,7 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, url
-        case seasonId = "season"
-        case number, type, airdate, airtime, runtime, rating, image, summary, hasBeenSeen
+        case id, url, season, number, type, airdate, airtime, runtime, rating, image, summary, hasBeenSeen
         case title = "name"
         case _show = "show"
         case _embeddedShow = "_embedded"
@@ -53,7 +51,7 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
         let urlString = try container.decode(String.self, forKey: .url)
         url = URL(string: urlString)!
         title = try container.decode(String.self, forKey: .title)
-        seasonId = try container.decode(Int64.self, forKey: .seasonId)
+        season = try container.decode(Int64.self, forKey: .season)
         number = try container.decodeIfPresent(Int64.self, forKey: .number)
         type = try container.decode(String.self, forKey: .type)
         airdate = try container.decodeIfPresent(String.self, forKey: .airdate)
@@ -78,7 +76,7 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
         container["id"] = id
         container["url"] = url
         container["showId"] = showId
-        container["season"] = seasonId
+        container["season"] = season
         container["number"] = number
         container["type"] = type
         container["airdate"] = airdate
@@ -96,3 +94,10 @@ struct Episode: Codable, FetchableRecord, PersistableRecord {
     }
     
 }
+
+extension Episode: Equatable {
+    static func ==(lhs: Episode, rhs: Episode) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+

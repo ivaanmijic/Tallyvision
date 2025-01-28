@@ -135,7 +135,7 @@ class EpisodeTableViewCell: UITableViewCell {
     
     private func configureOrderLabel() {
         if let number = episode?.number,
-           let seasonNumber = episode?.seasonId {
+           let seasonNumber = episode?.season {
             let formattedSeason = String(format: "S%02d", seasonNumber)
             let formattedEpisode = String(format: "E%02d", number)
             orderLabel.text = "\(formattedSeason) \(formattedEpisode)"
