@@ -206,44 +206,41 @@ class MyShowsViewController: UIViewController {
 
 extension MyShowsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
+    private var sections: [(title: String, items: [Any])] {
+        [
+            ("Watchlist", watchlistShows),
+            ("Have not Started", notStartedEpisodes),
+            ("Watch next", startedEpisodes),
+            ("Upcoming", upcomingEpisodes)
+        ].filter { !$0.items.isEmpty }
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return sections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0: return watchlistShows.count
-        case 1: return notStartedEpisodes.count
-        case 2: return startedEpisodes.count
-        case 3: return upcomingEpisodes.count
-        default: return 0
-        }
+        return sections[section].items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-        case 0:
+        let sectionModel = sections[indexPath.section]
+        
+        switch sectionModel.title {
+        case "Watchlist":
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowCell.identifier, for: indexPath)
                     as? ShowCell else { break }
             
-            let imageURL = watchlistShows[indexPath.row].image?.medium
+            let imageURL = (sectionModel.items[indexPath.row] as? Show)?.image?.medium
             cell.configure(withImageURL: imageURL)
-            
             return cell
             
         default:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EpisodeCollectionViewCell.identifier, for: indexPath)
                     as? EpisodeCollectionViewCell else { break }
          
-            let buttonDisabled = indexPath.section == 3 ? true : false
-            var episodeWithShowTitle: EpisodeWithShowTitle
-            
-            switch indexPath.section {
-            case 1: episodeWithShowTitle = notStartedEpisodes[indexPath.row]
-            case 2: episodeWithShowTitle = startedEpisodes[indexPath.row]
-            case 3: episodeWithShowTitle = upcomingEpisodes[indexPath.row]
-            default: return UICollectionViewCell()
-            }
+            let buttonDisabled = sectionModel.title == "Upcoming" ? true : false
+            let episodeWithShowTitle = sectionModel.items[indexPath.row] as! EpisodeWithShowTitle
            
             cell.delegate = self
             cell.configure(episode: episodeWithShowTitle.episode, showTitle: episodeWithShowTitle.showTitle, buttonDisabled: buttonDisabled)
@@ -255,11 +252,10 @@ extension MyShowsViewController: UICollectionViewDelegate, UICollectionViewDataS
         
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            let selectedShow = watchlistShows[indexPath.row]
+        let sectionModel = sections[indexPath.section]
+        if sectionModel.title == "Watchlist" {
+            let selectedShow = sectionModel.items[indexPath.row] as! Show
             navigateToDetails(for: selectedShow)
-        default: break
         }
     }
     
@@ -272,17 +268,9 @@ extension MyShowsViewController: UICollectionViewDelegate, UICollectionViewDataS
               ) as? SectionTitleReusableView else {
             return UICollectionReusableView()
         }
-       
-        var title = String()
-        switch indexPath.section {
-        case 0: title = "Watchlist"
-        case 1: title = "Have not Started"
-        case 2: title = "Watch next"
-        case 3: title = "Upcoming"
-        default: break
-        }
         
-        header.configure(title: title)
+        let sectionTitle = sections[indexPath.section].title
+        header.configure(title: sectionTitle)
         return header
     }
     
