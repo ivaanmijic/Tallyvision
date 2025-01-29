@@ -54,9 +54,8 @@ class DecoratedLabel: UIView {
         ])
     }
    
-    func configure(icon: UIImage?, withColor color: UIColor, text: String?) {
+    func configure(icon: UIImage?, text: String?) {
         iconImageView.image = icon
-        iconImageView.tintColor = color
         textLabel.text = text
     }
     

@@ -66,7 +66,7 @@ class AppButton: UIButton {
     func updateButtonAppearance(isListed: Bool) {
         if isListed {
             self.backgroundColor = .appGreen
-            self.buttonImageView.image = UIImage(named: "check")!.withTintColor(.white)
+            self.buttonImageView.image = UIImage(named: "check_circle")!.withTintColor(.white)
             self.label.text = "Listed"
             self.label.textColor = .white
         } else {

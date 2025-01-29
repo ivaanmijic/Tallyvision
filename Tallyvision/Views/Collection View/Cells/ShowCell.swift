@@ -47,8 +47,9 @@ class ShowCell: UICollectionViewCell {
         imageView.configure(image: imageURL)
     }
     
-    func configure(withImageURL imageURL: String?) {
+    func configure(withImageURL imageURL: String?, alpha: CGFloat = 1) {
         self.imageURL = imageURL
+        imageView.alpha = alpha
     }
     
 }

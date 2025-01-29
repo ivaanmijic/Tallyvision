@@ -126,8 +126,7 @@ class MyShowsViewController: UIViewController {
                 if let nextEpisode = try await fetchNextEpisode(for: tracker) {
                     nextToWatchItems[tracker.showID] = nextEpisode
                 } else {
-                    tracker.markAsCompleted()
-                    try await showTrackerRepository.save(tracker)
+                    try await completeTrackerAndCleanup(&tracker)
                 }
             } catch {
                 log.error("Unable to find next episode for show \(tracker.showID):\n\(error)")
@@ -315,12 +314,22 @@ extension MyShowsViewController: EpisodeCollectionViewCellDelegate {
             if let nextEpisode = try await fetchNextEpisode(for: tracker) {
                 nextToWatchItems[tracker.showID] = nextEpisode
             } else {
-                tracker.markAsCompleted()
-                try await showTrackerRepository.save(tracker)
+                try await completeTrackerAndCleanup(&tracker)
             }
         } catch {
             log.error("Unable to find next episode for show \(tracker.showID):\n\(error)")
         }
+    }
+    
+    private func completeTrackerAndCleanup(_ tracker: inout ShowTracker) async throws {
+        tracker.markAsCompleted()
+        try await showTrackerRepository.save(tracker)
+        nextToWatchItems.removeValue(forKey: tracker.showID)
+        try await deleteEpisodes(forShow: tracker.showID)
+    }
+    
+    private func deleteEpisodes(forShow showID: Int64) async throws {
+        try await episodeRepository.deleteAll(forShow: showID)
     }
     
    

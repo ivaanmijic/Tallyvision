@@ -104,4 +104,11 @@ class EpisodeRepository {
         }
     }
     
+    func deleteAll(forShow showId: Int64) async throws {
+        try await dbQueue.write { db in
+            let sql = "DELETE FROM \(Episode.databaseTableName) WHERE showId = ?"
+            return try db.execute(sql: sql, arguments: [showId])
+        }
+    }
+    
 }

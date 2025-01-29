@@ -15,8 +15,8 @@ class AppLayouts {
         let section = createSection(
             itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
             groupSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(AppConstants.screenWidth / 3)),
-            groupInsets: NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0),
-            sectionInsets: NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
+            groupInsets: NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 8, trailing: 10),
+            sectionInsets: NSDirectionalEdgeInsets(top: 15, leading: 0, bottom: 10, trailing: 0)
         )
         
         let header = createHeader()
@@ -64,6 +64,7 @@ class AppLayouts {
         let section = createSection(
             itemSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)),
             groupSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .absolute(400)),
+            groupInsets: NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0),
             sectionInsets: NSDirectionalEdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15),
             scrollingBehavior: .groupPagingCentered
         )

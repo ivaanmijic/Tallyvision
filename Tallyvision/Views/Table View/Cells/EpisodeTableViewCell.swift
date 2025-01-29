@@ -25,13 +25,13 @@ class EpisodeTableViewCell: UITableViewCell {
     
     private var isEpisodeWatched: Bool? {
         didSet {
-            setTvButtonAppearance(isEpisodeWatched: isEpisodeWatched ?? false)
+            setCheckButtonAppearance(isEpisodeWatched: isEpisodeWatched ?? false)
         }
     }
     
     // MARK: - UIComponents
     
-    lazy var tvIcon = UIImage(named: "television")!
+    lazy var checkIcon = UIImage(named: "check_circle")!
     
     lazy var poster: UIImageView = {
         let imageView = UIImageView()
@@ -58,7 +58,7 @@ class EpisodeTableViewCell: UITableViewCell {
         return label.forAutoLayout()
     }()
     
-    private lazy var tvButton: UIButton = {
+    private lazy var checkButton: UIButton = {
         let button = UIButton(type: .custom)
         button.addTarget(self, action: #selector(toggleEpisodeSeenStatus), for: .touchUpInside)
         return button.forAutoLayout()
@@ -94,7 +94,7 @@ class EpisodeTableViewCell: UITableViewCell {
         
         contentView.addSubview(poster)
         contentView.addSubview(stackView)
-        contentView.addSubview(tvButton)
+        contentView.addSubview(checkButton)
     }
     
     private func activateConstraints() {
@@ -107,13 +107,13 @@ class EpisodeTableViewCell: UITableViewCell {
             poster.widthAnchor.constraint(equalToConstant: imageWidth),
             poster.heightAnchor.constraint(equalTo: poster.widthAnchor, multiplier: AppConstants.episodeImageRation),
            
-            tvButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            tvButton.heightAnchor.constraint(equalToConstant: 30),
-            tvButton.widthAnchor.constraint(equalToConstant: 30),
-            tvButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            checkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            checkButton.heightAnchor.constraint(equalToConstant: 30),
+            checkButton.widthAnchor.constraint(equalToConstant: 30),
+            checkButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             stackView.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: tvButton.leadingAnchor, constant: -16),
+            stackView.trailingAnchor.constraint(equalTo: checkButton.leadingAnchor, constant: -16),
             stackView.centerYAnchor.constraint(equalTo: poster.centerYAnchor)
         ])
     }
@@ -127,7 +127,7 @@ class EpisodeTableViewCell: UITableViewCell {
     private func updateUI() {
         guard let episode = self.episode else { return }
         poster.configure(image: episode.image?.medium, placeholder: "show")
-        setTvButtonAppearance(isEpisodeWatched: episode.hasBeenSeen)
+        setCheckButtonAppearance(isEpisodeWatched: episode.hasBeenSeen)
         configureOrderLabel()
         titleLabel.text = episode.title
         premiereLabel.text = episode.airdate?.formattedDate()
@@ -149,14 +149,14 @@ class EpisodeTableViewCell: UITableViewCell {
     @objc private func toggleEpisodeSeenStatus() {
         guard let episode = episode else { return }
         delegate?.episodeSeenStatusChanged(for: episode)
-        setTvButtonAppearance(isEpisodeWatched: !episode.hasBeenSeen)
+        setCheckButtonAppearance(isEpisodeWatched: !episode.hasBeenSeen)
     }
     
     // MARK: - Helpers
     
-    private func setTvButtonAppearance(isEpisodeWatched: Bool) {
+    private func setCheckButtonAppearance(isEpisodeWatched: Bool) {
         let color: UIColor = isEpisodeWatched == true ? .baseYellow : .textColor.withAlphaComponent(0.5)
-        tvButton.setImage(tvIcon.withTintColor(color), for: .normal)
+        checkButton.setImage(checkIcon.withTintColor(color), for: .normal)
     }
     
 }

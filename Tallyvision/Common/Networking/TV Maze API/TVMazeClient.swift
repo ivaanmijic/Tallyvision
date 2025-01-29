@@ -13,11 +13,6 @@ class TVMazeClient {
     let baseURL = "https://api.tvmaze.com/"
     static let dateFormatter: DateFormatter = .apiDateFormatter
     
-    func fetchShows() async throws -> [Show] {
-        let url = URL(string: "\(baseURL)shows")!
-        return try await fetchData(from: url)
-    }
-    
     func fetchShow(byId id: Int) async throws -> Show {
         let url = URL(string: "\(baseURL)shows/\(id)")!
         return try await fetchData(from: url)

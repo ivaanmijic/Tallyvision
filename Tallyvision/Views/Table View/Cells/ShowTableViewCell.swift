@@ -19,16 +19,13 @@ class ShowTableViewCell: UITableViewCell {
     
     private lazy var cellView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 10
         view.backgroundColor = .secondaryAppColor
         return view.forAutoLayout()
     }()
    
     private lazy var poster: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView.forAutoLayout()
     }()
@@ -76,9 +73,9 @@ class ShowTableViewCell: UITableViewCell {
     }
     
     private func activateConstraints() {
-        let imageWidth = AppConstants.screenWidth / 6
-        let imageHeight = imageWidth * AppConstants.posterImageRatio
-        let cellHeight = imageHeight + 20
+        let imageHeight = AppConstants.screenWidth / 4
+        let imageWidth = imageHeight / AppConstants.posterImageRatio
+        let cellHeight = imageHeight
         
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
@@ -90,8 +87,8 @@ class ShowTableViewCell: UITableViewCell {
             ratingLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 25),
             ratingLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
             
-            poster.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
-            poster.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
+            poster.topAnchor.constraint(equalTo: cellView.topAnchor),
+            poster.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
             poster.widthAnchor.constraint(equalToConstant: imageWidth),
             poster.heightAnchor.constraint(equalToConstant: imageHeight),
             
@@ -128,7 +125,7 @@ class ShowTableViewCell: UITableViewCell {
         secondSubtitleLabel.text = secondSubtitle
         
         if let rating = show.rating {
-            ratingLabel.configure(icon: UIImage(named: "star"), withColor: .baseYellow, text: String("\(rating)"))
+            ratingLabel.configure(icon: UIImage(named: "star")?.withTintColor(.baseYellow), text: String("\(rating)"))
         }
     }
     

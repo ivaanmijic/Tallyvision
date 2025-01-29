@@ -47,13 +47,20 @@ class ShowRepository {
                     FROM \(Show.databaseTableName)
                     WHERE id IN (\(showIds.map { _ in "?" }.joined(separator: ",")))
                     """
-           
+            
             let rows = try Row.fetchAll(db, sql: sql, arguments: StatementArguments(showIds))
             return rows.reduce(into: [Int64: String]()) { result, row in
                 if let id: Int64 = row["id"], let title: String = row["name"] {
                     result[id] = title
                 }
             }
+        }
+    }
+    
+    func fetchAllImages() async throws -> [Image] {
+        try await dbQueue.read { db in
+            let sql = "SELECT image FROM \(Show.databaseTableName)"
+            return try Image.fetchAll(db, sql: sql)
         }
     }
     

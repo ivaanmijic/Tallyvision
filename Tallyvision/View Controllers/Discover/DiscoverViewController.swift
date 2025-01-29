@@ -13,14 +13,17 @@ import Lottie
 class DiscoverViewController: UIViewController {
     
     // MARK: - Properties
-    private var recentShows: [Show] = []
+    private var images: [Image] = []
     private var shows:[Show] = []
-        
     private var showService: ShowService!
-    
+    private let showRepository = ShowRepository()
     private var cancellables = Set<AnyCancellable>()
-   
     private var shouldHideHeader = false
+    
+    private let rows = 4
+    private let columns = 3
+    private let totalCells = 12
+    private let cellSpacing: CGFloat = 10
     
     // MARK: - UI Components
     
@@ -39,18 +42,26 @@ class DiscoverViewController: UIViewController {
     }()
     
     lazy var collectionView: UICollectionView = {
-        let cellWidth = AppConstants.screenWidth/3 - 10
+        let cellWidth = (AppConstants.screenWidth - (CGFloat(columns + 1) * cellSpacing)) / CGFloat(columns)
         let cellHeight = cellWidth * AppConstants.posterImageRatio
-       
+        let collectionHeight = cellHeight * CGFloat(rows) + cellSpacing * CGFloat(rows + 1)
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+        layout.minimumLineSpacing = cellSpacing
+        layout.minimumInteritemSpacing = cellSpacing
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.isScrollEnabled = false
         collectionView.register(ShowCell.self, forCellWithReuseIdentifier: ShowCell.identifier)
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.scrollsToTop = true
-        return collectionView.forAutoLayout()
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .clear
+        
+        collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
+        
+        return collectionView
     }()
     
     lazy var tableView: UITableView = {
@@ -68,11 +79,11 @@ class DiscoverViewController: UIViewController {
     }()
     
     lazy var animationView: LottieAnimationView = {
-        let animation = LottieAnimationView(name: "search-animation")
+        let animation = LottieAnimationView(name: "loopanimation")
         animation.frame = view.bounds
         animation.contentMode = .scaleAspectFit
         animation.loopMode = .loop
-        animation.animationSpeed = 1
+        animation.animationSpeed = 0.75
         return animation.forAutoLayout()
     }()
     
@@ -87,13 +98,13 @@ class DiscoverViewController: UIViewController {
         setupCollectionView()
         setupTableView()
         setupServices()
+        loadImages()
     }
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
-        navigationController?.hidesBarsOnSwipe = true
     }
-   
+    
     private func setupUI() {
         view.backgroundColor = .appColor
         view.addSubview(collectionView)
@@ -107,11 +118,16 @@ class DiscoverViewController: UIViewController {
     private func setupConstraints() {
         collectionView.pin(to: view)
         tableView.pin(to: view)
-        animationView.pin(to: view)
         
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            animationView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.35),
+            animationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.35),
+            animationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            animationView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            
         ])
     }
     
@@ -119,9 +135,10 @@ class DiscoverViewController: UIViewController {
         animationView.play()
     }
     
+    
     private func setupSearchController() {
         searchController.searchBar.delegate = self
-
+        
         let placeHolderAppearance = UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self])
         placeHolderAppearance.font = UIFont(name: "RedHatDisplay-Regular", size: 16)
         
@@ -129,7 +146,6 @@ class DiscoverViewController: UIViewController {
         cancelAppearence.setTitleTextAttributes([.font: UIFont(name: "RedHatDisplay-Regular", size: 16)!], for: .normal)
         cancelAppearence.tintColor = .baseYellow
         
-        navigationController?.navigationBar.barTintColor = .appColor
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
     }
@@ -148,13 +164,26 @@ class DiscoverViewController: UIViewController {
         showService = ShowService(httpClient: TVMazeClient())
     }
     
+    private func loadImages() {
+        Task {
+            do {
+                self.images = try await showRepository.fetchAllImages()
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            } catch {
+                print("Failed to fetch random shows: \(error.localizedDescription)")
+            }
+        }
+    }
+    
 }
 
 // MARK: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -162,9 +191,12 @@ extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDe
                 as? ShowCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = .secondaryAppColor.withAlphaComponent(0.5)
+        
+        cell.configure(withImageURL: images[indexPath.row].medium, alpha: 0.3)
+        
         return cell
     }
+    
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -178,6 +210,7 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
                 as? ShowTableViewCell else {
             return UITableViewCell()
         }
+        cell.selectionStyle = .none
         cell.configure(withShow: shows[indexPath.row])
         return cell
     }
@@ -185,6 +218,7 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         navigateToDetails(for: shows[indexPath.row])
     }
+    
 }
 
 // MARK: - UISearchBarDelegate
@@ -287,7 +321,6 @@ extension DiscoverViewController {
         }, completion: { _ in
             outgoingView.isHidden = true
             outgoingView.alpha = 1
-            
             if !shouldShowAnimation {
                 self.animationView.stop()
                 self.animationView.isHidden = true
@@ -295,8 +328,6 @@ extension DiscoverViewController {
         })
         
     }
-    
-    
 }
 
 

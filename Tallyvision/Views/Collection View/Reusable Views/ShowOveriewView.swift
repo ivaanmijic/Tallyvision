@@ -197,7 +197,7 @@ class ShowOveriewView: UICollectionReusableView {
     
     private func createDecoratedLabel(icon: String, color: UIColor, text: String) -> DecoratedLabel {
         let label = DecoratedLabel()
-        label.configure(icon: UIImage(named: icon)?.withTintColor(color), withColor: color, text: text)
+        label.configure(icon: UIImage(named: icon)?.withTintColor(color), text: text)
         return label
     }
     

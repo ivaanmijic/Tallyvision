@@ -23,7 +23,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
         didSet {
             createUIMenu()
             updateUI()
-            configureTvButtonAppearance()
+            configureCheckButtonAppearance()
         }
     }
 
@@ -32,7 +32,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
     
     // MARK: - UI Components
     
-    lazy var tvIcon = UIImage(named: "television")!
+    lazy var checkIcon = UIImage(named: "check_circle")!
     
     lazy var selectionButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
@@ -61,7 +61,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
         return button
     }()
     
-    private lazy var tvButton: UIButton = {
+    private lazy var checkButton: UIButton = {
         let button = UIButton(type: .custom)
         button.addTarget(self, action: #selector(toggleSeasonSeenStatus), for: .touchUpInside)
         return button.forAutoLayout()
@@ -86,7 +86,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
     private func setupUI() {
         contentView.backgroundColor = .appColor
         contentView.addSubview(selectionButton)
-        contentView.addSubview(tvButton)
+        contentView.addSubview(checkButton)
         
         contentView.addSubview(episodesWatchedLabel)
         contentView.addSubview(slashLabel)
@@ -99,12 +99,12 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
             selectionButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             selectionButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             
-            tvButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            tvButton.heightAnchor.constraint(equalToConstant: 30),
-            tvButton.widthAnchor.constraint(equalToConstant: 30),
-            tvButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            checkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            checkButton.heightAnchor.constraint(equalToConstant: 30),
+            checkButton.widthAnchor.constraint(equalToConstant: 30),
+            checkButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            totalEpisodesLabel.trailingAnchor.constraint(equalTo: tvButton.leadingAnchor, constant: -16),
+            totalEpisodesLabel.trailingAnchor.constraint(equalTo: checkButton.leadingAnchor, constant: -16),
             totalEpisodesLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             slashLabel.trailingAnchor.constraint(equalTo: totalEpisodesLabel.leadingAnchor, constant: -4),
             slashLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -172,7 +172,7 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
         button.configuration = configuration
     }
    
-    private func configureTvButtonAppearance() {
+    private func configureCheckButtonAppearance() {
         guard let episodeCount = selectedSeason?.episodeCount,
               let seenEpisodesCount = seenEpisodesCount else { return }
         
@@ -180,6 +180,6 @@ class SeasonSelectionView: UITableViewHeaderFooterView {
         ? .baseYellow
         : .textColor.withAlphaComponent(0.5)
         
-        tvButton.setImage(tvIcon.withTintColor(color), for: .normal)
+        checkButton.setImage(checkIcon.withTintColor(color), for: .normal)
     }
 }

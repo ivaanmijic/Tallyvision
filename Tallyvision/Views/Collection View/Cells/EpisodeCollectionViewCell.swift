@@ -60,9 +60,9 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
         return label.forAutoLayout()
     }()
     
-    private lazy var tvButton: UIButton = {
+    private lazy var checkButton: UIButton = {
         let button = UIButton(type: .custom)
-        let image = UIImage(named: "television")!.withTintColor(.textColor.withAlphaComponent(0.5))
+        let image = UIImage(named: "check_circle")!.withTintColor(.textColor.withAlphaComponent(0.5))
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(checkButtonClicked), for: .touchUpInside)
         return button.forAutoLayout()
@@ -101,7 +101,7 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
         
         cellView.addSubview(poster)
         cellView.addSubview(stackView)
-        cellView.addSubview(tvButton)
+        cellView.addSubview(checkButton)
     }
     
     private func activateConstraints() {
@@ -115,13 +115,13 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
             poster.widthAnchor.constraint(equalToConstant: imageWidth),
             poster.heightAnchor.constraint(equalTo: poster.widthAnchor, multiplier: AppConstants.episodeImageRation),
             
-            tvButton.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -24),
-            tvButton.heightAnchor.constraint(equalToConstant: 30),
-            tvButton.widthAnchor.constraint(equalToConstant: 30),
-            tvButton.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
+            checkButton.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -24),
+            checkButton.heightAnchor.constraint(equalToConstant: 30),
+            checkButton.widthAnchor.constraint(equalToConstant: 30),
+            checkButton.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
             
             stackView.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: tvButton.leadingAnchor, constant: -16),
+            stackView.trailingAnchor.constraint(equalTo: checkButton.leadingAnchor, constant: -16),
             stackView.centerYAnchor.constraint(equalTo: poster.centerYAnchor)
         ])
     }
@@ -131,7 +131,7 @@ class EpisodeCollectionViewCell: UICollectionViewCell {
     func configure(episode: Episode, showTitle: String, buttonDisabled: Bool = false) {
         self.episode = episode
         self.showTitleLabel.text = showTitle
-        tvButton.isHidden = buttonDisabled
+        checkButton.isHidden = buttonDisabled
     }
     
     private func updateUI() {
