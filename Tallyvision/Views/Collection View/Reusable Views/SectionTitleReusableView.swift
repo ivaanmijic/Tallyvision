@@ -10,7 +10,7 @@ import UIKit
 class SectionTitleReusableView: UICollectionReusableView {
     static let identifier = "SectionHeaderView"
     
-    lazy var headerLabel = UILabel().forAutoLayout()
+    lazy var headerLabel = PaddingLabel().forAutoLayout()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

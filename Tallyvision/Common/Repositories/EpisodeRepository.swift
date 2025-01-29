@@ -111,4 +111,11 @@ class EpisodeRepository {
         }
     }
     
+    func count() async throws -> Int? {
+        try await dbQueue.read { db in
+            let sql = "SELECT COUNT(*) FROM \(Episode.databaseTableName)"
+            return try Int.fetchOne(db, sql: sql)
+        }
+    }
+    
 }

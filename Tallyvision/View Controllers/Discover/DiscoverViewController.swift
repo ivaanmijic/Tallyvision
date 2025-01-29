@@ -28,7 +28,7 @@ class DiscoverViewController: UIViewController {
     // MARK: - UI Components
     
     lazy var titleLabel: UILabel = {
-        return UILabel.appLabel(withText: "DISCOVER").forAutoLayout()
+        return UILabel.appLabel(withText: "Discover").forAutoLayout()
     }()
     
     lazy var searchController: UISearchController = {

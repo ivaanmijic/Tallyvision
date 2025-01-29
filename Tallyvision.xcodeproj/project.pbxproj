@@ -92,6 +92,7 @@
 		FCECD0182D11675200214673 /* TabBarController+RoundedTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCECD0172D11675200214673 /* TabBarController+RoundedTabBar.swift */; };
 		FCECD01F2D116BBF00214673 /* ShowOveriewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCECD01E2D116BBF00214673 /* ShowOveriewView.swift */; };
 		FCEDE2662CEC7FD900B4C0F8 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEDE2652CEC7FD900B4C0F8 /* ShowCell.swift */; };
+		FCEEF5872D4A1C8800402D81 /* GridStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEEF5862D4A1C8800402D81 /* GridStackView.swift */; };
 		FCF77A202CD0D12D00456132 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A1F2CD0D12D00456132 /* Show.swift */; };
 		FCF77A242CD0DF2000456132 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF77A232CD0DF2000456132 /* Database.swift */; };
 /* End PBXBuildFile section */
@@ -179,6 +180,7 @@
 		FCECD0172D11675200214673 /* TabBarController+RoundedTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+RoundedTabBar.swift"; sourceTree = "<group>"; };
 		FCECD01E2D116BBF00214673 /* ShowOveriewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOveriewView.swift; sourceTree = "<group>"; };
 		FCEDE2652CEC7FD900B4C0F8 /* ShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
+		FCEEF5862D4A1C8800402D81 /* GridStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridStackView.swift; sourceTree = "<group>"; };
 		FCF77A1F2CD0D12D00456132 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		FCF77A232CD0DF2000456132 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -425,6 +427,7 @@
 				FC44685C2D1310B5004CFAB2 /* HorizontalLine.swift */,
 				FC4B3BC62CE4962C0055ECAF /* BlurredImageView.swift */,
 				FC9CEC122D2E814600F09992 /* AppButton.swift */,
+				FCEEF5862D4A1C8800402D81 /* GridStackView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				FCE5594A2D35AF8100BC7C46 /* EpisodeService.swift in Sources */,
 				FC53223C2CC92DA2001BCC3D /* UIView+Extensions.swift in Sources */,
 				FC5322262CC8F817001BCC3D /* UIImage+Resize.swift in Sources */,
+				FCEEF5872D4A1C8800402D81 /* GridStackView.swift in Sources */,
 				FCA028AB2D084341002FC29B /* StorylineView.swift in Sources */,
 				FC0366D52CE33DFF003EBE4A /* ShowCardView.swift in Sources */,
 				FC0320192D328F3C001F002A /* EpisodesViewController.swift in Sources */,

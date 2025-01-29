@@ -20,6 +20,12 @@ class ShowRepository {
         }
     }
     
+    func fetchOne(withID id: Int64) async throws -> Show? {
+        try await dbQueue.read { db in
+            return try Show.fetchOne(db, key: id)
+        }
+    }
+    
     func create(show: Show) async throws {
         try await dbQueue.write { db in
             try show.insert(db, onConflict: .replace)

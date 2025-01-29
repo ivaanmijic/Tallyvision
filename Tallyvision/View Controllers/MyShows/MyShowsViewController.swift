@@ -12,12 +12,7 @@ class MyShowsViewController: UIViewController {
     
     var watchlistShows = [Show]()
     
-    var nextToWatchItems = [Int64: Episode]() {
-        didSet {
-            Task {
-            }
-        }
-    }
+    var nextToWatchItems = [Int64: Episode]()
     
     private var notStartedEpisodes: [EpisodeWithShowTitle] = []
     private var startedEpisodes: [EpisodeWithShowTitle] = []
@@ -31,7 +26,7 @@ class MyShowsViewController: UIViewController {
     // MARK: - UI Components
     
     lazy var titleLabel: UILabel = {
-        return UILabel.appLabel(withText: "MY SHOWS").forAutoLayout()
+        return UILabel.appLabel(withText: "My Shows").forAutoLayout()
     }()
     
     lazy var collectionView: UICollectionView = {
