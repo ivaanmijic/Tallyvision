@@ -13,7 +13,7 @@
 - [Technology Stack](#technology-stack)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Future Enhancements](#future-enhancements
+- [Future Enhancements](#future-enhancements)
 
 ## About
 
