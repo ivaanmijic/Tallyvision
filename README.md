@@ -63,12 +63,12 @@ TallyVision follows a layered MVC design:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/tallyvision.git
+   git clone https://github.com/ivaanmijic/Tallyvision.git
    ```
 2. Open the Xcode project:
    ```bash
-   cd tallyvision
-   open TallyVision.xcworksapce
+   cd Tallyvision
+   open Tallyvision.xcworksapce
    ```
 3. Build and run on a simulator or device.
 
