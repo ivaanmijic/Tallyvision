@@ -2,7 +2,7 @@
 
 > A mobile application to help TV enthusiasts track their favorite TV shows, monitor progress, and receive updates.
 
-![App Screenshot](screenshots/app.png)
+<img src="screenshots/app.png" alt="App Screenshot" width="300" />
 
 ## Table of Contents
 
@@ -31,13 +31,13 @@ TallyVision is designed for users who want an organized way to search, track, an
 ## Screenshots
 
 ### Show Details
-![Show Details](screenshots/details.png)
+<img src="screenshots/details.png" alt="Show Details" width="300" />
 
 ### Watchlist View
-![Watchlist View](screenshots/myshows.png)
+<img src="screenshots/myshows.png" alt="Watchlist View" width="300" />
 
 ### Episode Tracking
-![Episode Tracking](screenshots/episodes.png)
+<img src="screenshots/episodes.png" alt="Episode Tracking" width="300" />
 
 ## Architecture
 
